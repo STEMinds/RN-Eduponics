@@ -1,0 +1,6 @@
+module Pods_Eduponics_EduponicsTests {
+  umbrella header "Pods-Eduponics-EduponicsTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
