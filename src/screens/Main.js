@@ -58,17 +58,20 @@ const styles = StyleSheet.create({
     bottom:0
   },
   titleView:{
+    justifyContent:'center',
     alignSelf:'center',
     marginTop:hp('11.82%'),
-    flexDirection: 'row',
-    justifyContent:'space-between',
+    flexDirection: 'row'
   },
   titleText:{
+    width:wp('35%'),
+    textAlign:'center',
     fontSize:hp('3.2%'),
-    padding:wp('0.8%'),
     fontWeight:'bold'
   },
   subtitleText:{
+    width:wp('100%'),
+    textAlign:'center',
     marginTop:hp('1.23%'),
     fontSize:hp('2.22%'),
     alignSelf:'center',
@@ -98,11 +101,15 @@ const styles = StyleSheet.create({
     justifyContent:'center'
   },
   letsGoText:{
+    textAlign:'center',
+    alignSelf:'center',
+    width:wp('100%'),
     fontSize:hp('1.72%'),
     fontWeight:'bold',
     color:'white'
   },
   termsText:{
+    width:'100%',
     textAlign:'center',
     alignSelf:'center',
     fontSize:hp('1.48%'),
