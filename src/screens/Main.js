@@ -8,7 +8,7 @@
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import {View,Text,StyleSheet,TouchableOpacity,Image,StatusBar} from 'react-native'
+import {View,Text,StyleSheet,TouchableOpacity,Image,StatusBar,Platform} from 'react-native'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -20,6 +20,7 @@ class Main extends React.Component {
 
       }
     }
+
 
     render() {
       return (
@@ -36,7 +37,7 @@ class Main extends React.Component {
 
           <Image style={styles.plantIllustration} source={require('../images/plant_illustration.png')}/>
 
-          <TouchableOpacity style={styles.letsGoButton} onPress={() => this.props.navigation.replace('Control')}>
+          <TouchableOpacity style={styles.letsGoButton} onPress={() => this.props.jumpTo('control')}>
             <LinearGradient useAngle={true} angle={45} colors={['#0AC4BA','#2BDA8E']} style={[styles.absolute,{borderRadius:24}]}/>
             <Text style={styles.letsGoText}>Let's Go!</Text>
           </TouchableOpacity>
@@ -60,7 +61,14 @@ const styles = StyleSheet.create({
   titleView:{
     justifyContent:'center',
     alignSelf:'center',
-    marginTop:hp('11.82%'),
+    ...Platform.select({
+      ios: {
+        marginTop:hp('11.82%'),
+      },
+      android: {
+        marginTop:hp('8.82%'),
+      }
+    }),
     flexDirection: 'row'
   },
   titleText:{

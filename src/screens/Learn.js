@@ -10,7 +10,7 @@ import {View,Text,StyleSheet,TouchableOpacity,Image,Platform} from 'react-native
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
 
-class Settings extends React.Component {
+class Learn extends React.Component {
 
     constructor(props) {
       super(props)
@@ -31,7 +31,7 @@ class Settings extends React.Component {
       return (
         <View style={styles.absolute}>
           <View style={styles.container}>
-    
+
           </View>
         </View>
       )
@@ -62,4 +62,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Settings;
+export default Learn;

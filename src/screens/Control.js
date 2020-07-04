@@ -8,7 +8,7 @@
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import {View,Text,StyleSheet,TouchableOpacity,Image,StatusBar} from 'react-native'
+import {View,Text,StyleSheet,TouchableOpacity,Image,StatusBar,Platform} from 'react-native'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -68,13 +68,21 @@ class Control extends React.Component {
       return sensors
     }
 
+    _goToSettings(){
+      this.props.navigation.navigate('Settings');
+    }
+
+    _goToLearning(){
+      this.props.navigation.navigate('Learn');
+    }
+
     render() {
         return (
           <View style={styles.absolute}>
             <LinearGradient colors={['#FFFFFF','#D4E5F8']} style={styles.absolute}/>
             <Image source={require('../images/flower_illustration.png')} style={styles.flowerIllustration}/>
             <View style={styles.container}>
-              <Image source={require('../images/nav_icon.png')} style={{marginTop:hp('5%')}}/>
+
               <Text style={styles.introText}>Good Morning</Text>
 
               <View style={[styles.dataContainer,{marginTop:hp('2%')}]}>
@@ -119,10 +127,21 @@ const styles = StyleSheet.create({
     top:0,
     bottom:0
   },
+  topNavBar:{
+    flexDirection:'row',
+    ...Platform.select({
+      ios: {
+        marginTop:hp('5%')
+      },
+      android: {
+        marginTop:hp('2%')
+      }
+    })
+  },
   flowerIllustration:{
     position:'absolute',
-    top:hp('2.5%'),
-    right:wp('-13.8%')
+    right:wp('-13.8%'),
+    marginTop:hp('-3%')
   },
   container:{
     left:wp('8%')
