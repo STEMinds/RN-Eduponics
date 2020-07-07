@@ -13,6 +13,13 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import LinearGradient from 'react-native-linear-gradient';
 import MQTT from 'sp-react-native-mqtt';
 
+function guidGenerator() {
+    var S4 = function() {
+       return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+    };
+    return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+}
+
 // Create a client instance
 class Control extends React.Component {
 
@@ -52,37 +59,39 @@ class Control extends React.Component {
       this._setupMQTT()
     }
 
-    _setupMQTT(){
+    async _setupMQTT(){
       /* create mqtt client */
-      MQTT.createClient( {
+      var client = await MQTT.createClient( {
         uri: 'mqtt://mqtt.eclipse.org:1883',
-        clientId: 'asdasdasdasdsasda'
+        clientId: guidGenerator()
       })
-      client = MQTT.clients[0]
+      /* make sure client created successfully */
+      if(client){
+        client.on('closed', function() {
+          console.log('mqtt.event.closed');
+        });
 
-      client.on('closed', function() {
-        console.log('mqtt.event.closed');
-      });
+        client.on('error', function(msg) {
+          console.log('mqtt.event.error', msg);
+        });
 
-      client.on('error', function(msg) {
-        console.log('mqtt.event.error', msg);
-      });
+        client.on('message', function(msg) {
+          console.log('mqtt.event.message', msg);
+        });
 
-      client.on('message', function(msg) {
-        console.log('mqtt.event.message', msg);
-      });
-
-      client.on('connect', function() {
-        console.log('connected');
-        /* subscribe to topics */
-        client.subscribe('/data', 0);
-      });
-      /* connect */
-      client.connect();
+        client.on('connect', function() {
+          console.log('connected');
+          /* subscribe to topics */
+          // TODO: create a list of topics and loop through them to subscribe
+          client.subscribe('test', 0);
+        });
+        /* connect to client */
+        client.connect();
+      }
     }
 
     _renderSoilSensors(){
-        sensors = Object.keys(this.state.sensors).map(key =>
+        var sensors = Object.keys(this.state.sensors).map(key =>
         <View style={styles.soilMoistureBox} key={key}>
           <LinearGradient useAngle={true} angle={45} colors={['#0AC4BA','#2BDA8E']} style={[styles.absolute,{borderRadius:6,width:this.state.sensors[key].moisture}]}/>
           <Image source={require('../images/water_drop.png')} style={styles.waterDrop}/>
