@@ -37,36 +37,36 @@ class Settings extends React.Component {
             <View style={{marginTop:hp('2.34%')}}>
               <Text style={styles.titleText}>MQTT address</Text>
               <View style={{flexDirection:'row'}}>
-                <Text style={styles.subtitleText}>192.168.1.1:8080</Text>
-                <TouchableOpacity style={{width:wp('25.6%'),height:hp('3.08%'),borderRadius:15}}>
+                <Text style={styles.subtitleText}>192.168.1.1:8080   </Text>
+                <TouchableOpacity style={{position:'absolute',width:wp('25.6%'),height:hp('3.08%'),borderRadius:15,right:wp('15%')}}>
                   <LinearGradient useAngle={true} angle={45} colors={['#0AC4BA','#2BDA8E']} style={styles.gradientStyle}>
-                    <Text style={{fontSize:hp('1.72%'), fontWeight:'bold', color:'white'}}>Connect</Text>
+                    <Text style={{fontSize:hp('1.72%'), fontWeight:'bold', color:'white'}}>Connect  </Text>
                   </LinearGradient>
                 </TouchableOpacity>
               </View>
             </View>
 
             <View style={{marginTop:hp('3.57%'),flexDirection:'row'}}>
-              <Text style={styles.titleText}>Notifications</Text>
+              <Text style={styles.titleText}>Notifications  </Text>
             </View>
 
             <View style={styles.seperator}/>
 
             <View style={{flexDirection:'row'}}>
-              <Text style={styles.titleText}>Automatic watering</Text>
+              <Text style={styles.titleText}>Automatic watering   </Text>
             </View>
 
             <View style={styles.seperator}/>
 
             <View style={{flexDirection:'row'}}>
-              <Text style={styles.titleText}>Hydroponics mode</Text>
+              <Text style={styles.titleText}>Hydroponics mode   </Text>
             </View>
 
             <View style={styles.seperator}/>
 
             <TouchableOpacity style={styles.buttonStyle}>
               <LinearGradient useAngle={true} angle={45} colors={['#0AC4BA','#2BDA8E']} style={styles.buttonGradientStyle}>
-                <Text style={{fontSize:hp('1.72%'), fontWeight:'bold', color:'white'}}>WIPE DATA</Text>
+                <Text style={{fontSize:hp('1.72%'), fontWeight:'bold', color:'white'}}>WIPE DATA  </Text>
               </LinearGradient>
             </TouchableOpacity>
 
@@ -110,7 +110,6 @@ const styles = StyleSheet.create({
     color:'black'
   },
   gradientStyle:{
-    marginLeft:wp('27.47%'),
     width:wp('25.6%'),
     height:hp('3.08%'),
     borderRadius:15,
