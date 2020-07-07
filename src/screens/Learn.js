@@ -19,14 +19,6 @@ class Learn extends React.Component {
       }
     }
 
-    _goToControl(){
-      this.props.navigation.navigate('Control');
-    }
-
-    _goToLearning(){
-      this.props.navigation.navigate('Learn');
-    }
-
     render() {
       return (
         <View style={styles.absolute}>

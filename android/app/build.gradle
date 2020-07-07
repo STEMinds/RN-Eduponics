@@ -213,6 +213,9 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+
+    // compile MQTT
+    compile project(':sp-react-native-mqtt')
 }
 
 // Run this once to be able to run the application with BUCK

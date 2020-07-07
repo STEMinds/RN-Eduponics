@@ -25,7 +25,10 @@ class Main extends React.Component {
     render() {
       return (
         <View style={styles.absolute}>
-
+          <StatusBar
+            backgroundColor="transparent"
+            barStyle="dark-content"
+          />
           <View style={styles.titleView}>
             <Text style={styles.titleText}>STEMinds</Text>
             <Text style={[styles.titleText,{color:'rgba(78,185,95,100)'}]}>Eduponics</Text>
@@ -42,8 +45,8 @@ class Main extends React.Component {
             <Text style={styles.letsGoText}>Let's Go!</Text>
           </TouchableOpacity>
 
-          <Text style={[styles.termsText,{marginTop:32}]}>Terms of service</Text>
-          <Text style={[styles.termsText,{marginTop:8}]}>Privacy policy</Text>
+          <Text style={[styles.termsText,{marginTop:hp('3.94%')}]}>Terms of service</Text>
+          <Text style={[styles.termsText,{marginTop:hp('0.99%')}]}>Privacy policy</Text>
         </View>
       )
     }

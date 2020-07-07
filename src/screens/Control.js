@@ -11,7 +11,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import {View,Text,StyleSheet,TouchableOpacity,Image,StatusBar,Platform} from 'react-native'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
+import MQTT from 'sp-react-native-mqtt';
 
+// Create a client instance
 class Control extends React.Component {
 
     constructor(props) {
@@ -47,6 +49,36 @@ class Control extends React.Component {
           }
         }
       }
+      this._setupMQTT()
+    }
+
+    _setupMQTT(){
+      /* create mqtt client */
+      MQTT.createClient( {
+        uri: 'mqtt://mqtt.eclipse.org:1883',
+        clientId: 'asdasdasdasdsasda'
+      })
+      client = MQTT.clients[0]
+
+      client.on('closed', function() {
+        console.log('mqtt.event.closed');
+      });
+
+      client.on('error', function(msg) {
+        console.log('mqtt.event.error', msg);
+      });
+
+      client.on('message', function(msg) {
+        console.log('mqtt.event.message', msg);
+      });
+
+      client.on('connect', function() {
+        console.log('connected');
+        /* subscribe to topics */
+        client.subscribe('/data', 0);
+      });
+      /* connect */
+      client.connect();
     }
 
     _renderSoilSensors(){
@@ -66,14 +98,6 @@ class Control extends React.Component {
         </View>
       )
       return sensors
-    }
-
-    _goToSettings(){
-      this.props.navigation.navigate('Settings');
-    }
-
-    _goToLearning(){
-      this.props.navigation.navigate('Learn');
     }
 
     render() {

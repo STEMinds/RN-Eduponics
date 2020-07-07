@@ -58,9 +58,8 @@ export default function navBar() {
       ) : null}
     />
   )
-
-      console.log(index,routes);
   return (
+
     <TabView
       navigationState={{ index, routes }}
       renderScene={renderScene}
