@@ -8,7 +8,7 @@
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import {View,Text,StyleSheet,TouchableOpacity,Image,StatusBar,Platform} from 'react-native'
+import {View,Text,StyleSheet,TouchableOpacity,Image,StatusBar,Platform,Animated} from 'react-native'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
 import MQTT from 'sp-react-native-mqtt';
@@ -27,7 +27,7 @@ class Control extends React.Component {
       super(props)
       this.state = {
         mode:"soil",
-        data:{
+        environment:{
           temp:25.5,
           humidity:70,
           sunlight:3000,
@@ -35,28 +35,39 @@ class Control extends React.Component {
         },
         sensors:{
           'A':{
-            'name':'Plant A',
-            'enabled':true,
-            'moisture':'100%'
+            'id':'A',
+            'name':'N/A',
+            'enabled':false,
+            'moisture':'0%'
           },
           'B':{
-            'name':'Plant B',
-            'enabled':true,
-            'moisture':'75%'
+            'id':'B',
+            'name':'N/A',
+            'enabled':false,
+            'moisture':'0%'
           },
           'C':{
-            'name':'Plant C',
-            'enabled':true,
-            'moisture':'25%'
+            'id':'C',
+            'name':'N/A',
+            'enabled':false,
+            'moisture':'0%'
           },
           'D':{
-            'name':'Plant D',
+            'id':'D',
+            'name':'N/A',
             'enabled':false,
             'moisture':'0%'
           }
         }
       }
-      this._setupMQTT()
+      this.client = this._setupMQTT()
+    }
+
+    toggleAnimation = () =>{
+      Animated.timing(this.state.animationValue, {
+        toValue : 50,
+        timing : 1500
+      })
     }
 
     async _setupMQTT(){
@@ -69,24 +80,49 @@ class Control extends React.Component {
       if(client){
         client.on('closed', function() {
           console.log('mqtt.event.closed');
-        });
+        }.bind(this));
 
         client.on('error', function(msg) {
           console.log('mqtt.event.error', msg);
-        });
+        }.bind(this));
 
         client.on('message', function(msg) {
-          console.log('mqtt.event.message', msg);
-        });
+          /* Manage plants soil data given from the Raspberry Pi */
+          if(msg.topic == "plants/soil"){
+            var data = JSON.parse(msg.data)
+            // turn int into boolean
+            data["enabled"] = !!+data["enabled"]
+            // append new data to state
+            var sensors = this.state.sensors
+            sensors[data["id"]] = data
+            this.setState({sensors:sensors})
+          }
+          /* Manage plants environmental data given from the Raspberry Pi */
+          else if(msg.topic == "plants/environment"){
+            var data = JSON.parse(msg.data)
+          }
+          /* Manage soil plants watering commands response from the Raspberry Pi */
+          else if(msg.topic == "plants/water"){
+            var data = JSON.parse(msg.data)
+            if(data.status == "OK"){
+              var plant_id = data.plant_id
+              var sensors = this.state.sensors
+              sensors[plant_id].enabled = true
+              this.setState(sensors)
+            }
+          }
+        }.bind(this));
 
         client.on('connect', function() {
           console.log('connected');
           /* subscribe to topics */
-          // TODO: create a list of topics and loop through them to subscribe
-          client.subscribe('test', 0);
+          client.subscribe('plants/soil', 0);
+          client.subscribe('plants/environment', 0);
+          client.subscribe('plants/water', 0);
         });
         /* connect to client */
         client.connect();
+        this.setState({client:client})
       }
     }
 
@@ -100,13 +136,21 @@ class Control extends React.Component {
             <Text style={styles.plantSoilText}>Soil moisture</Text>
           </View>
           <Text style={styles.soilQuantityText}>{this.state.sensors[key].moisture}</Text>
-          <TouchableOpacity style={styles.powerButton} disabled={!this.state.sensors[key].enabled}>
+          <TouchableOpacity style={styles.powerButton} disabled={!this.state.sensors[key].enabled} onPress={() => this._givePlantWater(this.state.sensors[key].id)}>
             <LinearGradient useAngle={true} angle={45} colors={this.state.sensors[key].enabled ? ['#0AC4BA','#2BDA8E'] : ['#ABC2E1','#ABC2E1']} style={[styles.absolute,{borderBottomRightRadius:6,borderTopLeftRadius:6}]}/>
             <Image source={require('../images/power_button.png')} style={{alignSelf:'center',tintColor: this.state.sensors[key].enabled ? 'white' : '#4D72A3', opacity: this.state.sensors[key].enabled ? 1 : 0.6}}/>
           </TouchableOpacity>
         </View>
       )
       return sensors
+    }
+
+    async _givePlantWater(id){
+      await this.state.client.publish('plants/water', '{"plant_id":"' + id + '","status":"pending"}', 0, false);
+      // disable sensor till we recieve feedback to enable it back
+      var sensors = this.state.sensors
+      sensors[id].enabled = false
+      this.setState(sensors);
     }
 
     render() {
@@ -120,22 +164,22 @@ class Control extends React.Component {
 
               <View style={[styles.dataContainer,{marginTop:hp('2%')}]}>
                 <Text style={styles.infoTitle}>Water quantity</Text>
-                <Text style={styles.infoSubtitle}>{this.state.data.water_quantity}</Text>
+                <Text style={styles.infoSubtitle}>{this.state.environment.water_quantity}</Text>
               </View>
 
               <View style={styles.dataContainer}>
                 <Text style={styles.infoTitle}>Temperature</Text>
-                <Text style={styles.infoSubtitle}>{this.state.data.temp}℃</Text>
+                <Text style={styles.infoSubtitle}>{this.state.environment.temp}℃</Text>
               </View>
 
               <View style={styles.dataContainer}>
                 <Text style={styles.infoTitle}>Humidity</Text>
-                <Text style={styles.infoSubtitle}>{this.state.data.humidity}%</Text>
+                <Text style={styles.infoSubtitle}>{this.state.environment.humidity}%</Text>
               </View>
 
               <View>
                 <Text style={styles.infoTitle}>Sunlight</Text>
-                <Text style={styles.infoSubtitle}>{this.state.data.sunlight} lx</Text>
+                <Text style={styles.infoSubtitle}>{this.state.environment.sunlight} lx</Text>
               </View>
 
               <Text style={styles.controlText}>Control</Text>
