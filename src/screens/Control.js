@@ -33,32 +33,28 @@ class Control extends React.Component {
           sunlight:3000,
           water_quantity:"Normal"
         },
-        sensors:{
-          'A':{
-            'id':'A',
-            'name':'N/A',
-            'enabled':false,
-            'moisture':'0%'
-          },
-          'B':{
-            'id':'B',
-            'name':'N/A',
-            'enabled':false,
-            'moisture':'0%'
-          },
-          'C':{
-            'id':'C',
-            'name':'N/A',
-            'enabled':false,
-            'moisture':'0%'
-          },
-          'D':{
-            'id':'D',
-            'name':'N/A',
-            'enabled':false,
-            'moisture':'0%'
-          }
-        }
+        connected:false,
+        sensors:{"A":{
+          "id":null,
+          "name":"N/A",
+          "enabled":false,
+          "moisture":"0%"
+        },"B":{
+          "id":null,
+          "name":"N/A",
+          "enabled":false,
+          "moisture":"0%"
+        },"C":{
+          "id":null,
+          "name":"N/A",
+          "enabled":false,
+          "moisture":"0%"
+        },"D":{
+          "id":null,
+          "name":"N/A",
+          "enabled":false,
+          "moisture":"0%"
+        }}
       }
       this.client = this._setupMQTT()
     }
@@ -89,13 +85,20 @@ class Control extends React.Component {
         client.on('message', function(msg) {
           /* Manage plants soil data given from the Raspberry Pi */
           if(msg.topic == "plants/soil"){
-            var data = JSON.parse(msg.data)
+            var sensor = JSON.parse(msg.data)
             // turn int into boolean
-            data["enabled"] = !!+data["enabled"]
-            // append new data to state
-            var sensors = this.state.sensors
-            sensors[data["id"]] = data
-            this.setState({sensors:sensors})
+            sensor["enabled"] = !!+sensor["enabled"]
+            // check if connected before
+            if(!this.state.connected){
+              // first time, make new array
+              var existing_sensors = {}
+            }else{
+              // not first time, take existing array
+              var existing_sensors = this.state.sensors
+            }
+            // add or update sensors
+            existing_sensors[sensor["id"]] = sensor
+            this.setState({sensors:existing_sensors, connected:true})
           }
           /* Manage plants environmental data given from the Raspberry Pi */
           else if(msg.topic == "plants/environment"){
@@ -105,9 +108,9 @@ class Control extends React.Component {
           else if(msg.topic == "plants/water"){
             var data = JSON.parse(msg.data)
             if(data.status == "OK"){
-              var plant_id = data.plant_id
+              var plant_key = data.key
               var sensors = this.state.sensors
-              sensors[plant_id].enabled = true
+              sensors[plant_key].enabled = true
               this.setState(sensors)
             }
           }
@@ -120,36 +123,36 @@ class Control extends React.Component {
           client.subscribe('plants/environment', 0);
           client.subscribe('plants/water', 0);
         });
+
         /* connect to client */
-        client.connect();
+        await client.connect();
         this.setState({client:client})
       }
     }
 
     _renderSoilSensors(){
-        var sensors = Object.keys(this.state.sensors).map(key =>
-        <View style={styles.soilMoistureBox} key={key}>
-          <LinearGradient useAngle={true} angle={45} colors={['#0AC4BA','#2BDA8E']} style={[styles.absolute,{borderRadius:6,width:this.state.sensors[key].moisture}]}/>
-          <Image source={require('../images/water_drop.png')} style={styles.waterDrop}/>
-          <View style={{flexDirection:'column',marginLeft:wp('2.67%'),alignSelf:'center'}}>
-            <Text style={styles.plantNameText}>{this.state.sensors[key].name}</Text>
-            <Text style={styles.plantSoilText}>Soil moisture</Text>
-          </View>
-          <Text style={styles.soilQuantityText}>{this.state.sensors[key].moisture}</Text>
-          <TouchableOpacity style={styles.powerButton} disabled={!this.state.sensors[key].enabled} onPress={() => this._givePlantWater(this.state.sensors[key].id)}>
-            <LinearGradient useAngle={true} angle={45} colors={this.state.sensors[key].enabled ? ['#0AC4BA','#2BDA8E'] : ['#ABC2E1','#ABC2E1']} style={[styles.absolute,{borderBottomRightRadius:6,borderTopLeftRadius:6}]}/>
-            <Image source={require('../images/power_button.png')} style={{alignSelf:'center',tintColor: this.state.sensors[key].enabled ? 'white' : '#4D72A3', opacity: this.state.sensors[key].enabled ? 1 : 0.6}}/>
-          </TouchableOpacity>
+      var container = Object.keys(this.state.sensors).map(key =>
+      <View style={styles.soilMoistureBox} key={key}>
+        <LinearGradient useAngle={true} angle={45} colors={['#0AC4BA','#2BDA8E']} style={[styles.absolute,{borderRadius:6,width:this.state.sensors[key].moisture}]}/>
+        <Image source={require('../images/water_drop.png')} style={styles.waterDrop}/>
+        <View style={{flexDirection:'column',marginLeft:wp('2.67%'),alignSelf:'center'}}>
+          <Text style={styles.plantNameText}>{this.state.sensors[key].name}</Text>
+          <Text style={styles.plantSoilText}>Soil moisture</Text>
         </View>
-      )
-      return sensors
+        <Text style={styles.soilQuantityText}>{this.state.sensors[key].moisture}</Text>
+        <TouchableOpacity style={styles.powerButton} disabled={!this.state.sensors[key].enabled} onPress={() => this._givePlantWater(key)}>
+          <LinearGradient useAngle={true} angle={45} colors={this.state.sensors[key].enabled ? ['#0AC4BA','#2BDA8E'] : ['#ABC2E1','#ABC2E1']} style={[styles.absolute,{borderBottomRightRadius:6,borderTopLeftRadius:6}]}/>
+          <Image source={require('../images/power_button.png')} style={{alignSelf:'center',tintColor: this.state.sensors[key].enabled ? 'white' : '#4D72A3', opacity: this.state.sensors[key].enabled ? 1 : 0.6}}/>
+        </TouchableOpacity>
+      </View>)
+      return container
     }
 
-    async _givePlantWater(id){
-      await this.state.client.publish('plants/water', '{"plant_id":"' + id + '","status":"pending"}', 0, false);
+    async _givePlantWater(key){
+      await this.state.client.publish('plants/water', '{"key":"' + key + '","status":"pending"}', 0, false);
       // disable sensor till we recieve feedback to enable it back
       var sensors = this.state.sensors
-      sensors[id].enabled = false
+      sensors[key].enabled = false
       this.setState(sensors);
     }
 
