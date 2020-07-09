@@ -9,13 +9,16 @@ import React from 'react'
 import {View,Text,StyleSheet,TouchableOpacity,Image,Platform} from 'react-native'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
+import { Switch } from 'react-native-switch';
 
 class Settings extends React.Component {
 
     constructor(props) {
       super(props)
       this.state = {
-
+        notifications_enabled:true,
+        watering_enabled:true,
+        hydro_mode:true
       }
     }
 
@@ -35,9 +38,14 @@ class Settings extends React.Component {
             </View>
 
             <View style={{marginTop:hp('2.34%')}}>
-              <Text style={styles.titleText}>MQTT address</Text>
+              <Text style={styles.titleText}>MQTT Server</Text>
+              <Text style={styles.subtitleText}>mqtt.eclipse.org:1883</Text>
+            </View>
+
+            <View style={{marginTop:hp('2.34%')}}>
+              <Text style={styles.titleText}>MQTT Client Identifier</Text>
               <View style={{flexDirection:'row'}}>
-                <Text style={styles.subtitleText}>192.168.1.1:8080   </Text>
+                <Text style={styles.subtitleText}>My-Raspberry-Pi</Text>
                 <TouchableOpacity style={{position:'absolute',width:wp('25.6%'),height:hp('3.08%'),borderRadius:15,right:wp('15%')}}>
                   <LinearGradient useAngle={true} angle={45} colors={['#0AC4BA','#2BDA8E']} style={styles.gradientStyle}>
                     <Text style={{fontSize:hp('1.72%'), fontWeight:'bold', color:'white'}}>Connect  </Text>
@@ -48,18 +56,75 @@ class Settings extends React.Component {
 
             <View style={{marginTop:hp('3.57%'),flexDirection:'row'}}>
               <Text style={styles.titleText}>Notifications  </Text>
+              <LinearGradient useAngle={true} angle={45} colors={this.state.notifications_enabled ? ['#0AC4BA','#2BDA8E'] : ['#FFFFFF','#FFFFFF']} style={[styles.switchStyle,{borderWidth:this.state.notifications_enabled ? 0 : 1.5}]}>
+                <Switch
+                  style={styles.switchStyle}
+                  activeText={null}
+                  inActiveText={null}
+                  renderActiveText={false}
+                  renderInActiveText={false}
+                  circleSize={hp('2.2%')}
+                  innerCircleStyle={{borderColor:'#E4E4E4'}}
+                  circleBorderWidth={this.state.notifications_enabled ? 0 : 1}
+                  backgroundActive={'transparent'}
+                  backgroundInactive={'transparent'}
+                  circleInActiveColor={'white'}
+                  circleActiveColor={'white'}
+                  switchBorderRadius={14}
+                  onValueChange={() => this.setState({notifications_enabled:!this.state.notifications_enabled})}
+                  value={this.state.notifications_enabled}
+                />
+              </LinearGradient>
             </View>
 
             <View style={styles.seperator}/>
 
             <View style={{flexDirection:'row'}}>
               <Text style={styles.titleText}>Automatic watering   </Text>
+                <LinearGradient useAngle={true} angle={45} colors={this.state.watering_enabled ? ['#0AC4BA','#2BDA8E'] : ['#FFFFFF','#FFFFFF']} style={[styles.switchStyle,{borderWidth:this.state.watering_enabled ? 0 : 1.5}]}>
+                  <Switch
+                    style={styles.switchStyle}
+                    activeText={null}
+                    inActiveText={null}
+                    renderActiveText={false}
+                    renderInActiveText={false}
+                    circleSize={hp('2.2%')}
+                    innerCircleStyle={{borderColor:'#E4E4E4'}}
+                    circleBorderWidth={this.state.watering_enabled ? 0 : 1}
+                    backgroundActive={'transparent'}
+                    backgroundInactive={'transparent'}
+                    circleInActiveColor={'white'}
+                    circleActiveColor={'white'}
+                    switchBorderRadius={14}
+                    onValueChange={() => this.setState({watering_enabled:!this.state.watering_enabled})}
+                    value={this.state.watering_enabled}
+                  />
+                </LinearGradient>
             </View>
 
             <View style={styles.seperator}/>
 
             <View style={{flexDirection:'row'}}>
               <Text style={styles.titleText}>Hydroponics mode   </Text>
+                <LinearGradient useAngle={true} angle={45} colors={this.state.hydro_mode ? ['#0AC4BA','#2BDA8E'] : ['#FFFFFF','#FFFFFF']} style={[styles.switchStyle,{borderWidth:this.state.hydro_mode ? 0 : 1.5}]}>
+                  <Switch
+                    style={styles.switchStyle}
+                    activeText={null}
+                    inActiveText={null}
+                    renderActiveText={false}
+                    renderInActiveText={false}
+                    circleSize={hp('2.2%')}
+                    innerCircleStyle={{borderColor:'#E4E4E4'}}
+                    circleBorderWidth={this.state.hydro_mode ? 0 : 1}
+                    backgroundActive={'transparent'}
+                    backgroundInactive={'transparent'}
+                    circleInActiveColor={'white'}
+                    circleActiveColor={'white'}
+                    switchBorderRadius={14}
+                    onValueChange={() => this.setState({hydro_mode:!this.state.hydro_mode})}
+                    value={this.state.hydro_mode}
+                  />
+                </LinearGradient>
             </View>
 
             <View style={styles.seperator}/>
@@ -136,6 +201,17 @@ const styles = StyleSheet.create({
     width:wp('84%'),
     height:hp('5.91%'),
     borderRadius:24
+  },
+  switchStyle:{
+    width:wp('13.33%'),
+    height:hp('3.05%'),
+    borderRadius:14,
+    alignItems: "center",
+    justifyContent: "center",
+    borderColor:'#E5E5E5',
+    borderWidth:1.5,
+    position:'absolute',
+    right:wp('15%')
   }
 })
 

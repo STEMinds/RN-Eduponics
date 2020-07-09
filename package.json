@@ -21,6 +21,7 @@
     "react-native-responsive-screen": "^1.4.1",
     "react-native-safe-area-context": "^3.0.7",
     "react-native-screens": "^2.9.0",
+    "react-native-switch": "^2.0.0",
     "react-native-tab-view": "^2.14.4",
     "sp-react-native-mqtt": "^0.4.25",
     "underscore": "^1.10.2"
