@@ -28,10 +28,10 @@ class Control extends React.Component {
       this.state = {
         mode:"soil",
         environment:{
-          temp:25.5,
-          humidity:70,
-          sunlight:3000,
-          water_quantity:"Normal"
+          temp:null,
+          humidity:null,
+          sunlight:null,
+          water_quantity:null
         },
         connected:false,
         sensors:{"A":{
@@ -103,6 +103,7 @@ class Control extends React.Component {
           /* Manage plants environmental data given from the Raspberry Pi */
           else if(msg.topic == "plants/environment"){
             var data = JSON.parse(msg.data)
+            this.setState({environment:data})
           }
           /* Manage soil plants watering commands response from the Raspberry Pi */
           else if(msg.topic == "plants/water"){
@@ -167,22 +168,22 @@ class Control extends React.Component {
 
               <View style={[styles.dataContainer,{marginTop:hp('2%')}]}>
                 <Text style={styles.infoTitle}>Water quantity</Text>
-                <Text style={styles.infoSubtitle}>{this.state.environment.water_quantity}</Text>
+                <Text style={styles.infoSubtitle}>{this.state.environment.water_quantity == null ? "N/A" : this.state.environment.water_quantity}</Text>
               </View>
 
               <View style={styles.dataContainer}>
                 <Text style={styles.infoTitle}>Temperature</Text>
-                <Text style={styles.infoSubtitle}>{this.state.environment.temp}℃</Text>
+                <Text style={styles.infoSubtitle}>{this.state.environment.temp == null ? "N/A" : this.state.environment.temp + "℃"}</Text>
               </View>
 
               <View style={styles.dataContainer}>
                 <Text style={styles.infoTitle}>Humidity</Text>
-                <Text style={styles.infoSubtitle}>{this.state.environment.humidity}%</Text>
+                <Text style={styles.infoSubtitle}>{this.state.environment.humidity == null ? "N/A" : this.state.environment.humidity + "%"}</Text>
               </View>
 
               <View>
                 <Text style={styles.infoTitle}>Sunlight</Text>
-                <Text style={styles.infoSubtitle}>{this.state.environment.sunlight} lx</Text>
+                <Text style={styles.infoSubtitle}>{this.state.environment.sunlight == null ? "N/A" : this.state.environment.sunlight + "lx"}</Text>
               </View>
 
               <Text style={styles.controlText}>Control</Text>

@@ -1,7 +1,5 @@
 import * as React from 'react';
 import { View, Text, Dimensions, StyleSheet, Alert} from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
@@ -10,6 +8,13 @@ import Main from "./src/screens/Main";
 import Control from "./src/screens/Control";
 import Learn from "./src/screens/Learn";
 import Settings from "./src/screens/Settings";
+
+function guidGenerator() {
+    var S4 = function() {
+       return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+    };
+    return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+}
 
 const initialLayout = { width: Dimensions.get('window').width};
 
@@ -28,7 +33,6 @@ export default function navBar() {
     { key: 'learn', title: 'Learn' },
     { key: 'settings', title: 'Settings' },
   ]);
-
 
   const renderScene = SceneMap({
     main: Main,

@@ -6,25 +6,36 @@
 //
 
 import React from 'react'
-import {View,Text,StyleSheet,TouchableOpacity,Image,Platform} from 'react-native'
+import {View,Text,StyleSheet,TouchableOpacity,Image,Platform,TextInput,Modal} from 'react-native'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
 import { Switch } from 'react-native-switch';
+
+import CameraModal from "../components/CameraModal";
+import QRCodeScanner from 'react-native-qrcode-scanner';
+import { RNCamera } from 'react-native-camera';
 
 class Settings extends React.Component {
 
     constructor(props) {
       super(props)
       this.state = {
+        cameraModalVisible:false,
+        unique_identifier:'',
         notifications_enabled:true,
         watering_enabled:true,
         hydro_mode:true
       }
     }
 
+    _connectPressed(){
+      this.setState({cameraModalVisible:true})
+    }
+
     render() {
       return (
         <View style={styles.absolute}>
+
           <View style={styles.container}>
 
             <View style={{marginTop:hp('2.83%')}}>
@@ -38,15 +49,19 @@ class Settings extends React.Component {
             </View>
 
             <View style={{marginTop:hp('2.34%')}}>
-              <Text style={styles.titleText}>MQTT Server</Text>
-              <Text style={styles.subtitleText}>mqtt.eclipse.org:1883</Text>
+              <Text style={styles.titleText}>MQTT Client Identifier</Text>
+              <TextInput
+                value={this.state.unique_identifier}
+                style={[styles.subtitleText,{borderBottomWidth:0.5,borderColor:'rgba(225,227,232,100)',width:wp('78%')}]}
+                onChangeText={text => this.setState({unique_identifier:text})}>
+              </TextInput>
             </View>
 
             <View style={{marginTop:hp('2.34%')}}>
               <Text style={styles.titleText}>MQTT Client Identifier</Text>
               <View style={{flexDirection:'row'}}>
                 <Text style={styles.subtitleText}>My-Raspberry-Pi</Text>
-                <TouchableOpacity style={{position:'absolute',width:wp('25.6%'),height:hp('3.08%'),borderRadius:15,right:wp('15%')}}>
+                <TouchableOpacity style={{position:'absolute',width:wp('25.6%'),height:hp('3.08%'),borderRadius:15,right:wp('15%')}} onPress={() => this._connectPressed()}>
                   <LinearGradient useAngle={true} angle={45} colors={['#0AC4BA','#2BDA8E']} style={styles.gradientStyle}>
                     <Text style={{fontSize:hp('1.72%'), fontWeight:'bold', color:'white'}}>Connect  </Text>
                   </LinearGradient>
@@ -136,6 +151,23 @@ class Settings extends React.Component {
             </TouchableOpacity>
 
           </View>
+
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={this.state.cameraModalVisible}
+            onRequestClose={() => {this.setState({cameraModalVisible:false})}}>
+            <TouchableOpacity
+              style={styles.absolute}
+              activeOpacity={1}
+              onPressOut={() => {this.setState({cameraModalVisible:false})}}
+            >
+              <CameraModal callBack={(e) => {
+                this.setState({cameraModalVisible: false,unique_identifier:e.data});
+              }}/>
+            </TouchableOpacity>
+            </Modal>
+
         </View>
       )
     }
@@ -197,7 +229,7 @@ const styles = StyleSheet.create({
     borderColor:'rgba(225,227,232,100)'
   },
   buttonStyle:{
-    marginTop:hp('26.23%'),
+    marginTop:hp('23%'),
     width:wp('84%'),
     height:hp('5.91%'),
     borderRadius:24

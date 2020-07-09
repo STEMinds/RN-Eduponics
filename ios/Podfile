@@ -78,7 +78,10 @@ target 'Eduponics' do
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
   pod 'MQTTClient'
-  
+
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  pod 'Permission-Camera', :path => "#{permissions_path}/Camera.podspec"
+
   target 'EduponicsTests' do
     inherit! :complete
     # Pods for testing
