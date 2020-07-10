@@ -9,13 +9,6 @@ import Control from "./src/screens/Control";
 import Learn from "./src/screens/Learn";
 import Settings from "./src/screens/Settings";
 
-function guidGenerator() {
-    var S4 = function() {
-       return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
-    };
-    return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
-}
-
 const initialLayout = { width: Dimensions.get('window').width};
 
 export default function navBar() {
@@ -28,24 +21,19 @@ export default function navBar() {
     { key: 'settings', title: 'Settings' },
   ]);
 
-  const [routesNew] = React.useState([
-    { key: 'control', title: 'Control' },
-    { key: 'learn', title: 'Learn' },
-    { key: 'settings', title: 'Settings' },
-  ]);
+  const renderScene = ({ route, jumpTo }) => {
+    switch (route.key) {
+      case 'main':
+        return <Main jumpTo={jumpTo} />;
+      case 'control':
+        return <Control jumpTo={jumpTo} />;
+      case 'learn':
+        return <Learn jumpTo={jumpTo} />;
+      case 'settings':
+        return <Settings jumpTo={jumpTo} />;
+    }
+};
 
-  const renderScene = SceneMap({
-    main: Main,
-    control: Control,
-    learn: Learn,
-    settings: Settings
-  });
-
-  const renderSceneTwo = SceneMap({
-    control: Control,
-    learn: Learn,
-    settings: Settings
-  });
 
   const dontRenderTabBar = prpos => (
     <View/>
@@ -54,6 +42,9 @@ export default function navBar() {
   const renderTabBar = props => (
     <TabBar
       {...props}
+      onTabPress={({ route, preventDefault }) => {
+        console.log("route:",route.key)
+      }}
       indicatorStyle={{backgroundColor:'#10C8B1'}}
       style={{backgroundColor:'transparent', justifyContent:'center', textAlign:'center'}}
       tabStyle={{backgroundColor:'transparent', width:'auto'}}
@@ -69,6 +60,7 @@ export default function navBar() {
       renderScene={renderScene}
       onIndexChange={setIndex}
       initialLayout={initialLayout}
+      lazy={true}
       style={styles.topNavBar}
       renderTabBar={index == 0 ? dontRenderTabBar : renderTabBar}
       swipeEnabled={false}

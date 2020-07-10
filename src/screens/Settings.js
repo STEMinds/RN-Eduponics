@@ -58,7 +58,7 @@ class Settings extends React.Component {
             </View>
 
             <View style={{marginTop:hp('2.34%')}}>
-              <Text style={styles.titleText}>MQTT Client Identifier</Text>
+              <Text style={styles.titleText}>MQTT Broker</Text>
               <View style={{flexDirection:'row'}}>
                 <Text style={styles.subtitleText}>My-Raspberry-Pi</Text>
                 <TouchableOpacity style={{position:'absolute',width:wp('25.6%'),height:hp('3.08%'),borderRadius:15,right:wp('15%')}} onPress={() => this._connectPressed()}>
@@ -158,7 +158,7 @@ class Settings extends React.Component {
             visible={this.state.cameraModalVisible}
             onRequestClose={() => {this.setState({cameraModalVisible:false})}}>
             <TouchableOpacity
-              style={styles.absolute}
+              style={[styles.absolute,{backgroundColor: 'rgba(100,100,100, 0.5)'}]}
               activeOpacity={1}
               onPressOut={() => {this.setState({cameraModalVisible:false})}}
             >

@@ -6,12 +6,12 @@
 //
 
 import React from 'react'
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import {View,Text,StyleSheet,TouchableOpacity,Image,StatusBar,Platform,Animated} from 'react-native'
+import {View,Text,StyleSheet,TouchableOpacity,Image,StatusBar,Platform,Animated,Modal} from 'react-native'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
 import MQTT from 'sp-react-native-mqtt';
+
+import FirstTimeModal from "../components/FirstTimeModal";
 
 function guidGenerator() {
     var S4 = function() {
@@ -26,6 +26,7 @@ class Control extends React.Component {
     constructor(props) {
       super(props)
       this.state = {
+        firstTimeModalShow:true,
         mode:"soil",
         environment:{
           temp:null,
@@ -57,6 +58,10 @@ class Control extends React.Component {
         }}
       }
       this.client = this._setupMQTT()
+    }
+
+    componentDidMount() {
+      // check if first time, if it is, show modal
     }
 
     toggleAnimation = () =>{
@@ -195,6 +200,24 @@ class Control extends React.Component {
 
               </View>
           </View>
+
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={this.state.firstTimeModalShow}
+            onRequestClose={() => {this.setState({firstTimeModalShow:false})}}>
+            <TouchableOpacity
+              style={[styles.absolute,{backgroundColor: 'rgba(100,100,100, 0.5)'}]}
+              activeOpacity={1}
+              onPressOut={() => {this.setState({firstTimeModalShow:false})}}
+            >
+              <FirstTimeModal callBack={(e) => {
+                this.setState({firstTimeModalShow: false});
+                this.props.jumpTo('settings');
+              }}/>
+            </TouchableOpacity>
+            </Modal>
+
           </View>
         )
     }
