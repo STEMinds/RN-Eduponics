@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.10",
+    "@react-navigation/material-top-tabs": "^5.2.12",
     "@react-navigation/native": "^5.6.1",
     "@react-navigation/stack": "^5.6.2",
     "react": "16.11.0",
@@ -25,9 +26,7 @@
     "react-native-safe-area-context": "^3.0.7",
     "react-native-screens": "^2.9.0",
     "react-native-switch": "^2.0.0",
-    "react-native-tab-view": "^2.14.4",
     "sp-react-native-mqtt": "^0.4.25",
-    "underscore": "^1.10.2"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",

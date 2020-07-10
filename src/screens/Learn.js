@@ -17,6 +17,12 @@ class Learn extends React.Component {
       this.state = {
 
       }
+      this.props.navigation.addListener(
+        'focus',
+        payload => {
+          console.log('Learn is focused');
+        }
+      );
     }
 
     render() {

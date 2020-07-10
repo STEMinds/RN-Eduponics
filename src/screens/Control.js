@@ -26,6 +26,7 @@ class Control extends React.Component {
     constructor(props) {
       super(props)
       this.state = {
+        mqtt_client:null,
         firstTimeModalShow:true,
         mode:"soil",
         environment:{
@@ -57,11 +58,18 @@ class Control extends React.Component {
           "moisture":"0%"
         }}
       }
-      this.client = this._setupMQTT()
+      //this.client = this._setupMQTT()
+      this.props.navigation.addListener(
+        'focus',
+        payload => {
+          console.log('Control is focused');
+        }
+      );
     }
 
     componentDidMount() {
       // check if first time, if it is, show modal
+      this.setState({trial:'tested'})
     }
 
     toggleAnimation = () =>{
@@ -132,7 +140,7 @@ class Control extends React.Component {
 
         /* connect to client */
         await client.connect();
-        this.setState({client:client})
+        this.setState({mqtt_client:client})
       }
     }
 
@@ -155,7 +163,7 @@ class Control extends React.Component {
     }
 
     async _givePlantWater(key){
-      await this.state.client.publish('plants/water', '{"key":"' + key + '","status":"pending"}', 0, false);
+      await this.state.mqtt_client.publish('plants/water', '{"key":"' + key + '","status":"pending"}', 0, false);
       // disable sensor till we recieve feedback to enable it back
       var sensors = this.state.sensors
       sensors[key].enabled = false
@@ -213,7 +221,7 @@ class Control extends React.Component {
             >
               <FirstTimeModal callBack={(e) => {
                 this.setState({firstTimeModalShow: false});
-                this.props.jumpTo('settings');
+                this.props.navigation.navigate('AppStack', { screen: 'Settings' })
               }}/>
             </TouchableOpacity>
             </Modal>

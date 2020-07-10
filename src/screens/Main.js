@@ -40,7 +40,7 @@ class Main extends React.Component {
 
           <Image style={styles.plantIllustration} source={require('../images/plant_illustration.png')}/>
 
-          <TouchableOpacity style={styles.letsGoButton} onPress={() => this.props.jumpTo('control')}>
+          <TouchableOpacity style={styles.letsGoButton} onPress={() => this.props.navigation.replace('AppStack', { screen: 'Control' })}>
             <LinearGradient useAngle={true} angle={45} colors={['#0AC4BA','#2BDA8E']} style={[styles.absolute,{borderRadius:24}]}/>
             <Text style={styles.letsGoText}>Let's Go!</Text>
           </TouchableOpacity>

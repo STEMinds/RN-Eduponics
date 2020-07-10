@@ -26,6 +26,12 @@ class Settings extends React.Component {
         watering_enabled:true,
         hydro_mode:true
       }
+      this.props.navigation.addListener(
+        'focus',
+        payload => {
+          console.log('Settings is focused');
+        }
+      );
     }
 
     _connectPressed(){

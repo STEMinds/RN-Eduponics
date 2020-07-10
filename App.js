@@ -1,7 +1,10 @@
+import 'react-native-gesture-handler';
 import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, Dimensions, StyleSheet, Alert} from 'react-native';
-import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 // import the routes
 import Main from "./src/screens/Main";
@@ -11,61 +14,56 @@ import Settings from "./src/screens/Settings";
 
 const initialLayout = { width: Dimensions.get('window').width};
 
-export default function navBar() {
-  const [index, setIndex] = React.useState(0);
+const Stack = createStackNavigator();
+const InitialStack = createStackNavigator();
+const AppStack = createMaterialTopTabNavigator();
 
-  const [routes] = React.useState([
-    { key: 'main', title: 'Main'},
-    { key: 'control', title: 'Control' },
-    { key: 'learn', title: 'Learn' },
-    { key: 'settings', title: 'Settings' },
-  ]);
-
-  const renderScene = ({ route, jumpTo }) => {
-    switch (route.key) {
-      case 'main':
-        return <Main jumpTo={jumpTo} />;
-      case 'control':
-        return <Control jumpTo={jumpTo} />;
-      case 'learn':
-        return <Learn jumpTo={jumpTo} />;
-      case 'settings':
-        return <Settings jumpTo={jumpTo} />;
-    }
-};
-
-
-  const dontRenderTabBar = prpos => (
-    <View/>
-  )
-
-  const renderTabBar = props => (
-    <TabBar
-      {...props}
-      onTabPress={({ route, preventDefault }) => {
-        console.log("route:",route.key)
-      }}
-      indicatorStyle={{backgroundColor:'#10C8B1'}}
-      style={{backgroundColor:'transparent', justifyContent:'center', textAlign:'center'}}
-      tabStyle={{backgroundColor:'transparent', width:'auto'}}
-      renderLabel={({ route, focused, color }) => route.title != 'Main' ? (
-         <Text style={{width:wp('25%'),alignSelf:'center',textAlign:'center',fontSize:hp('1.97%'), fontWeight:'bold', color: route.title == routes[index].title ? 'rgba(16,200,177,100)' : 'rgba(197,204,214,100)'}}>{route.title}  </Text>
-      ) : null}
-    />
-  )
+function InitialScreens() {
   return (
-
-    <TabView
-      navigationState={{ index, routes }}
-      renderScene={renderScene}
-      onIndexChange={setIndex}
-      initialLayout={initialLayout}
-      lazy={true}
-      style={styles.topNavBar}
-      renderTabBar={index == 0 ? dontRenderTabBar : renderTabBar}
-      swipeEnabled={false}
-    />
+    <InitialStack.Navigator
+      headerMode="none"
+      >
+      <InitialStack.Screen name="Main" component={Main} />
+    </InitialStack.Navigator>
   );
+}
+
+function AppScreens() {
+  return (
+    <AppStack.Navigator
+      headerMode="none"
+      initialRouteName={Main}
+      backBehavior={'none'}
+      lazy={true}
+      initialLayout={initialLayout}
+      sceneContainerStyle={styles.sceneContainerStyle}
+      tabBarOptions={{
+        style:{backgroundColor: 'transparent', ...Platform.select({
+          ios: {
+            marginTop:hp('3.7%')
+          },
+          android: {
+            marginTop:hp('0%')
+          }
+        })},
+      }}
+      >
+      <AppStack.Screen name="Control" component={Control} />
+      <AppStack.Screen name="Learn" component={Learn} />
+      <AppStack.Screen name="Settings" component={Settings} />
+    </AppStack.Navigator>
+  );
+}
+
+export default function app() {
+  return (
+    <NavigationContainer>
+       <Stack.Navigator headerMode="none">
+         <Stack.Screen name="InitialStack" component={InitialScreens} />
+         <Stack.Screen name="AppStack" component={AppScreens} />
+       </Stack.Navigator>
+     </NavigationContainer>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -75,11 +73,14 @@ const styles = StyleSheet.create({
   topNavBar:{
     ...Platform.select({
       ios: {
-        marginTop:hp('3.7%')
+        //marginTop:hp('3.7%')
       },
       android: {
         marginTop:hp('0%')
       }
     })
   },
+  tabStyle:{
+    backgroundColor:'red'
+  }
 });
