@@ -6,12 +6,14 @@
 //
 
 import React from 'react'
-import {View,Text,StyleSheet,TouchableOpacity,Image,Platform,TextInput,Modal} from 'react-native'
+import {View,Text,StyleSheet,TouchableOpacity,Image,Platform,TextInput,Modal,DevSettings,Alert} from 'react-native'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
 import { Switch } from 'react-native-switch';
-
+import AsyncStorage from '@react-native-community/async-storage';
 import CameraModal from "../components/CameraModal";
+import SuccessModal from "../components/SuccessModal";
+import FailedModal from "../components/FailedModal";
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { RNCamera } from 'react-native-camera';
 
@@ -21,10 +23,13 @@ class Settings extends React.Component {
       super(props)
       this.state = {
         cameraModalVisible:false,
-        unique_identifier:'',
+        identifier:'',
         notifications_enabled:true,
         watering_enabled:true,
-        hydro_mode:true
+        hydro_mode:true,
+        connected:false,
+        successModalVisible:false,
+        failedModalVisible:false
       }
       this.props.navigation.addListener(
         'focus',
@@ -34,8 +39,97 @@ class Settings extends React.Component {
       );
     }
 
-    _connectPressed(){
+    async componentDidMount() {
+      // get saved data if not introduced already
+      if(this.state.identifier == ''){
+        try {
+          const value = await AsyncStorage.getItem('@identifier')
+          if(value !== null) {
+            // value previously stored
+            this.setState({
+              identifier:value,
+              connected:true
+            })
+          }else{
+            // value not stored, change status to disconnected
+            this.setState({
+              connected:false
+            })
+          }
+        } catch (e) {
+          // saving error
+          console.log("error saving identifier",e)
+        }
+      }
+    }
+
+    async _saveIdentifierToStorage(){
+      // TODO: make sure the identifer is UUID
+      var uuid_re = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+      if(uuid_re.test(this.state.identifier)){
+        // identifer is correct, save data
+        try {
+          await AsyncStorage.setItem('@identifier', this.state.identifier)
+        } catch (e) {
+          // saving error
+          console.log("error saving identifier",e)
+        }
+        // Change state to connected and show success modal
+        this.setState({
+          connected:true,
+          successModalVisible:true
+        })
+      }else{
+        // Regex is wrong, show failed modal
+        this.setState({
+          connected:false,
+          failedModalVisible:true
+        })
+      }
+    }
+
+    _cameraIconPressed(){
       this.setState({cameraModalVisible:true})
+    }
+
+    _renderConnectionState(){
+      if(this.state.connected){
+        return(
+          <View style={{position:'absolute',width:wp('27.6%'),height:hp('3.08%'),borderRadius:15,right:wp('15%')}}>
+            <LinearGradient useAngle={true} angle={45} colors={['#0AC4BA','#2BDA8E']} style={styles.gradientStyle}>
+              <Text style={{fontSize:hp('1.72%'), fontWeight:'bold', color:'white'}}>Connected</Text>
+            </LinearGradient>
+          </View>
+        )
+      }else{
+        return(
+          <View style={{position:'absolute',width:wp('27.6%'),height:hp('3.08%'),borderRadius:15,right:wp('15%')}}>
+            <LinearGradient useAngle={true} angle={45} colors={['#F1592B','#FF706E']} style={styles.gradientStyle}>
+              <Text style={{fontSize:hp('1.72%'), fontWeight:'bold', color:'white'}}>Disconnected</Text>
+            </LinearGradient>
+          </View>
+        )
+      }
+    }
+
+    _wipeAsyncStorage = async() => {
+        Alert.alert(
+        "Wipe local app data",
+        "Are you sure you want to reset the app and wipe your local data?",
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+          },
+          { text: "Wipe", onPress: () => {
+            this.setState({identifer:''})
+            AsyncStorage.clear();
+            DevSettings.reload()
+          } }
+        ],
+        { cancelable: false }
+      );
     }
 
     render() {
@@ -57,21 +151,19 @@ class Settings extends React.Component {
             <View style={{marginTop:hp('2.34%')}}>
               <Text style={styles.titleText}>MQTT Client Identifier</Text>
               <TextInput
-                value={this.state.unique_identifier}
+                placeholder={"Your personal UUID goes here"}
+                value={this.state.identifier}
                 style={[styles.subtitleText,{borderBottomWidth:0.5,borderColor:'rgba(225,227,232,100)',width:wp('78%')}]}
-                onChangeText={text => this.setState({unique_identifier:text})}>
+                onChangeText={text => this.setState({identifier:text})}
+                onSubmitEditing={() => this._saveIdentifierToStorage()}>
               </TextInput>
             </View>
 
             <View style={{marginTop:hp('2.34%')}}>
               <Text style={styles.titleText}>MQTT Broker</Text>
               <View style={{flexDirection:'row'}}>
-                <Text style={styles.subtitleText}>My-Raspberry-Pi</Text>
-                <TouchableOpacity style={{position:'absolute',width:wp('25.6%'),height:hp('3.08%'),borderRadius:15,right:wp('15%')}} onPress={() => this._connectPressed()}>
-                  <LinearGradient useAngle={true} angle={45} colors={['#0AC4BA','#2BDA8E']} style={styles.gradientStyle}>
-                    <Text style={{fontSize:hp('1.72%'), fontWeight:'bold', color:'white'}}>Connect  </Text>
-                  </LinearGradient>
-                </TouchableOpacity>
+                <Text style={styles.subtitleText}>mqtt.eclipse.org:1883</Text>
+                {this._renderConnectionState()}
               </View>
             </View>
 
@@ -150,7 +242,7 @@ class Settings extends React.Component {
 
             <View style={styles.seperator}/>
 
-            <TouchableOpacity style={styles.buttonStyle}>
+            <TouchableOpacity style={styles.buttonStyle} onPress={() => this._wipeAsyncStorage()}>
               <LinearGradient useAngle={true} angle={45} colors={['#0AC4BA','#2BDA8E']} style={styles.buttonGradientStyle}>
                 <Text style={{fontSize:hp('1.72%'), fontWeight:'bold', color:'white'}}>WIPE DATA  </Text>
               </LinearGradient>
@@ -169,11 +261,44 @@ class Settings extends React.Component {
               onPressOut={() => {this.setState({cameraModalVisible:false})}}
             >
               <CameraModal callBack={(e) => {
-                this.setState({cameraModalVisible: false,unique_identifier:e.data});
+                this.setState({cameraModalVisible: false,identifier:e.data});
               }}/>
             </TouchableOpacity>
             </Modal>
 
+            <Modal
+              animationType="fade"
+              transparent={true}
+              visible={this.state.successModalVisible}
+              onRequestClose={() => {this.setState({successModalVisible:false})}}>
+              <TouchableOpacity
+                style={[styles.absolute,{backgroundColor: 'rgba(100,100,100, 0.5)'}]}
+                activeOpacity={1}
+                onPressOut={() => {this.setState({successModalVisible:false})}}
+              >
+                <SuccessModal callBack={(e) => {
+                  this.setState({successModalVisible: false});
+                  this.props.navigation.navigate('AppStack', { screen: 'Settings' })
+                }}/>
+              </TouchableOpacity>
+              </Modal>
+
+              <Modal
+                animationType="fade"
+                transparent={true}
+                visible={this.state.failedModalVisible}
+                onRequestClose={() => {this.setState({failedModalVisible:false})}}>
+                <TouchableOpacity
+                  style={[styles.absolute,{backgroundColor: 'rgba(100,100,100, 0.5)'}]}
+                  activeOpacity={1}
+                  onPressOut={() => {this.setState({failedModalVisible:false})}}
+                >
+                  <FailedModal callBack={(e) => {
+                    this.setState({failedModalVisible: false});
+                    this.props.navigation.navigate('AppStack', { screen: 'Settings' })
+                  }}/>
+                </TouchableOpacity>
+                </Modal>
         </View>
       )
     }
@@ -213,7 +338,7 @@ const styles = StyleSheet.create({
     color:'black'
   },
   gradientStyle:{
-    width:wp('25.6%'),
+    width:wp('27.6%'),
     height:hp('3.08%'),
     borderRadius:15,
     alignItems:'center',

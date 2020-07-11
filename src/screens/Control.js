@@ -8,6 +8,7 @@
 import React from 'react'
 import {View,Text,StyleSheet,TouchableOpacity,Image,StatusBar,Platform,Animated,Modal} from 'react-native'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import AsyncStorage from '@react-native-community/async-storage';
 import LinearGradient from 'react-native-linear-gradient';
 import MQTT from 'sp-react-native-mqtt';
 
@@ -26,8 +27,10 @@ class Control extends React.Component {
     constructor(props) {
       super(props)
       this.state = {
+        identifier:'',
         mqtt_client:null,
-        firstTimeModalShow:true,
+        mqtt_subscribed:false,
+        firstTimeModalShow:false,
         mode:"soil",
         environment:{
           temp:null,
@@ -58,18 +61,52 @@ class Control extends React.Component {
           "moisture":"0%"
         }}
       }
-      //this.client = this._setupMQTT()
       this.props.navigation.addListener(
         'focus',
         payload => {
-          console.log('Control is focused');
+          console.log("Control is focused")
+          this.updateStorage()
+          // TODO: ask for updatd info through MQTT
         }
       );
     }
 
-    componentDidMount() {
-      // check if first time, if it is, show modal
-      this.setState({trial:'tested'})
+    async updateStorage(){
+      try {
+        const value = await AsyncStorage.getItem('@identifier')
+        if(value !== null) {
+          // check if the identifier we currently have is same as value
+          if(value != this.state.identifier && this.state.identifier != ''){
+            // the identifier was changed in settings
+            // close the client
+            //this.mqtt_client.close()
+            // update settings
+            this.setState({
+                identifier: value,
+                mqtt_client:null,
+                mqtt_subscribed: false
+            }, () => {
+                // set new mqtt client
+                this._setupMQTT()
+            });
+          }else{
+            // value previously stored, set it
+            this.setState({
+                identifier: value,
+                firstTimeModalShow: false
+            }, () => {
+                // set new mqtt client
+                this._setupMQTT()
+            });
+          }
+        }else{
+          // value is empty, show the modal
+          this.setState({firstTimeModalShow:true})
+        }
+      } catch (e) {
+        // saving error
+        console.log("error saving identifier",e)
+      }
     }
 
     toggleAnimation = () =>{
@@ -80,67 +117,74 @@ class Control extends React.Component {
     }
 
     async _setupMQTT(){
-      /* create mqtt client */
-      var client = await MQTT.createClient( {
-        uri: 'mqtt://mqtt.eclipse.org:1883',
-        clientId: guidGenerator()
-      })
-      /* make sure client created successfully */
-      if(client){
-        client.on('closed', function() {
-          console.log('mqtt.event.closed');
-        }.bind(this));
-
-        client.on('error', function(msg) {
-          console.log('mqtt.event.error', msg);
-        }.bind(this));
-
-        client.on('message', function(msg) {
-          /* Manage plants soil data given from the Raspberry Pi */
-          if(msg.topic == "plants/soil"){
-            var sensor = JSON.parse(msg.data)
-            // turn int into boolean
-            sensor["enabled"] = !!+sensor["enabled"]
-            // check if connected before
-            if(!this.state.connected){
-              // first time, make new array
-              var existing_sensors = {}
-            }else{
-              // not first time, take existing array
-              var existing_sensors = this.state.sensors
-            }
-            // add or update sensors
-            existing_sensors[sensor["id"]] = sensor
-            this.setState({sensors:existing_sensors, connected:true})
-          }
-          /* Manage plants environmental data given from the Raspberry Pi */
-          else if(msg.topic == "plants/environment"){
-            var data = JSON.parse(msg.data)
-            this.setState({environment:data})
-          }
-          /* Manage soil plants watering commands response from the Raspberry Pi */
-          else if(msg.topic == "plants/water"){
-            var data = JSON.parse(msg.data)
-            if(data.status == "OK"){
-              var plant_key = data.key
-              var sensors = this.state.sensors
-              sensors[plant_key].enabled = true
-              this.setState(sensors)
-            }
-          }
-        }.bind(this));
-
-        client.on('connect', function() {
-          console.log('connected');
-          /* subscribe to topics */
-          client.subscribe('plants/soil', 0);
-          client.subscribe('plants/environment', 0);
-          client.subscribe('plants/water', 0);
-        });
-
+      if(this.state.mqtt_client == null){
+        /* create mqtt client */
+        var client = await MQTT.createClient( {
+          uri: 'mqtt://mqtt.eclipse.org:1883',
+          clientId: guidGenerator()
+        })
         /* connect to client */
         await client.connect();
-        this.setState({mqtt_client:client})
+        // set the client into state
+        this.setState({mqtt_client:client});
+      }
+      /* make sure client created successfully */
+      if(this.state.mqtt_client != null){
+        // make sure we are not subscribed already
+        if(this.state.mqtt_subscribed == false && this.state.identifier != ''){
+          client.on('closed', function() {
+            console.log('mqtt.event.closed');
+          }.bind(this));
+
+          client.on('error', function(msg) {
+            console.log('mqtt.event.error', msg);
+          }.bind(this));
+
+          client.on('message', function(msg) {
+            /* Manage plants soil data given from the Raspberry Pi */
+            if(msg.topic == this.state.identifier + "/plants/soil"){
+              var sensor = JSON.parse(msg.data)
+              // turn int into boolean
+              sensor["enabled"] = !!+sensor["enabled"]
+              // check if connected before
+              if(!this.state.connected){
+                // first time, make new array
+                var existing_sensors = {}
+              }else{
+                // not first time, take existing array
+                var existing_sensors = this.state.sensors
+              }
+              // add or update sensors
+              existing_sensors[sensor["id"]] = sensor
+              this.setState({sensors:existing_sensors, connected:true})
+            }
+            /* Manage plants environmental data given from the Raspberry Pi */
+            else if(msg.topic == this.state.identifier + "/plants/environment"){
+              var data = JSON.parse(msg.data)
+              this.setState({environment:data})
+            }
+            /* Manage soil plants watering commands response from the Raspberry Pi */
+            else if(msg.topic == this.state.identifier + "/plants/water"){
+              var data = JSON.parse(msg.data)
+              if(data.status == "ok"){
+                var plant_key = data.key
+                var sensors = this.state.sensors
+                sensors[plant_key].enabled = true
+                this.setState(sensors)
+              }
+            }
+          }.bind(this));
+
+          client.on('connect', function() {
+            console.log('connected');
+            /* subscribe to topics */
+            client.subscribe(this.state.identifier + '/plants/soil', 0);
+            client.subscribe(this.state.identifier + '/plants/environment', 0);
+            client.subscribe(this.state.identifier + '/plants/water', 0);
+            // TODO: ask mqtt to give data
+            this.setState({mqtt_subscribed:true})
+          }.bind(this));
+        }
       }
     }
 
@@ -163,7 +207,7 @@ class Control extends React.Component {
     }
 
     async _givePlantWater(key){
-      await this.state.mqtt_client.publish('plants/water', '{"key":"' + key + '","status":"pending"}', 0, false);
+      await this.state.mqtt_client.publish(this.state.identifier + '/plants/water', '{"key":"' + key + '","status":"pending"}', 0, false);
       // disable sensor till we recieve feedback to enable it back
       var sensors = this.state.sensors
       sensors[key].enabled = false

@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { View, Text, Dimensions, StyleSheet, Alert} from 'react-native';
+import { View, Text, Dimensions, StyleSheet, Platform} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
@@ -38,7 +38,13 @@ function AppScreens() {
       initialLayout={initialLayout}
       sceneContainerStyle={styles.sceneContainerStyle}
       tabBarOptions={{
-        style:{backgroundColor: 'transparent', ...Platform.select({
+        activeTintColor: '#10C8B1',
+        inactiveTintColor: '#C5CCD6',
+        indicatorStyle: {backgroundColor:'#10C8B1'},
+        labelStyle: { fontSize: 16, fontWeight:'bold' },
+        style:{
+          backgroundColor: 'transparent',
+          ...Platform.select({
           ios: {
             marginTop:hp('3.7%')
           },
