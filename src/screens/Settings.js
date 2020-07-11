@@ -64,7 +64,7 @@ class Settings extends React.Component {
     }
 
     async _saveIdentifierToStorage(){
-      // TODO: make sure the identifer is UUID
+      // make sure the identifier is UUID
       var uuid_re = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
       if(uuid_re.test(this.state.identifier)){
         // identifer is correct, save data

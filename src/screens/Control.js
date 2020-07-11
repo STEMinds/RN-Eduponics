@@ -144,19 +144,21 @@ class Control extends React.Component {
             /* Manage plants soil data given from the Raspberry Pi */
             if(msg.topic == this.state.identifier + "/plants/soil"){
               var sensor = JSON.parse(msg.data)
-              // turn int into boolean
-              sensor["enabled"] = !!+sensor["enabled"]
-              // check if connected before
-              if(!this.state.connected){
-                // first time, make new array
-                var existing_sensors = {}
-              }else{
-                // not first time, take existing array
-                var existing_sensors = this.state.sensors
+              if(sensor["enabled"] != undefined){
+                // turn int into boolean
+                sensor["enabled"] = !!+sensor["enabled"]
+                // check if connected before
+                if(!this.state.connected){
+                  // first time, make new array
+                  var existing_sensors = {}
+                }else{
+                  // not first time, take existing array
+                  var existing_sensors = this.state.sensors
+                }
+                // add or update sensors
+                existing_sensors[sensor["id"]] = sensor
+                this.setState({sensors:existing_sensors, connected:true})
               }
-              // add or update sensors
-              existing_sensors[sensor["id"]] = sensor
-              this.setState({sensors:existing_sensors, connected:true})
             }
             /* Manage plants environmental data given from the Raspberry Pi */
             else if(msg.topic == this.state.identifier + "/plants/environment"){
@@ -175,13 +177,15 @@ class Control extends React.Component {
             }
           }.bind(this));
 
-          client.on('connect', function() {
+          client.on('connect', async function() {
             console.log('connected');
             /* subscribe to topics */
             client.subscribe(this.state.identifier + '/plants/soil', 0);
             client.subscribe(this.state.identifier + '/plants/environment', 0);
             client.subscribe(this.state.identifier + '/plants/water', 0);
             // TODO: ask mqtt to give data
+            await client.publish(this.state.identifier + '/plants/soil', '{"action":"get","status":"pending"}', 0, false);
+            await client.publish(this.state.identifier + '/plants/environment', '{"action":"get","status":"pending"}', 0, false);
             this.setState({mqtt_subscribed:true})
           }.bind(this));
         }
