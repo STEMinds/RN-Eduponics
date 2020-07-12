@@ -6,7 +6,7 @@
 //
 
 import React from 'react'
-import {View,Text,StyleSheet,TouchableOpacity,Image,StatusBar,Platform,Animated,Modal} from 'react-native'
+import {View,Text,StyleSheet,TouchableOpacity,Image,StatusBar,Platform,Animated,Modal,ScrollView} from 'react-native'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-community/async-storage';
 import LinearGradient from 'react-native-linear-gradient';
@@ -251,9 +251,9 @@ class Control extends React.Component {
               <LinearGradient useAngle={true} angle={45} colors={['#0AC4BA','#2BDA8E']} style={styles.controlLinear}/>
 
               <View style={styles.soilMoistureContainer}>
-
-              {this._renderSoilSensors()}
-
+                <ScrollView style={{height:hp('40.32%')}}>
+                  {this._renderSoilSensors()}
+                </ScrollView>
               </View>
           </View>
 
