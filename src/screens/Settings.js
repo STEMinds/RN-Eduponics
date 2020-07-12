@@ -6,7 +6,7 @@
 //
 
 import React from 'react'
-import {View,Text,StyleSheet,TouchableOpacity,Image,Platform,TextInput,Modal,DevSettings,Alert} from 'react-native'
+import {View,Text,StyleSheet,TouchableOpacity,ImageBackground,Platform,TextInput,Modal,DevSettings,Alert} from 'react-native'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
 import { Switch } from 'react-native-switch';
@@ -95,7 +95,7 @@ class Settings extends React.Component {
     _renderConnectionState(){
       if(this.state.connected){
         return(
-          <View style={{position:'absolute',width:wp('27.6%'),height:hp('3.08%'),borderRadius:15,right:wp('15%')}}>
+          <View style={{alignItems:'center',justifyContent:'center',position:'absolute',width:wp('27.6%'),height:hp('4.2%'),borderRadius:20,right:wp('15%')}}>
             <LinearGradient useAngle={true} angle={45} colors={['#0AC4BA','#2BDA8E']} style={styles.gradientStyle}>
               <Text style={{fontSize:hp('1.72%'), fontWeight:'bold', color:'white'}}>Connected</Text>
             </LinearGradient>
@@ -103,11 +103,9 @@ class Settings extends React.Component {
         )
       }else{
         return(
-          <View style={{position:'absolute',width:wp('27.6%'),height:hp('3.08%'),borderRadius:15,right:wp('15%')}}>
-            <LinearGradient useAngle={true} angle={45} colors={['#F1592B','#FF706E']} style={styles.gradientStyle}>
-              <Text style={{fontSize:hp('1.72%'), fontWeight:'bold', color:'white'}}>Disconnected</Text>
-            </LinearGradient>
-          </View>
+          <ImageBackground source={require('../images/label-border.png')} style={{alignItems:'center',justifyContent:'center',position:'absolute',width:wp('27.6%'),height:hp('4.2%'),right:wp('15%')}}>
+                <Text style={{fontSize:hp('1.72%'), fontWeight:'bold', color:'#0AC4BA'}}>Disconnected</Text>
+          </ImageBackground>
         )
       }
     }
@@ -339,8 +337,8 @@ const styles = StyleSheet.create({
   },
   gradientStyle:{
     width:wp('27.6%'),
-    height:hp('3.08%'),
-    borderRadius:15,
+    height:hp('4.2%'),
+    borderRadius:20,
     alignItems:'center',
     justifyContent:'center'
   },
