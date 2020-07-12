@@ -6,7 +6,7 @@
 //
 
 import React from 'react'
-import {View,Text,StyleSheet,TouchableOpacity,ImageBackground,Platform,TextInput,Modal,DevSettings,Alert} from 'react-native'
+import {View,Text,StyleSheet,TouchableOpacity,ImageBackground,Image,Platform,TextInput,Modal,DevSettings,Alert} from 'react-native'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
 import { Switch } from 'react-native-switch';
@@ -97,15 +97,22 @@ class Settings extends React.Component {
         return(
           <View style={{alignItems:'center',justifyContent:'center',position:'absolute',width:wp('27.6%'),height:hp('4.2%'),borderRadius:20,right:wp('15%')}}>
             <LinearGradient useAngle={true} angle={45} colors={['#0AC4BA','#2BDA8E']} style={styles.gradientStyle}>
-              <Text style={{fontSize:hp('1.72%'), fontWeight:'bold', color:'white'}}>Connected</Text>
+              <Text style={{alignSelf:'center',textAlign:'center',fontSize:hp('1.72%'), fontWeight:'bold', color:'white', width:wp('19.9%')}}>Connected</Text>
             </LinearGradient>
           </View>
         )
       }else{
         return(
-          <ImageBackground source={require('../images/label-border.png')} style={{alignItems:'center',justifyContent:'center',position:'absolute',width:wp('27.6%'),height:hp('4.2%'),right:wp('15%')}}>
-                <Text style={{fontSize:hp('1.72%'), fontWeight:'bold', color:'#0AC4BA'}}>Disconnected</Text>
-          </ImageBackground>
+          <View style={{borderColor:"#0AC4BA",borderRadius:20,borderWidth:1.5,alignItems:'center',justifyContent:'center',position:'absolute',width:wp('27.6%'),...Platform.select({
+            ios: {
+              height:hp('4.2%')
+            },
+            android: {
+              height:hp('4.53%')
+            }
+          }),right:wp('15%')}}>
+                <Text style={{alignSelf:'center',textAlign:'center',fontSize:hp('1.72%'), fontWeight:'bold', color:'#0AC4BA', width:wp('26%')}}>Disconnected</Text>
+          </View>
         )
       }
     }
@@ -137,30 +144,42 @@ class Settings extends React.Component {
           <View style={styles.container}>
 
             <View style={{marginTop:hp('2.83%')}}>
-              <Text style={styles.titleText}>Name</Text>
-              <Text style={styles.subtitleText}>Roni</Text>
+              <Text style={styles.titleText}>Name  </Text>
+              <Text style={styles.subtitleText}>Roni  </Text>
             </View>
 
             <View style={{marginTop:hp('2.34%')}}>
-              <Text style={styles.titleText}>Language</Text>
-              <Text style={styles.subtitleText}>English</Text>
+              <Text style={styles.titleText}>Language  </Text>
+              <Text style={styles.subtitleText}>English  </Text>
             </View>
 
             <View style={{marginTop:hp('2.34%')}}>
-              <Text style={styles.titleText}>MQTT Client Identifier</Text>
+              <Text style={styles.titleText}>MQTT Client Identifier  </Text>
+              <TouchableOpacity style={styles.cameraStyle} onPress={() => this._cameraIconPressed()}>
+                <Image source={require('../images/camera-icon.png')}/>
+              </TouchableOpacity>
               <TextInput
-                placeholder={"Your personal UUID goes here"}
+                placeholder={"Your personal UUID goes here  "}
                 value={this.state.identifier}
-                style={[styles.subtitleText,{borderBottomWidth:0.5,borderColor:'rgba(225,227,232,100)',width:wp('78%')}]}
+                returnKeyType={"done"}
+                style={[styles.subtitleText,{width:wp('75%')}]}
                 onChangeText={text => this.setState({identifier:text})}
                 onSubmitEditing={() => this._saveIdentifierToStorage()}>
               </TextInput>
+              <View style={{borderBottomWidth:0.5,borderColor:'rgba(225,227,232,100)',...Platform.select({
+                ios: {
+                  marginTop:hp('1%')
+                },
+                android: {
+                  marginTop:hp('0%')
+                }
+              }),width:wp("85%")}}/>
             </View>
 
             <View style={{marginTop:hp('2.34%')}}>
               <Text style={styles.titleText}>MQTT Broker</Text>
               <View style={{flexDirection:'row'}}>
-                <Text style={styles.subtitleText}>mqtt.eclipse.org:1883</Text>
+                <Text style={styles.subtitleText}>mqtt.eclipse.org:1883   </Text>
                 {this._renderConnectionState()}
               </View>
             </View>
@@ -259,7 +278,7 @@ class Settings extends React.Component {
               onPressOut={() => {this.setState({cameraModalVisible:false})}}
             >
               <CameraModal callBack={(e) => {
-                this.setState({cameraModalVisible: false,identifier:e.data});
+                this.setState({cameraModalVisible: false,identifier:e.data},this._saveIdentifierToStorage);
               }}/>
             </TouchableOpacity>
             </Modal>
@@ -276,7 +295,6 @@ class Settings extends React.Component {
               >
                 <SuccessModal callBack={(e) => {
                   this.setState({successModalVisible: false});
-                  this.props.navigation.navigate('AppStack', { screen: 'Settings' })
                 }}/>
               </TouchableOpacity>
               </Modal>
@@ -293,7 +311,6 @@ class Settings extends React.Component {
                 >
                   <FailedModal callBack={(e) => {
                     this.setState({failedModalVisible: false});
-                    this.props.navigation.navigate('AppStack', { screen: 'Settings' })
                   }}/>
                 </TouchableOpacity>
                 </Modal>
@@ -308,7 +325,8 @@ const styles = StyleSheet.create({
     left:0,
     right:0,
     top:0,
-    bottom:0
+    bottom:0,
+    backgroundColor:'white'
   },
   topNavBar:{
     flexDirection:'row',
@@ -331,7 +349,7 @@ const styles = StyleSheet.create({
   },
   subtitleText:{
     marginTop:hp('1.11%'),
-    fontWeight:'bold',
+    fontWeight:'600',
     fontSize:hp('1.72%'),
     color:'black'
   },
@@ -358,7 +376,14 @@ const styles = StyleSheet.create({
     borderColor:'rgba(225,227,232,100)'
   },
   buttonStyle:{
-    marginTop:hp('23%'),
+    ...Platform.select({
+      ios: {
+        marginTop:hp('23%')
+      },
+      android: {
+        marginTop:hp('21%')
+      }
+    }),
     width:wp('84%'),
     height:hp('5.91%'),
     borderRadius:24
@@ -373,6 +398,23 @@ const styles = StyleSheet.create({
     borderWidth:1.5,
     position:'absolute',
     right:wp('15%')
+  },
+  cameraStyle:{
+    position:'absolute',
+    right:wp('15%'),
+    width:24,
+    height:24,
+    ...Platform.select({
+      ios: {
+        bottom:hp("0.2%")
+      },
+      android: {
+        bottom:wp("3%")
+      }
+    }),
+    alignSelf:'center',
+    alignItems:'center',
+    justifyContent:'center'
   }
 })
 

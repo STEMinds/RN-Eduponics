@@ -27,6 +27,7 @@ class Control extends React.Component {
     constructor(props) {
       super(props)
       this.state = {
+        sample:true,
         identifier:'',
         mqtt_client:null,
         mqtt_subscribed:false,
@@ -39,7 +40,8 @@ class Control extends React.Component {
           water_quantity:null
         },
         connected:false,
-        sensors:{"A":{
+        sensors:{
+          "A":{
           "id":null,
           "name":"N/A",
           "enabled":false,
@@ -116,6 +118,14 @@ class Control extends React.Component {
       })
     }
 
+    async updateSensorsData (client){
+      await client.publish(this.state.identifier + '/plants/soil', '{"action":"get","status":"pending"}', 0, false);
+    }
+
+    async updateEnvironmentalData (client){
+      await client.publish(this.state.identifier + '/plants/environment', '{"action":"get","status":"pending"}', 0, false);
+    }
+
     async _setupMQTT(){
       if(this.state.mqtt_client == null){
         /* create mqtt client */
@@ -144,7 +154,7 @@ class Control extends React.Component {
             /* Manage plants soil data given from the Raspberry Pi */
             if(msg.topic == this.state.identifier + "/plants/soil"){
               var sensor = JSON.parse(msg.data)
-              if(sensor["enabled"] != undefined){
+              if(!sensor.hasOwnProperty("action")){
                 // turn int into boolean
                 sensor["enabled"] = !!+sensor["enabled"]
                 // check if connected before
@@ -158,12 +168,23 @@ class Control extends React.Component {
                 // add or update sensors
                 existing_sensors[sensor["id"]] = sensor
                 this.setState({sensors:existing_sensors, connected:true})
+                if(this.state.sample == true){
+                  this.updateEnvironmentalData(client);
+                  this.setState({sample:false})
+                }
               }
             }
             /* Manage plants environmental data given from the Raspberry Pi */
             else if(msg.topic == this.state.identifier + "/plants/environment"){
               var data = JSON.parse(msg.data)
-              this.setState({environment:data})
+              if(!data.hasOwnProperty("action")){
+                this.setState({environment:data})
+                if(this.state.sample == true){
+                  this.updateSensorsData(client);
+                  this.setState({sample:false})
+                }
+              }
+
             }
             /* Manage soil plants watering commands response from the Raspberry Pi */
             else if(msg.topic == this.state.identifier + "/plants/water"){
@@ -183,9 +204,9 @@ class Control extends React.Component {
             client.subscribe(this.state.identifier + '/plants/soil', 0);
             client.subscribe(this.state.identifier + '/plants/environment', 0);
             client.subscribe(this.state.identifier + '/plants/water', 0);
-            // TODO: ask mqtt to give data
-            await client.publish(this.state.identifier + '/plants/soil', '{"action":"get","status":"pending"}', 0, false);
-            await client.publish(this.state.identifier + '/plants/environment', '{"action":"get","status":"pending"}', 0, false);
+            // update environmental data updates the environment first
+            // once it's finished, it will send signal to update the soil moisture sensors
+            this.updateEnvironmentalData(client);
             this.setState({mqtt_subscribed:true})
           }.bind(this));
         }
@@ -221,6 +242,10 @@ class Control extends React.Component {
     render() {
         return (
           <View style={styles.absolute}>
+            <StatusBar
+              backgroundColor="white"
+              barStyle="dark-content"
+            />
             <LinearGradient colors={['#FFFFFF','#D4E5F8']} style={styles.absolute}/>
             <Image source={require('../images/flower_illustration.png')} style={styles.flowerIllustration}/>
             <View style={styles.container}>
@@ -267,9 +292,10 @@ class Control extends React.Component {
               activeOpacity={1}
               onPressOut={() => {this.setState({firstTimeModalShow:false})}}
             >
-              <FirstTimeModal callBack={(e) => {
+              <FirstTimeModal callBack={() => {
                 this.setState({firstTimeModalShow: false});
-                this.props.navigation.navigate('AppStack', { screen: 'Settings' })
+                console.log("blaahhhh")
+                this.props.navigation.navigate('AppStack', { screen: 'Settings  ' })
               }}/>
             </TouchableOpacity>
             </Modal>
@@ -301,7 +327,7 @@ const styles = StyleSheet.create({
   flowerIllustration:{
     position:'absolute',
     right:wp('-13.8%'),
-    marginTop:hp('-3%')
+    marginTop:hp('-3%'),
   },
   container:{
     left:wp('8%')

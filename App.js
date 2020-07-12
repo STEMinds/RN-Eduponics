@@ -41,9 +41,9 @@ function AppScreens() {
         activeTintColor: '#10C8B1',
         inactiveTintColor: '#C5CCD6',
         indicatorStyle: {backgroundColor:'#10C8B1'},
-        labelStyle: { fontSize: 16, fontWeight:'bold' },
+        labelStyle: { fontSize: hp("1.8%"), fontWeight:'bold' },
         style:{
-          backgroundColor: 'transparent',
+          backgroundColor: 'white',
           ...Platform.select({
           ios: {
             marginTop:hp('3.7%')
@@ -54,9 +54,9 @@ function AppScreens() {
         })},
       }}
       >
-      <AppStack.Screen name="Control" component={Control} />
-      <AppStack.Screen name="Learn" component={Learn} />
-      <AppStack.Screen name="Settings" component={Settings} />
+      <AppStack.Screen name="Control  " component={Control} />
+      <AppStack.Screen name="Learn  " component={Learn} />
+      <AppStack.Screen name="Settings  " component={Settings} />
     </AppStack.Navigator>
   );
 }
@@ -75,18 +75,5 @@ export default function app() {
 const styles = StyleSheet.create({
   scene: {
     flex: 1
-  },
-  topNavBar:{
-    ...Platform.select({
-      ios: {
-        //marginTop:hp('3.7%')
-      },
-      android: {
-        marginTop:hp('0%')
-      }
-    })
-  },
-  tabStyle:{
-    backgroundColor:'red'
   }
 });

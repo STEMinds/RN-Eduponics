@@ -25,10 +25,12 @@ class CameraModal extends Component {
         return (
           <View style={styles.container}>
               <QRCodeScanner
-                  cameraStyle={{width:wp('88%'),height:hp('35%')}}
+                  cameraStyle={{width:wp("84%"),height:wp("84%")}}
+                  containerStyle={{width:wp("84%"),height:wp("84%")}}
+                  showMarker={true}
+                  markerStyle={{borderColor:'#0FC7B3',borderWidth:1}}
                   onRead={this.onSuccess}
                 />
-                <Text style={{alignSelf:'center',marginBottom:10}}>Scan the QR code</Text>
           </View>
         );
     }
@@ -36,8 +38,8 @@ class CameraModal extends Component {
 
 const styles = StyleSheet.create({
   container:{
-    width:wp('88%'),
-    height:hp('40%'),
+    width:wp("84%"),
+    height:wp("84%"),
     alignSelf:'center',
     marginTop:180,
     backgroundColor:'white',

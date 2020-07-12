@@ -16,15 +16,10 @@ class FirstTimeModal extends Component {
       this.props.callBack();
     }
 
-    onSuccess = e => {
-      console.log(e.data)
-      this.closeModalAfterUse(e)
-    };
-
     render() {
         return (
           <View style={styles.container}>
-            <Text style={styles.title}>Welcome</Text>
+            <Text style={styles.title}>Welcome  </Text>
             <Image source={require('../images/intro_image.png')} style={styles.introImage}/>
             <Text style={styles.contentText}>
               Seems like it’s your first time.{"\n"}

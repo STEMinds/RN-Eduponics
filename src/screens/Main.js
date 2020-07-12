@@ -34,7 +34,7 @@ class Main extends React.Component {
             <Text style={[styles.titleText,{color:'rgba(78,185,95,100)'}]}>Eduponics</Text>
           </View>
 
-          <Text style={styles.subtitleText}>Make your own IoT farm</Text>
+          <Text style={styles.subtitleText}>Make your own IoT garden</Text>
 
           <Image style={styles.logoGrey} source={require('../images/logo_grey.png')}/>
 

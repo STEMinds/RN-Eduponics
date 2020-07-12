@@ -31,7 +31,7 @@ class FailedModal extends Component {
                 </LinearGradient>
               </LinearGradient>
             </LinearGradient>
-            <Text style={{fontSize:hp('2.44%'),fontWeight:'bold',marginTop:hp("1.22%")}}>Failed</Text>
+            <Text style={{alignSelf:'center',textAlign:'center',fontSize:hp('2.44%'),fontWeight:'bold',marginTop:hp("1.22%")}}>Failed </Text>
             <Text style={{marginTop:hp("1.22%"),fontSize:hp("1.71%"),opacity:0.8, textAlign:'center'}}>
               Incorrect identifier{"\n"}
               Plese try to enter new one.{"\n"}
