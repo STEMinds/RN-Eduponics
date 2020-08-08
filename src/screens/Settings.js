@@ -6,7 +6,7 @@
 //
 
 import React from 'react'
-import {View,Text,StyleSheet,TouchableOpacity,ImageBackground,Image,Platform,TextInput,Modal,DevSettings,Alert} from 'react-native'
+import {View,Text,StyleSheet,TouchableOpacity,ImageBackground,Image,Platform,TextInput,Modal,DevSettings,Alert,Linking} from 'react-native'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
 import { Switch } from 'react-native-switch';
@@ -24,9 +24,9 @@ class Settings extends React.Component {
       this.state = {
         cameraModalVisible:false,
         identifier:'',
-        notifications_enabled:true,
-        watering_enabled:true,
-        hydro_mode:true,
+        notifications_enabled:false,
+        watering_enabled:false,
+        hydro_mode:false,
         connected:false,
         successModalVisible:false,
         failedModalVisible:false
@@ -83,6 +83,7 @@ class Settings extends React.Component {
         // Regex is wrong, show failed modal
         this.setState({
           connected:false,
+          identifier:'',
           failedModalVisible:true
         })
       }
@@ -144,11 +145,6 @@ class Settings extends React.Component {
           <View style={styles.container}>
 
             <View style={{marginTop:hp('2.83%')}}>
-              <Text style={styles.titleText}>Name  </Text>
-              <Text style={styles.subtitleText}>Roni  </Text>
-            </View>
-
-            <View style={{marginTop:hp('2.34%')}}>
               <Text style={styles.titleText}>Language  </Text>
               <Text style={styles.subtitleText}>English  </Text>
             </View>
@@ -184,10 +180,12 @@ class Settings extends React.Component {
               </View>
             </View>
 
+            {/*
             <View style={{marginTop:hp('3.57%'),flexDirection:'row'}}>
               <Text style={styles.titleText}>Notifications  </Text>
               <LinearGradient useAngle={true} angle={45} colors={this.state.notifications_enabled ? ['#0AC4BA','#2BDA8E'] : ['#FFFFFF','#FFFFFF']} style={[styles.switchStyle,{borderWidth:this.state.notifications_enabled ? 0 : 1.5}]}>
                 <Switch
+                  disabled={true}
                   style={styles.switchStyle}
                   activeText={null}
                   inActiveText={null}
@@ -213,6 +211,7 @@ class Settings extends React.Component {
               <Text style={styles.titleText}>Automatic watering   </Text>
                 <LinearGradient useAngle={true} angle={45} colors={this.state.watering_enabled ? ['#0AC4BA','#2BDA8E'] : ['#FFFFFF','#FFFFFF']} style={[styles.switchStyle,{borderWidth:this.state.watering_enabled ? 0 : 1.5}]}>
                   <Switch
+                    disabled={true}
                     style={styles.switchStyle}
                     activeText={null}
                     inActiveText={null}
@@ -238,6 +237,7 @@ class Settings extends React.Component {
               <Text style={styles.titleText}>Hydroponics mode   </Text>
                 <LinearGradient useAngle={true} angle={45} colors={this.state.hydro_mode ? ['#0AC4BA','#2BDA8E'] : ['#FFFFFF','#FFFFFF']} style={[styles.switchStyle,{borderWidth:this.state.hydro_mode ? 0 : 1.5}]}>
                   <Switch
+                    disabled={true}
                     style={styles.switchStyle}
                     activeText={null}
                     inActiveText={null}
@@ -257,7 +257,14 @@ class Settings extends React.Component {
                 </LinearGradient>
             </View>
 
-            <View style={styles.seperator}/>
+            <View style={styles.seperator}/>*/}
+
+            <View style={{marginTop:hp('3.57%')}}>
+              <Text style={styles.titleText}>Help  </Text>
+              <TouchableOpacity onPress={() => Linking.openURL('mailto:contact@steminds.com?subject=[EDUPONICS] Bug report&body=Please describe your bug here, make sure to state your mobile app version and what type of smart phone you have including the OS version you are running.') }>
+                <Text style={styles.subtitleText}>Report a bug  </Text>
+              </TouchableOpacity>
+            </View>
 
             <TouchableOpacity style={styles.buttonStyle} onPress={() => this._wipeAsyncStorage()}>
               <LinearGradient useAngle={true} angle={45} colors={['#0AC4BA','#2BDA8E']} style={styles.buttonGradientStyle}>

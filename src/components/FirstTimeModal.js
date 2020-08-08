@@ -20,12 +20,12 @@ class FirstTimeModal extends Component {
         return (
           <View style={styles.container}>
             <Text style={styles.title}>Welcome  </Text>
-            <Image source={require('../images/intro_image.png')} style={styles.introImage}/>
+            <Image source={require('../images/intro_image.png')} style={styles.introImage} resizeMode="contain"/>
             <Text style={styles.contentText}>
               Seems like it’s your first time.{"\n"}
               Your device is not connected.{"\n"}
               Let’s go to settings,{"\n"}
-              and connect your Agritech Kit!
+              and connect your Eduponics Kit!
             </Text>
             <TouchableOpacity style={styles.letsGoButton} onPress={() => this.closeModalAfterUse()}>
               <LinearGradient useAngle={true} angle={45} colors={['#0AC4BA','#2BDA8E']} style={[styles.absolute,{borderRadius:22}]}/>

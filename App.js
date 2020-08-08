@@ -36,7 +36,7 @@ function AppScreens() {
       backBehavior={'none'}
       lazy={true}
       initialLayout={initialLayout}
-      sceneContainerStyle={styles.sceneContainerStyle}
+      style={{backgroundColor:'white'}}
       tabBarOptions={{
         activeTintColor: '#10C8B1',
         inactiveTintColor: '#C5CCD6',
@@ -55,7 +55,7 @@ function AppScreens() {
       }}
       >
       <AppStack.Screen name="Control  " component={Control} />
-      <AppStack.Screen name="Learn  " component={Learn} />
+      {/* <AppStack.Screen name="Learn  " component={Learn} />  */}
       <AppStack.Screen name="Settings  " component={Settings} />
     </AppStack.Navigator>
   );

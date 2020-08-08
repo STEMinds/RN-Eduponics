@@ -10,8 +10,8 @@ import {View,Text,StyleSheet,TouchableOpacity,Image,StatusBar,Platform,Animated,
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-community/async-storage';
 import LinearGradient from 'react-native-linear-gradient';
+import Spinner from 'react-native-loading-spinner-overlay';
 import MQTT from 'sp-react-native-mqtt';
-
 import FirstTimeModal from "../components/FirstTimeModal";
 
 function guidGenerator() {
@@ -27,6 +27,7 @@ class Control extends React.Component {
     constructor(props) {
       super(props)
       this.state = {
+        spinner:false,
         sample:true,
         identifier:'',
         mqtt_client:null,
@@ -95,7 +96,7 @@ class Control extends React.Component {
             // value previously stored, set it
             this.setState({
                 identifier: value,
-                firstTimeModalShow: false
+                firstTimeModalShow: false,
             }, () => {
                 // set new mqtt client
                 this._setupMQTT()
@@ -136,7 +137,7 @@ class Control extends React.Component {
         /* connect to client */
         await client.connect();
         // set the client into state
-        this.setState({mqtt_client:client});
+        this.setState({mqtt_client:client,spinner:true});
       }
       /* make sure client created successfully */
       if(this.state.mqtt_client != null){
@@ -167,7 +168,7 @@ class Control extends React.Component {
                 }
                 // add or update sensors
                 existing_sensors[sensor["id"]] = sensor
-                this.setState({sensors:existing_sensors, connected:true})
+                this.setState({sensors:existing_sensors, connected:true,spinner:false})
                 if(this.state.sample == true){
                   this.updateEnvironmentalData(client);
                   this.setState({sample:false})
@@ -246,9 +247,14 @@ class Control extends React.Component {
               backgroundColor="white"
               barStyle="dark-content"
             />
+            <Spinner
+              visible={this.state.spinner}
+              textContent={'Loading MQTT data...'}
+              textStyle={styles.spinnerTextStyle}
+            />
             <LinearGradient colors={['#FFFFFF','#D4E5F8']} style={styles.absolute}/>
-            <Image source={require('../images/flower_illustration.png')} style={styles.flowerIllustration}/>
             <View style={styles.container}>
+              <Image source={require('../images/flower_illustration.png')} style={styles.flowerIllustration} resizeMode="contain"/>
 
               <Text style={styles.introText}>Good Morning</Text>
 
@@ -294,7 +300,6 @@ class Control extends React.Component {
             >
               <FirstTimeModal callBack={() => {
                 this.setState({firstTimeModalShow: false});
-                console.log("blaahhhh")
                 this.props.navigation.navigate('AppStack', { screen: 'Settings  ' })
               }}/>
             </TouchableOpacity>
@@ -324,10 +329,15 @@ const styles = StyleSheet.create({
       }
     })
   },
+  spinnerTextStyle:{
+    color:'white'
+  },
   flowerIllustration:{
     position:'absolute',
     right:wp('-13.8%'),
-    marginTop:hp('-3%'),
+    top:hp('-3%'),
+    //width: wp('82.13'),
+    height: hp('49%')
   },
   container:{
     left:wp('8%')

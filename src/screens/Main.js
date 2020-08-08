@@ -8,7 +8,7 @@
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import {View,Text,StyleSheet,TouchableOpacity,Image,StatusBar,Platform} from 'react-native'
+import {View,Text,StyleSheet,TouchableOpacity,Image,StatusBar,Platform,Linking} from 'react-native'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -21,32 +21,43 @@ class Main extends React.Component {
       }
     }
 
+    openTermsOfService(){
+      Linking.openURL("https://www.steminds.com/eduponics/terms.html").catch(err => console.error("Couldn't load page", err));
+    }
+
+    openPrivacyPolicy(){
+      Linking.openURL("https://www.steminds.com/eduponics/privacy_policy.html").catch(err => console.error("Couldn't load page", err));
+    }
 
     render() {
       return (
         <View style={styles.absolute}>
           <StatusBar
-            backgroundColor="transparent"
+            backgroundColor="white"
             barStyle="dark-content"
           />
           <View style={styles.titleView}>
-            <Text style={styles.titleText}>STEMinds</Text>
-            <Text style={[styles.titleText,{color:'rgba(78,185,95,100)'}]}>Eduponics</Text>
+            <Text style={styles.titleText}>STEMinds </Text>
+            <Text style={[styles.titleText,{color:'rgba(78,185,95,100)'}]}> Eduponics</Text>
           </View>
 
           <Text style={styles.subtitleText}>Make your own IoT garden</Text>
 
-          <Image style={styles.logoGrey} source={require('../images/logo_grey.png')}/>
+          <Image style={styles.logoGrey} source={require('../images/logo_grey.png')} resizeMode="contain"/>
 
-          <Image style={styles.plantIllustration} source={require('../images/plant_illustration.png')}/>
+          <Image style={styles.plantIllustration} source={require('../images/plant_illustration.png')} resizeMode="contain"/>
 
           <TouchableOpacity style={styles.letsGoButton} onPress={() => this.props.navigation.replace('AppStack', { screen: 'Control' })}>
             <LinearGradient useAngle={true} angle={45} colors={['#0AC4BA','#2BDA8E']} style={[styles.absolute,{borderRadius:24}]}/>
             <Text style={styles.letsGoText}>Let's Go!</Text>
           </TouchableOpacity>
 
-          <Text style={[styles.termsText,{marginTop:hp('3.94%')}]}>Terms of service</Text>
-          <Text style={[styles.termsText,{marginTop:hp('0.99%')}]}>Privacy policy</Text>
+          <TouchableOpacity style={{marginTop:hp('3.94%')}} onPress={() => this.openTermsOfService()}>
+            <Text style={[styles.termsText]}>Terms of service</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={{marginTop:hp('0.99%')}} onPress={() => this.openPrivacyPolicy()}>
+            <Text style={[styles.termsText]}>Privacy policy</Text>
+          </TouchableOpacity>
         </View>
       )
     }
@@ -54,8 +65,8 @@ class Main extends React.Component {
 
 const styles = StyleSheet.create({
   absolute: {
-    backgroundColor:'white',
     position:'absolute',
+    backgroundColor:'white',
     left:0,
     right:0,
     top:0,
@@ -75,7 +86,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   titleText:{
-    width:wp('35%'),
     textAlign:'center',
     fontSize:hp('3.2%'),
     fontWeight:'bold'

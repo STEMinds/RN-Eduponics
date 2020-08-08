@@ -27,6 +27,8 @@ class CameraModal extends Component {
               <QRCodeScanner
                   cameraStyle={{width:wp("84%"),height:wp("84%")}}
                   containerStyle={{width:wp("84%"),height:wp("84%")}}
+                  topContent={null}
+                  bottomContent={null}
                   showMarker={true}
                   markerStyle={{borderColor:'#0FC7B3',borderWidth:1}}
                   onRead={this.onSuccess}
