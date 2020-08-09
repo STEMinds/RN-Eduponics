@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
+import I18n from "../utils/I18n";
 
 class FailedModal extends Component {
 
@@ -31,14 +32,14 @@ class FailedModal extends Component {
                 </LinearGradient>
               </LinearGradient>
             </LinearGradient>
-            <Text style={{alignSelf:'center',textAlign:'center',fontSize:hp('2.44%'),fontWeight:'bold',marginTop:hp("1.22%")}}>Failed </Text>
+            <Text style={{alignSelf:'center',textAlign:'center',fontSize:hp('2.44%'),fontWeight:'bold',marginTop:hp("1.22%")}}>{I18n.t("failed")} </Text>
             <Text style={{marginTop:hp("1.22%"),fontSize:hp("1.71%"),opacity:0.8, textAlign:'center'}}>
-              Incorrect identifier{"\n"}
-              Plese try to enter new one.{"\n"}
+              {I18n.t("incorrectIdentifier")}{"\n"}
+              {I18n.t("enterNewOne")}{"\n"}
             </Text>
             <TouchableOpacity style={{marginTop:hp("2.56%"),width:wp("48%"),height:hp("5.37%"),borderRadius:22,alignSelf:'center'}} onPress={() => this.closeModalAfterUse()}>
               <LinearGradient useAngle={true} angle={45} colors={['#0AC4BA','#2BDA8E']} style={{width:wp("48%"),height:hp("5.37%"),borderRadius:22,alignItems:'center',justifyContent:'center'}}>
-                <Text style={{fontSize:hp("1.71%"),fontWeight:'bold',color:'white'}}>Got it</Text>
+                <Text style={{fontSize:hp("1.71%"),fontWeight:'bold',color:'white'}}>{I18n.t("gotIt")}</Text>
               </LinearGradient>
             </TouchableOpacity>
           </View>

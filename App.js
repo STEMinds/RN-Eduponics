@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, Dimensions, StyleSheet, Platform} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import I18n from "./src/utils/I18n";
 
 // import the routes
 import Main from "./src/screens/Main";
@@ -54,9 +55,9 @@ function AppScreens() {
         })},
       }}
       >
-      <AppStack.Screen name="Control  " component={Control} />
+      <AppStack.Screen name={I18n.t("control")} component={Control} />
       {/* <AppStack.Screen name="Learn  " component={Learn} />  */}
-      <AppStack.Screen name="Settings  " component={Settings} />
+      <AppStack.Screen name={I18n.t("settings")} component={Settings} />
     </AppStack.Navigator>
   );
 }

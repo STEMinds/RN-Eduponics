@@ -13,6 +13,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Spinner from 'react-native-loading-spinner-overlay';
 import MQTT from 'sp-react-native-mqtt';
 import FirstTimeModal from "../components/FirstTimeModal";
+import I18n from "../utils/I18n";
 
 function guidGenerator() {
     var S4 = function() {
@@ -72,6 +73,7 @@ class Control extends React.Component {
           // TODO: ask for updatd info through MQTT
         }
       );
+      console.log(I18n.languageCode)
     }
 
     async updateStorage(){
@@ -221,11 +223,15 @@ class Control extends React.Component {
         <Image source={require('../images/water_drop.png')} style={styles.waterDrop}/>
         <View style={{flexDirection:'column',marginLeft:wp('2.67%'),alignSelf:'center'}}>
           <Text style={styles.plantNameText}>{this.state.sensors[key].name}</Text>
-          <Text style={styles.plantSoilText}>Soil moisture</Text>
+          <Text style={styles.plantSoilText}>{I18n.t("soilMoisture")}</Text>
         </View>
         <Text style={styles.soilQuantityText}>{this.state.sensors[key].moisture}</Text>
         <TouchableOpacity style={styles.powerButton} disabled={!this.state.sensors[key].enabled} onPress={() => this._givePlantWater(key)}>
-          <LinearGradient useAngle={true} angle={45} colors={this.state.sensors[key].enabled ? ['#0AC4BA','#2BDA8E'] : ['#ABC2E1','#ABC2E1']} style={[styles.absolute,{borderBottomRightRadius:6,borderTopLeftRadius:6}]}/>
+          <LinearGradient useAngle={true} angle={45} colors={this.state.sensors[key].enabled ? ['#0AC4BA','#2BDA8E'] : ['#ABC2E1','#ABC2E1']} style={[styles.absolute,{
+              borderBottomRightRadius: I18n.isRTL ? 0 : 6,
+              borderTopRightRadius: I18n.isRTL ? 6 : 0,
+              borderTopLeftRadius: I18n.isRTL ? 0 : 6,
+              borderBottomLeftRadius: I18n.isRTL ? 6 : 0}]}/>
           <Image source={require('../images/power_button.png')} style={{alignSelf:'center',tintColor: this.state.sensors[key].enabled ? 'white' : '#4D72A3', opacity: this.state.sensors[key].enabled ? 1 : 0.6}}/>
         </TouchableOpacity>
       </View>)
@@ -256,29 +262,29 @@ class Control extends React.Component {
             <View style={styles.container}>
               <Image source={require('../images/flower_illustration.png')} style={styles.flowerIllustration} resizeMode="contain"/>
 
-              <Text style={styles.introText}>Good Morning</Text>
+              <Text style={styles.introText}>{I18n.t('goodMorning')}</Text>
 
               <View style={[styles.dataContainer,{marginTop:hp('2%')}]}>
-                <Text style={styles.infoTitle}>Water quantity</Text>
+                <Text style={styles.infoTitle}>{I18n.t("waterQauntity")}</Text>
                 <Text style={styles.infoSubtitle}>{this.state.environment.water_quantity == null ? "N/A" : this.state.environment.water_quantity}</Text>
               </View>
 
               <View style={styles.dataContainer}>
-                <Text style={styles.infoTitle}>Temperature</Text>
+                <Text style={styles.infoTitle}>{I18n.t("temperature")}</Text>
                 <Text style={styles.infoSubtitle}>{this.state.environment.temp == null ? "N/A" : this.state.environment.temp + "℃"}</Text>
               </View>
 
               <View style={styles.dataContainer}>
-                <Text style={styles.infoTitle}>Humidity</Text>
+                <Text style={styles.infoTitle}>{I18n.t("humidity")}</Text>
                 <Text style={styles.infoSubtitle}>{this.state.environment.humidity == null ? "N/A" : this.state.environment.humidity + "%"}</Text>
               </View>
 
               <View>
-                <Text style={styles.infoTitle}>Sunlight</Text>
+                <Text style={styles.infoTitle}>{I18n.t("sunlight")}</Text>
                 <Text style={styles.infoSubtitle}>{this.state.environment.sunlight == null ? "N/A" : this.state.environment.sunlight + "lx"}</Text>
               </View>
 
-              <Text style={styles.controlText}>Control</Text>
+              <Text style={styles.controlText}>{I18n.t("control")}</Text>
               <LinearGradient useAngle={true} angle={45} colors={['#0AC4BA','#2BDA8E']} style={styles.controlLinear}/>
 
               <View style={styles.soilMoistureContainer}>
@@ -300,7 +306,7 @@ class Control extends React.Component {
             >
               <FirstTimeModal callBack={() => {
                 this.setState({firstTimeModalShow: false});
-                this.props.navigation.navigate('AppStack', { screen: 'Settings  ' })
+                this.props.navigation.navigate('AppStack', { screen: I18n.t("settings") })
               }}/>
             </TouchableOpacity>
             </Modal>
@@ -334,30 +340,36 @@ const styles = StyleSheet.create({
   },
   flowerIllustration:{
     position:'absolute',
-    right:wp('-13.8%'),
+    right: I18n.isRTL ? wp('-5.5%') : wp('-13.8%'),
+    transform: I18n.isRTL ? [{rotateY: '180deg'}] : [],
     top:hp('-3%'),
     //width: wp('82.13'),
     height: hp('49%')
   },
   container:{
-    left:wp('8%')
+    left:wp('8%'),
+    alignItems: I18n.isRTL ? null : 'flex-start'
   },
   introText:{
-    width:wp('100%'),
+    textAlign: I18n.isRTL ? 'left' : 'right',
     marginTop:hp('2%'),
     fontSize:hp('3.2%'),
     fontWeight:'bold'
   },
   infoTitle:{
+    textAlign: I18n.isRTL ? 'left' : 'right',
     fontSize:hp('1.48%'),
     opacity:0.4
   },
   infoSubtitle:{
+    alignSelf: I18n.isRTL ? null : 'flex-start',
+    textAlign: I18n.isRTL ? 'left' : 'right',
     marginTop:hp('1.23%'),
     fontSize:hp('2.22%'),
     fontWeight:'600'
   },
   dataContainer:{
+    alignItems: I18n.isRTL ? null : 'flex-end',
     marginBottom:hp('1.69%')
   },
   controlText:{
@@ -388,12 +400,14 @@ const styles = StyleSheet.create({
     height:hp('3.45%')
   },
   plantNameText:{
+    textAlign: 'left',
     fontSize:hp('1.72%'),
     fontWeight:'bold',
     color:'white',
     marginBottom:hp('0.25%')
   },
   plantSoilText:{
+    textAlign: I18n.isRTL ? 'right' : 'left',
     opacity:0.7,
     fontSize:hp('1.48%'),
     color:'white'
@@ -403,8 +417,10 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     borderWidth:1,
     borderColor:'white',
-    borderBottomRightRadius:6,
-    borderTopLeftRadius:6,
+    borderBottomRightRadius: I18n.isRTL ? 6 : 6,
+    borderBottomLeftRadius: I18n.isRTL ? 0 : 0,
+    borderTopLeftRadius: I18n.isRTL ? 6 : 6,
+    borderTopRightRadius: I18n.isRTL ? 0 : 0,
     height:40,
     width:40,
     bottom:0,

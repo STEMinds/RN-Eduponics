@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
+import I18n from "../utils/I18n";
 
 class SuccessModal extends Component {
 
@@ -31,13 +32,13 @@ class SuccessModal extends Component {
                 </LinearGradient>
               </LinearGradient>
             </LinearGradient>
-            <Text style={{fontSize:hp('2.44%'),fontWeight:'bold',marginTop:hp("1.22%")}}>Success</Text>
+            <Text style={{fontSize:hp('2.44%'),fontWeight:'bold',marginTop:hp("1.22%")}}>{I18n.t("success")}</Text>
             <Text style={{marginTop:hp("1.22%"),fontSize:hp("1.71%"),opacity:0.8, justifyContent:'center', textAlign:'center'}}>
-              Connection successfully established!{"\n"}
+              {I18n.t("connectionEstablished")}{"\n"}
             </Text>
             <TouchableOpacity style={{marginTop:hp("2.56%"),width:wp("48%"),height:hp("5.37%"),borderRadius:22,alignSelf:'center'}} onPress={() => this.closeModalAfterUse()}>
               <LinearGradient useAngle={true} angle={45} colors={['#0AC4BA','#2BDA8E']} style={{width:wp("48%"),height:hp("5.37%"),borderRadius:22,alignItems:'center',justifyContent:'center'}}>
-                <Text style={{fontSize:hp("1.71%"),fontWeight:'bold',color:'white'}}>Awesome</Text>
+                <Text style={{fontSize:hp("1.71%"),fontWeight:'bold',color:'white'}}>{I18n.t("awesome")}</Text>
               </LinearGradient>
             </TouchableOpacity>
           </View>

@@ -245,13 +245,13 @@ PODS:
     - React-cxxreact (= 0.62.2)
     - React-jsi (= 0.62.2)
   - React-jsinspector (0.62.2)
-  - react-native-camera (3.31.0):
+  - react-native-camera (3.35.0):
     - React
-    - react-native-camera/RCT (= 3.31.0)
-    - react-native-camera/RN (= 3.31.0)
-  - react-native-camera/RCT (3.31.0):
+    - react-native-camera/RCT (= 3.35.0)
+    - react-native-camera/RN (= 3.35.0)
+  - react-native-camera/RCT (3.35.0):
     - React
-  - react-native-camera/RN (3.31.0):
+  - react-native-camera/RN (3.35.0):
     - React
   - react-native-safe-area-context (3.0.7):
     - React
@@ -318,13 +318,17 @@ PODS:
     - React
   - RNCMaskedView (0.1.10):
     - React
+  - RNDeviceInfo (5.6.3):
+    - React
   - RNGestureHandler (1.6.1):
+    - React
+  - RNLocalize (1.4.1):
     - React
   - RNPermissions (2.1.5):
     - React
   - RNReanimated (1.9.0):
     - React
-  - RNScreens (2.9.0):
+  - RNScreens (2.10.1):
     - React
   - sp-react-native-mqtt (0.4.25):
     - React
@@ -386,7 +390,9 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
+  - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNLocalize (from `../node_modules/react-native-localize`)
   - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -470,8 +476,12 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/async-storage"
   RNCMaskedView:
     :path: "../node_modules/@react-native-community/masked-view"
+  RNDeviceInfo:
+    :path: "../node_modules/react-native-device-info"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNLocalize:
+    :path: "../node_modules/react-native-localize"
   RNPermissions:
     :path: "../node_modules/react-native-permissions"
   RNReanimated:
@@ -512,7 +522,7 @@ SPEC CHECKSUMS:
   React-jsi: b6dc94a6a12ff98e8877287a0b7620d365201161
   React-jsiexecutor: 1540d1c01bb493ae3124ed83351b1b6a155db7da
   React-jsinspector: 512e560d0e985d0e8c479a54a4e5c147a9c83493
-  react-native-camera: 679479bfe0f59103aca704e8dc39b0cedf5e2f65
+  react-native-camera: 9dd96065b956306de03ef2a2efc3583019f95941
   react-native-safe-area-context: c39fc20a20cd66ebf1d56c6f8b8711142fbfee98
   React-RCTActionSheet: f41ea8a811aac770e0cc6e0ad6b270c644ea8b7c
   React-RCTAnimation: 49ab98b1c1ff4445148b72a3d61554138565bad0
@@ -526,10 +536,12 @@ SPEC CHECKSUMS:
   ReactCommon: ed4e11d27609d571e7eee8b65548efc191116eb3
   RNCAsyncStorage: db711e29e5e0500d9bd21aa0c2e397efa45302b1
   RNCMaskedView: f5c7d14d6847b7b44853f7acb6284c1da30a3459
+  RNDeviceInfo: c5fa705c8914c42800ff36e86d25d277e8eb16ff
   RNGestureHandler: 8f09cd560f8d533eb36da5a6c5a843af9f056b38
+  RNLocalize: c388679af021ddd6069c215f7fdd2acf4e77ede5
   RNPermissions: 1888705aebcc81714efa5dbff94351e4388ae012
   RNReanimated: b5ccb50650ba06f6e749c7c329a1bc3ae0c88b43
-  RNScreens: c526239bbe0e957b988dacc8d75ac94ec9cb19da
+  RNScreens: b748efec66e095134c7166ca333b628cd7e6f3e2
   sp-react-native-mqtt: 15f945b7555fd700cbb5aee995908beb3acf4b32
   Yoga: 3ebccbdd559724312790e7742142d062476b698e
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a

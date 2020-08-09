@@ -1,6 +1,7 @@
-package com.eduponics;
+package com.steminds.eduponics;
 
-import android.app.Application;
+import androidx.multidex.MultiDexApplication;
+import androidx.multidex.MultiDex;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
@@ -12,7 +13,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import com.tuanpm.RCTMqtt.*;
 
-public class MainApplication extends Application implements ReactApplication {
+public class MainApplication extends MultiDexApplication implements ReactApplication {
+
+  protected void attachBaseContext(Context base) {
+     super.attachBaseContext(base);
+     MultiDex.install(this);
+  }
 
   private final ReactNativeHost mReactNativeHost =
       new ReactNativeHost(this) {
@@ -64,7 +70,7 @@ public class MainApplication extends Application implements ReactApplication {
          We use reflection here to pick up the class that initializes Flipper,
         since Flipper library is not available in release mode
         */
-        Class<?> aClass = Class.forName("com.eduponics.ReactNativeFlipper");
+        Class<?> aClass = Class.forName("com.steminds.eduponics.ReactNativeFlipper");
         aClass
             .getMethod("initializeFlipper", Context.class, ReactInstanceManager.class)
             .invoke(null, context, reactInstanceManager);

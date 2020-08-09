@@ -1,4 +1,4 @@
-package com.eduponics;
+package com.steminds.eduponics;
 
 import com.facebook.react.ReactActivity;
 

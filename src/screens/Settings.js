@@ -16,6 +16,7 @@ import SuccessModal from "../components/SuccessModal";
 import FailedModal from "../components/FailedModal";
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { RNCamera } from 'react-native-camera';
+import I18n from "../utils/I18n";
 
 class Settings extends React.Component {
 
@@ -98,7 +99,7 @@ class Settings extends React.Component {
         return(
           <View style={{alignItems:'center',justifyContent:'center',position:'absolute',width:wp('27.6%'),height:hp('4.2%'),borderRadius:20,right:wp('15%')}}>
             <LinearGradient useAngle={true} angle={45} colors={['#0AC4BA','#2BDA8E']} style={styles.gradientStyle}>
-              <Text style={{alignSelf:'center',textAlign:'center',fontSize:hp('1.72%'), fontWeight:'bold', color:'white', width:wp('19.9%')}}>Connected</Text>
+              <Text style={{alignSelf:'center',textAlign:'center',fontSize:hp('1.72%'), fontWeight:'bold', color:'white', width:wp('19.9%')}}>{I18n.t('connected')}</Text>
             </LinearGradient>
           </View>
         )
@@ -112,7 +113,7 @@ class Settings extends React.Component {
               height:hp('4.53%')
             }
           }),right:wp('15%')}}>
-                <Text style={{alignSelf:'center',textAlign:'center',fontSize:hp('1.72%'), fontWeight:'bold', color:'#0AC4BA', width:wp('26%')}}>Disconnected</Text>
+                <Text style={{alignSelf:'center',textAlign:'center',fontSize:hp('1.72%'), fontWeight:'bold', color:'#0AC4BA', width:wp('26%')}}>{I18n.t('disconnected')}</Text>
           </View>
         )
       }
@@ -120,8 +121,8 @@ class Settings extends React.Component {
 
     _wipeAsyncStorage = async() => {
         Alert.alert(
-        "Wipe local app data",
-        "Are you sure you want to reset the app and wipe your local data?",
+        I18n.t("wipeDataTitle"),
+        I18n.t("wipeDataSubtitle"),
         [
           {
             text: "Cancel",
@@ -145,17 +146,17 @@ class Settings extends React.Component {
           <View style={styles.container}>
 
             <View style={{marginTop:hp('2.83%')}}>
-              <Text style={styles.titleText}>Language  </Text>
-              <Text style={styles.subtitleText}>English  </Text>
+              <Text style={styles.titleText}>{I18n.t("language")}</Text>
+              <Text style={styles.subtitleText}>{I18n.t(I18n.languageCode)}</Text>
             </View>
 
             <View style={{marginTop:hp('2.34%')}}>
-              <Text style={styles.titleText}>MQTT Client Identifier  </Text>
+              <Text style={styles.titleText}>{I18n.t("clientIdentifier")}</Text>
               <TouchableOpacity style={styles.cameraStyle} onPress={() => this._cameraIconPressed()}>
                 <Image source={require('../images/camera-icon.png')}/>
               </TouchableOpacity>
               <TextInput
-                placeholder={"Your personal UUID goes here  "}
+                placeholder={I18n.t("uuidPlaceHolder")}
                 value={this.state.identifier}
                 returnKeyType={"done"}
                 style={[styles.subtitleText,{width:wp('75%')}]}
@@ -173,7 +174,7 @@ class Settings extends React.Component {
             </View>
 
             <View style={{marginTop:hp('2.34%')}}>
-              <Text style={styles.titleText}>MQTT Broker</Text>
+              <Text style={styles.titleText}>{I18n.t("mqttBroker")}</Text>
               <View style={{flexDirection:'row'}}>
                 <Text style={styles.subtitleText}>mqtt.eclipse.org:1883   </Text>
                 {this._renderConnectionState()}
@@ -260,15 +261,15 @@ class Settings extends React.Component {
             <View style={styles.seperator}/>*/}
 
             <View style={{marginTop:hp('3.57%')}}>
-              <Text style={styles.titleText}>Help  </Text>
+              <Text style={styles.titleText}>{I18n.t("help")}</Text>
               <TouchableOpacity onPress={() => Linking.openURL('mailto:contact@steminds.com?subject=[EDUPONICS] Bug report&body=Please describe your bug here, make sure to state your mobile app version and what type of smart phone you have including the OS version you are running.') }>
-                <Text style={styles.subtitleText}>Report a bug  </Text>
+                <Text style={styles.subtitleText}>{I18n.t("reportBug")}</Text>
               </TouchableOpacity>
             </View>
 
             <TouchableOpacity style={styles.buttonStyle} onPress={() => this._wipeAsyncStorage()}>
               <LinearGradient useAngle={true} angle={45} colors={['#0AC4BA','#2BDA8E']} style={styles.buttonGradientStyle}>
-                <Text style={{fontSize:hp('1.72%'), fontWeight:'bold', color:'white'}}>WIPE DATA  </Text>
+                <Text style={{fontSize:hp('1.72%'), fontWeight:'bold', color:'white'}}>{I18n.t("wipeData")}</Text>
               </LinearGradient>
             </TouchableOpacity>
 

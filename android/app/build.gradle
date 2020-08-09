@@ -129,11 +129,11 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.eduponics"
+        applicationId "com.steminds.eduponics"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.1"
         missingDimensionStrategy 'react-native-camera', 'general'
         multiDexEnabled true
     }
@@ -230,10 +230,6 @@ dependencies {
 
     // enable multidex
     implementation 'com.android.support:multidex:1.0.3'
-
-    // fix crash related to react-native-screens
-    implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
-    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha02'
 }
 
 // Run this once to be able to run the application with BUCK

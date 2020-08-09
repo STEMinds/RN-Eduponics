@@ -11,6 +11,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import {View,Text,StyleSheet,TouchableOpacity,Image,StatusBar,Platform,Linking} from 'react-native'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
+import I18n from "../utils/I18n";
 
 class Main extends React.Component {
 
@@ -37,11 +38,11 @@ class Main extends React.Component {
             barStyle="dark-content"
           />
           <View style={styles.titleView}>
-            <Text style={styles.titleText}>STEMinds </Text>
-            <Text style={[styles.titleText,{color:'rgba(78,185,95,100)'}]}> Eduponics</Text>
+            <Text style={styles.titleText}>{I18n.t("steminds")} </Text>
+            <Text style={[styles.titleText,{color:'rgba(78,185,95,100)'}]}>{I18n.t("eduponics")}</Text>
           </View>
 
-          <Text style={styles.subtitleText}>Make your own IoT garden</Text>
+          <Text style={styles.subtitleText}>{I18n.t("subtitleText")}</Text>
 
           <Image style={styles.logoGrey} source={require('../images/logo_grey.png')} resizeMode="contain"/>
 
@@ -49,14 +50,14 @@ class Main extends React.Component {
 
           <TouchableOpacity style={styles.letsGoButton} onPress={() => this.props.navigation.replace('AppStack', { screen: 'Control' })}>
             <LinearGradient useAngle={true} angle={45} colors={['#0AC4BA','#2BDA8E']} style={[styles.absolute,{borderRadius:24}]}/>
-            <Text style={styles.letsGoText}>Let's Go!</Text>
+            <Text style={styles.letsGoText}>{I18n.t("letsGo")}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={{marginTop:hp('3.94%')}} onPress={() => this.openTermsOfService()}>
-            <Text style={[styles.termsText]}>Terms of service</Text>
+            <Text style={[styles.termsText]}>{I18n.t("termsOfService")}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={{marginTop:hp('0.99%')}} onPress={() => this.openPrivacyPolicy()}>
-            <Text style={[styles.termsText]}>Privacy policy</Text>
+            <Text style={[styles.termsText]}>{I18n.t("privacyPolicy")}</Text>
           </TouchableOpacity>
         </View>
       )

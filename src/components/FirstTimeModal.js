@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
+import I18n from "../utils/I18n";
 
 class FirstTimeModal extends Component {
 
@@ -19,17 +20,14 @@ class FirstTimeModal extends Component {
     render() {
         return (
           <View style={styles.container}>
-            <Text style={styles.title}>Welcome  </Text>
+            <Text style={styles.title}>{I18n.t('welcome')}</Text>
             <Image source={require('../images/intro_image.png')} style={styles.introImage} resizeMode="contain"/>
             <Text style={styles.contentText}>
-              Seems like it’s your first time.{"\n"}
-              Your device is not connected.{"\n"}
-              Let’s go to settings,{"\n"}
-              and connect your Eduponics Kit!
+              {I18n.t('welcomeText')}
             </Text>
             <TouchableOpacity style={styles.letsGoButton} onPress={() => this.closeModalAfterUse()}>
               <LinearGradient useAngle={true} angle={45} colors={['#0AC4BA','#2BDA8E']} style={[styles.absolute,{borderRadius:22}]}/>
-              <Text style={styles.letsGoText}>Let's Go!</Text>
+              <Text style={styles.letsGoText}>{I18n.t('letsGo')}</Text>
             </TouchableOpacity>
           </View>
         );
