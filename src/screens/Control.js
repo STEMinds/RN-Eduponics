@@ -288,7 +288,7 @@ class Control extends React.Component {
               <LinearGradient useAngle={true} angle={45} colors={['#0AC4BA','#2BDA8E']} style={styles.controlLinear}/>
 
               <View style={styles.soilMoistureContainer}>
-                <ScrollView style={{height:hp('40.32%')}}>
+                <ScrollView showsVerticalScrollIndicator={false}>
                   {this._renderSoilSensors()}
                 </ScrollView>
               </View>
@@ -383,6 +383,7 @@ const styles = StyleSheet.create({
     marginTop:hp('0.49%')
   },
   soilMoistureContainer:{
+    height:hp('40.32%'),
     marginTop:hp('3.69%')
   },
   soilMoistureBox:{
