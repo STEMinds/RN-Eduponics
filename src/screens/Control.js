@@ -255,7 +255,7 @@ class Control extends React.Component {
             />
             <Spinner
               visible={this.state.spinner}
-              textContent={'Loading MQTT data...'}
+              textContent={I18n.t("loadingData")}
               textStyle={styles.spinnerTextStyle}
             />
             <LinearGradient colors={['#FFFFFF','#D4E5F8']} style={styles.absolute}/>
