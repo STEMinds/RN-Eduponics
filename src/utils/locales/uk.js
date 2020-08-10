@@ -1,3 +1,5 @@
+// Translator name:
+// Translated language: Ukrainian
 export default {
   // navigation
   settings: "Налаштування",
@@ -16,6 +18,7 @@ export default {
   humidity: "Вологість",
   sunlight: "Сонячне світло",
   control: "Управілння",
+  loadingData: "Loading MQTT data...",
   // greetings
   goodMorning: "Good morning",
   goodNoon: "Good noon",
@@ -46,12 +49,14 @@ export default {
   wipeDataSubtitle: "Ви впевнені, що хочете скинути додаток та стерти локальні дані?",
   connected: "Connected",
   disconnected: "Disconnected",
-  // language codes
-  en: "Англійська",
-  zh: "Китайська",
-  he: "Іврит",
-  ru: "Російська",
-  vi: "Vietnamese",
+  // language codes (each one on it's own native language)
+  en: "English",
+  de: "Deutsche",
+  zh: "中文",
+  he: "עברית",
+  ru: "русский",
+  hi: "हिन्दी",
+  vi: "Tiếng Việt",
   pt: "Português",
-  uk: "Ukrainian"
+  uk: "Українська"
 };

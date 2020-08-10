@@ -1,5 +1,4 @@
 // Translator name: Lưu Đức Toàn
-// Translator email (stays confidential, only for contact purposes):
 // Translated language: Vietnamese
 export default {
   // navigation
@@ -19,6 +18,7 @@ export default {
   humidity: "Độ ẩm",
   sunlight: "Ánh sáng",
   control: "Điều khiển",
+  loadingData: "Loading MQTT data...",
   // greetings
   goodMorning: "Good morning",
   goodNoon: "Good noon",
@@ -49,12 +49,14 @@ export default {
   wipeDataSubtitle: "Bạn có chắc chắn muốn thiết lập lại ứng dụng và xóa toàn bộ dữ liệu",
   connected: "Connected",
   disconnected: "Disconnected",
-  // language codes
-  en: "Tiếng Anh",
-  zh: "Tiếng Trung",
-  he: "Tiếng do thái",
-  ru: "Tiếng Nga",
-  vi: "Vietnamese",
-  pt: "Portugese",
-  uk: "Ukrainian"
+  // language codes (each one on it's own native language)
+  en: "English",
+  de: "Deutsche",
+  zh: "中文",
+  he: "עברית",
+  ru: "русский",
+  hi: "हिन्दी",
+  vi: "Tiếng Việt",
+  pt: "Português",
+  uk: "Українська"
 };

@@ -1,5 +1,4 @@
 // Translator name: Roni Gorodetsky
-// Translator email (stays confidential, only for contact purposes):
 // Translated language: English
 export default {
   // navigation
@@ -19,6 +18,7 @@ export default {
   humidity: "humidity",
   sunlight: "Sunlight",
   control: "Control",
+  loadingData: "Loading MQTT data...",
   // greetings
   goodMorning: "Good morning",
   goodNoon: "Good noon",
@@ -39,9 +39,9 @@ export default {
   awesome: "Awesome",
   // settings
   mqttBroker: "MQTT Broker",
-  uuidPlaceHolder: "Your personal UUID goes here ...  ",
-  clientIdentifier:"MQTT Client Identifier  ",
-  language: "Language ",
+  uuidPlaceHolder: "Your personal UUID goes here ... ",
+  clientIdentifier:"MQTT Client Identifier",
+  language: "Language",
   help: "Help",
   reportBug: "Report a bug",
   wipeData: "WIPE DATA",
@@ -49,12 +49,14 @@ export default {
   wipeDataSubtitle: "Are you sure you want to reset the app and wipe your local data?",
   connected: "Connected",
   disconnected: "Disconnected",
-  // language codes
+  // language codes (each one on it's own native language)
   en: "English",
-  zh: "Chinese",
-  he: "Hebrew",
-  ru: "Russian",
-  vi: "Vietnamese",
+  de: "Deutsche",
+  zh: "中文",
+  he: "עברית",
+  ru: "русский",
+  hi: "हिन्दी",
+  vi: "Tiếng Việt",
   pt: "Português",
-  uk: "Ukrainian"
+  uk: "Українська"
 };

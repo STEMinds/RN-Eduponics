@@ -1,5 +1,4 @@
 // Translator name: Amanda Helale Elnecave
-// Translator email (stays confidential, only for contact purposes):
 // Translated language: Português
 export default {
   // navigation
@@ -19,6 +18,7 @@ export default {
   humidity: "Umidade",
   sunlight: "Luz do sol",
   control: "Controle",
+  loadingData: "Loading MQTT data...",
   // greetings
   goodMorning: "Bom Dia",
   goodNoon: "Bom meio dia",
@@ -49,12 +49,14 @@ export default {
   wipeDataSubtitle: "Você tem certeza que quer redefinir o aplicativo e limpar seus dados?",
   connected: "Conectado",
   disconnected: "Desconectado",
-  // language codes
-  en: "Inglês",
-  he: "Hebraico",
-  ru: "Russo",
-  vi: "Vietnamita",
-  zh: "Chinese",
+  // language codes (each one on it's own native language)
+  en: "English",
+  de: "Deutsche",
+  zh: "中文",
+  he: "עברית",
+  ru: "русский",
+  hi: "हिन्दी",
+  vi: "Tiếng Việt",
   pt: "Português",
-  uk: "Ukrainian"
+  uk: "Українська"
 };

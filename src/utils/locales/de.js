@@ -1,5 +1,4 @@
 // Translator name: David Motsch
-// Translator email (stays confidential, only for contact purposes):
 // Translated language: German
 export default {
   // navigation
@@ -19,14 +18,15 @@ export default {
   humidity: "Luftfeuchtigkeit",
   sunlight: "Sonnenlicht",
   control: "Steuerung",
+  loadingData: "Loading MQTT data...",
   // greetings
-  goodMorning: "Good morning",
-  goodNoon: "Good noon",
-  goodAfternoon: "Good afternoon",
-  goodEvening: "Good evening",
-  goodNight: "Good night",
+  goodMorning: "Guten Morgen",
+  goodNoon: "Guten Tag",
+  goodAfternoon: "Guten Tag",
+  goodEvening: "Guten Abend",
+  goodNight: "Gute Nacht",
   // first time modal
-  welcome: "Welcome",
+  welcome: "Willkommen",
   welcomeText: "Seems like it’s your first time.\nYour device is not connected.\nLet’s go to settings,\nand connect your Eduponics Kit!",
   // failed modal
   incorrectIdentifier: "Inkorrekte Bezeichnung",
@@ -41,20 +41,22 @@ export default {
   mqttBroker: "MQTT Broker",
   uuidPlaceHolder: "Deine persönliche UUID kommt hierhin ...",
   clientIdentifier:"MQTT Client-Bezeichnung",
-  language: "Sprache ",
+  language: "Sprache",
   help: "Hilfe",
   reportBug: "Einen Fehler melden",
   wipeData: "DATEN LÖSCHEN",
   wipeDataTitle: "Lokale App-Daten löschen",
   wipeDataSubtitle: "Bist du sicher, dass du die App zurücksetzen und die lokalen Daten löschen möchtest?",
-  connected: "Connected",
-  disconnected: "Disconnected",
-  // language codes
-  en: "Englisch",
-  zh: "Chinesisch",
-  he: "Hebräisch",
-  ru: "Russisch",
-  vi: "Vietnamese",
-  pt: "Portugese",
-  uk: "Ukrainian"
+  connected: "Verbunden",
+  disconnected: "Getrennt",
+  // language codes (each one on it's own native language)
+  en: "English",
+  de: "Deutsche",
+  zh: "中文",
+  he: "עברית",
+  ru: "русский",
+  hi: "हिन्दी",
+  vi: "Tiếng Việt",
+  pt: "Português",
+  uk: "Українська"
 }

@@ -1,5 +1,4 @@
 // Translator name: Victoria Zhou
-// Translator email (stays confidential, only for contact purposes):
 // Translated language: Mandarin
 export default {
   // navigation
@@ -19,6 +18,7 @@ export default {
   humidity: "空气湿度",
   sunlight: "阳光",
   control: "控制",
+  loadingData: "Loading MQTT data...",
   // greetings
   goodMorning: "早上好",
   goodNoon: "中午好",
@@ -29,8 +29,8 @@ export default {
   welcome: "欢迎",
   welcomeText: "首次登陆.\n尚未连接你的设备.\n请打开设置,\n并连接你的Eduponics套件!",
   // failed modal
-  incorrectIdentifier: "// 识别码错误",
-  enterNewOne: "/请重新输入.",
+  incorrectIdentifier: "识别码错误",
+  enterNewOne: "请重新输入.",
   gotIt: "正在验证",
   failed: "验证失败",
   // success modal
@@ -49,12 +49,14 @@ export default {
   wipeDataSubtitle: "确定要重置应用并清除本地数据吗?",
   connected: "已连接",
   disconnected: "未连接",
-  // language codes
+  // language codes (each one on it's own native language)
   en: "English",
-  zh: "Chinese",
-  he: "Hebrew",
-  ru: "Russian",
-  vi: "Vietnamese",
-  pt: "Portugese",
-  uk: "Ukrainian"
+  de: "Deutsche",
+  zh: "中文",
+  he: "עברית",
+  ru: "русский",
+  hi: "हिन्दी",
+  vi: "Tiếng Việt",
+  pt: "Português",
+  uk: "Українська"
 };

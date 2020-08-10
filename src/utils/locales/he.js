@@ -1,5 +1,4 @@
 // Translator name: Roni Gorodetsky
-// Translator email (stays confidential, only for contact purposes): roni@roni.io
 // Translated language: Hebrew
 export default {
   // navigation
@@ -19,6 +18,7 @@ export default {
   humidity: "לחות",
   sunlight: "כמות אור",
   control: "בקרה",
+  loadingData: "טוען נתונים ...",
   // greetings
   goodMorning: "בוקר טוב",
   goodNoon: "צהריים טובים",
@@ -26,7 +26,7 @@ export default {
   goodEvening: "ערב טוב",
   goodNight: "לילה טוב",
   // first time modal
-  welcome: "Welcome",
+  welcome: "ברוכים הבאים",
   welcomeText: "Seems like it’s your first time.\nYour device is not connected.\nLet’s go to settings,\nand connect your Eduponics Kit!",
   // failed modal
   incorrectIdentifier: "מזהה שגוי",
@@ -49,12 +49,14 @@ export default {
   wipeDataSubtitle: "אתה בטוח שאתה רוצה למחוק את כל המידע מהאפליקצייה？",
   connected: "מחובר",
   disconnected: "מנותק",
-  // language codes
-  en: "אנגלית",
-  zh: "סינית",
+  // language codes (each one on it's own native language)
+  en: "English",
+  de: "Deutsche",
+  zh: "中文",
   he: "עברית",
-  ru: "רוסית",
-  vi: "וויאטנאמית",
+  ru: "русский",
+  hi: "हिन्दी",
+  vi: "Tiếng Việt",
   pt: "Português",
-  uk: "Ukrainian"
+  uk: "Українська"
 };

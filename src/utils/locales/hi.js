@@ -1,5 +1,4 @@
 // Translator name: Akshay Vernekar
-// Translator email (stays confidential, only for contact purposes):
 // Translated language: Hindi
 export default {
   // navigation
@@ -19,6 +18,7 @@ export default {
   humidity: "नमी",
   sunlight: "रोशनी",
   control: "नियंत्रण",
+  loadingData: "Loading MQTT data...",
   // greetings
   goodMorning: "Good morning",
   goodNoon: "Good noon",
@@ -49,12 +49,14 @@ export default {
   wipeDataSubtitle: "क्या आप वाकई APP को रीसेट और अपने स्थानीय जानकारी को मिटाना चाहते है",
   connected: "Connected",
   disconnected: "Disconnected",
-  // language codes
+  // language codes (each one on it's own native language)
   en: "English",
-  zh: "Chinese",
-  he: "Hebrew",
-  ru: "Russian",
-  vi: "Vietnamese",
+  de: "Deutsche",
+  zh: "中文",
+  he: "עברית",
+  ru: "русский",
+  hi: "हिन्दी",
+  vi: "Tiếng Việt",
   pt: "Português",
-  uk: "Ukrainian"
+  uk: "Українська"
 };
