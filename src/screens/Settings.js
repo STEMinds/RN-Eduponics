@@ -267,13 +267,13 @@ class Settings extends React.Component {
               </TouchableOpacity>
             </View>
 
-            <TouchableOpacity style={styles.buttonStyle} onPress={() => this._wipeAsyncStorage()}>
-              <LinearGradient useAngle={true} angle={45} colors={['#0AC4BA','#2BDA8E']} style={styles.buttonGradientStyle}>
-                <Text style={{fontSize:hp('1.72%'), fontWeight:'bold', color:'white'}}>{I18n.t("wipeData")}</Text>
-              </LinearGradient>
-            </TouchableOpacity>
-
           </View>
+
+          <TouchableOpacity style={styles.buttonStyle} onPress={() => this._wipeAsyncStorage()}>
+            <LinearGradient useAngle={true} angle={45} colors={['#0AC4BA','#2BDA8E']} style={styles.buttonGradientStyle}>
+              <Text style={{fontSize:hp('1.72%'), fontWeight:'bold', color:'white'}}>{I18n.t("wipeData")}</Text>
+            </LinearGradient>
+          </TouchableOpacity>
 
           <Modal
             animationType="fade"
@@ -315,10 +315,10 @@ class Settings extends React.Component {
                 <TouchableOpacity
                   style={[styles.absolute,{backgroundColor: 'rgba(100,100,100, 0.5)'}]}
                   activeOpacity={1}
-                  onPressOut={() => {this.setState({failedModalVisible:false})}}
+                  onPressOut={() => {this.setState({failedModalVisible:false, identifier:''})}}
                 >
                   <FailedModal callBack={(e) => {
-                    this.setState({failedModalVisible: false});
+                    this.setState({failedModalVisible: false, identifier:''});
                   }}/>
                 </TouchableOpacity>
                 </Modal>
@@ -384,14 +384,9 @@ const styles = StyleSheet.create({
     borderColor:'rgba(225,227,232,100)'
   },
   buttonStyle:{
-    ...Platform.select({
-      ios: {
-        marginTop:hp('23%')
-      },
-      android: {
-        marginTop:hp('21%')
-      }
-    }),
+    position:'absolute',
+    alignSelf:'center',
+    bottom:hp('9.85%'),
     width:wp('84%'),
     height:hp('5.91%'),
     borderRadius:24
