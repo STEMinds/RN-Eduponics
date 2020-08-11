@@ -6,7 +6,7 @@
 //
 
 import React from 'react'
-import {View,Text,StyleSheet,TouchableOpacity,Image,StatusBar,Platform,Animated,Modal,ScrollView} from 'react-native'
+import {View,Text,StyleSheet,TouchableOpacity,Image,StatusBar,Platform,Animated,Modal,ScrollView,Alert} from 'react-native'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-community/async-storage';
 import LinearGradient from 'react-native-linear-gradient';
@@ -28,6 +28,7 @@ class Control extends React.Component {
     constructor(props) {
       super(props)
       this.state = {
+        welcomeMessage:"",
         spinner:false,
         sample:true,
         identifier:'',
@@ -69,11 +70,50 @@ class Control extends React.Component {
         'focus',
         payload => {
           console.log("Control is focused")
+          this._setWelcomeMessage()
           this.updateStorage()
-          // TODO: ask for updatd info through MQTT
         }
       );
-      console.log(I18n.languageCode)
+    }
+
+    componentDidMount() {
+      setTimeout(() => {
+        // check if spinner still rolling
+        if(this.state.spinner){
+          this.setState({spinner: false});
+          // can't fetch mqtt data, something is wrong
+          setTimeout(() => {
+              Alert.alert(I18n.t("unableToLoadTitle"),I18n.t("unableToLoadContent"));
+          }, 100);
+        }
+      }, 15000);
+    }
+
+    _setWelcomeMessage(){
+      var today = new Date();
+      var time = today.getHours()
+      var sentence = ""
+      if(time >= 22 || time < 5){
+        // good night
+        sentence = I18n.t("goodNight");
+      }
+      if(time >= 5 && time < 12){
+        // good morning
+        sentence = I18n.t("goodMorning");
+      }
+      if(time >= 12 && time < 14){
+        // good noon
+        sentence = I18n.t("goodNoon");
+      }
+      if(time >= 14 && time < 18){
+        // good after-noon
+        sentence = I18n.t("goodAfternoon");
+      }
+      if(time > 18 && time < 22){
+        // good evening
+        sentence = I18n.t("goodEvening");
+      }
+      this.setState({welcomeMessage:sentence})
     }
 
     async updateStorage(){
@@ -112,13 +152,6 @@ class Control extends React.Component {
         // saving error
         console.log("error saving identifier",e)
       }
-    }
-
-    toggleAnimation = () =>{
-      Animated.timing(this.state.animationValue, {
-        toValue : 50,
-        timing : 1500
-      })
     }
 
     async updateSensorsData (client){
@@ -262,7 +295,7 @@ class Control extends React.Component {
             <View style={styles.container}>
               <Image source={require('../images/flower_illustration.png')} style={styles.flowerIllustration} resizeMode="contain"/>
 
-              <Text style={styles.introText}>{I18n.t('goodMorning')}</Text>
+              <Text style={styles.introText}>{this.state.welcomeMessage}</Text>
 
               <View style={[styles.dataContainer,{marginTop:hp('2%')}]}>
                 <Text style={styles.infoTitle}>{I18n.t("waterQauntity")}</Text>
