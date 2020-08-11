@@ -18,7 +18,9 @@ export default {
   humidity: "Luftfeuchtigkeit",
   sunlight: "Sonnenlicht",
   control: "Steuerung",
-  loadingData: "Loading MQTT data...",
+  loadingData: "Laden von MQTT Daten ...",
+  unableToLoadTitle: "Unable to fetch MQTT data",
+  unableToLoadContent: "Please make sure your hardware MQTT client is working properly",
   // greetings
   goodMorning: "Guten Morgen",
   goodNoon: "Guten Tag",
@@ -27,7 +29,7 @@ export default {
   goodNight: "Gute Nacht",
   // first time modal
   welcome: "Willkommen",
-  welcomeText: "Seems like it’s your first time.\nYour device is not connected.\nLet’s go to settings,\nand connect your Eduponics Kit!",
+  welcomeText: "Es scheint, als seist du zum ersten Mal hier. \nDein Gerät ist nicht verbunden. \nGehe in die Einstellungen \nund verbinde dein Eduponics-Kit!",
   // failed modal
   incorrectIdentifier: "Inkorrekte Bezeichnung",
   enterNewOne: "Bitte versuche eine neue einzugeben.",

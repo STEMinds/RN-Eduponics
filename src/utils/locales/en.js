@@ -19,6 +19,8 @@ export default {
   sunlight: "Sunlight",
   control: "Control",
   loadingData: "Loading MQTT data...",
+  unableToLoadTitle: "Unable to fetch MQTT data",
+  unableToLoadContent: "Please make sure your hardware MQTT client is working properly",
   // greetings
   goodMorning: "Good morning",
   goodNoon: "Good noon",

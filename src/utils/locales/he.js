@@ -19,6 +19,8 @@ export default {
   sunlight: "כמות אור",
   control: "בקרה",
   loadingData: "טוען נתונים ...",
+  unableToLoadTitle: "Unable to fetch MQTT data",
+  unableToLoadContent: "Please make sure your hardware MQTT client is working properly",
   // greetings
   goodMorning: "בוקר טוב",
   goodNoon: "צהריים טובים",
@@ -27,7 +29,7 @@ export default {
   goodNight: "לילה טוב",
   // first time modal
   welcome: "ברוכים הבאים",
-  welcomeText: "Seems like it’s your first time.\nYour device is not connected.\nLet’s go to settings,\nand connect your Eduponics Kit!",
+  welcomeText: "נראה שזה הביקור הראשון שלך\nהחומרה שלך לא מחוברת\nבוא נלך להגדרות,\nונחבר את החומרה לאפליקציה！",
   // failed modal
   incorrectIdentifier: "מזהה שגוי",
   enterNewOne: "אנא נסה להקליד מזהה חדש",

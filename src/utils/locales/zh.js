@@ -18,7 +18,9 @@ export default {
   humidity: "空气湿度",
   sunlight: "阳光",
   control: "控制",
-  loadingData: "Loading MQTT data...",
+  loadingData: "正在加载MQTT数据...",
+  unableToLoadTitle: "Unable to fetch MQTT data",
+  unableToLoadContent: "Please make sure your hardware MQTT client is working properly",
   // greetings
   goodMorning: "早上好",
   goodNoon: "中午好",
