@@ -166,7 +166,8 @@ class Control extends React.Component {
       if(this.state.mqtt_client == null){
         /* create mqtt client */
         var client = await MQTT.createClient( {
-          uri: 'mqtt://mqtt.eclipse.org:1883',
+          //uri: 'mqtt://mqtt.eclipse.org:1883',
+          uri: 'mqtts://mqtt.steminds.com:8883',
           clientId: guidGenerator()
         })
         /* connect to client */

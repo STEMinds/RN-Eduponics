@@ -176,7 +176,7 @@ class Settings extends React.Component {
             <View style={{marginTop:hp('2.34%')}}>
               <Text style={styles.titleText}>{I18n.t("mqttBroker")}</Text>
               <View style={{flexDirection:'row'}}>
-                <Text style={styles.subtitleText}>mqtt.eclipse.org:1883   </Text>
+                <Text style={styles.subtitleText}>mqtt.steminds.com</Text>
                 {this._renderConnectionState()}
               </View>
             </View>
