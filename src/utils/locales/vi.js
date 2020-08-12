@@ -29,7 +29,7 @@ export default {
   goodNight: "Chúc ngủ ngon",
   // first time modal
   welcome: "Chào mừng",
-  welcomeText: "Seems like it’s your first time.\nYour device is not connected.\nLet’s go to settings,\nand connect your Eduponics Kit!",
+  welcomeText: "Có vẻ như đây là  lần đầu của bạn. \n Thiết cị cảu bạn chưa được kết nối. \n Hãy đến phần cài đặt \n Và kết nối Eduponics Kit của bạn.",
   // failed modal
   incorrectIdentifier: "Sai mã xác minh",
   enterNewOne: "Vui lòng nhập lai.",
@@ -49,8 +49,8 @@ export default {
   wipeData: "XÓA DỮ LIỆU",
   wipeDataTitle: "Xóa dữ liệu trên thiết bị",
   wipeDataSubtitle: "Bạn có chắc chắn muốn thiết lập lại ứng dụng và xóa toàn bộ dữ liệu",
-  connected: "Connected",
-  disconnected: "Disconnected",
+  connected: "kết nối",
+  disconnected: "ngắt kết nối",
   // language codes (each one on it's own native language)
   en: "English",
   de: "Deutsche",

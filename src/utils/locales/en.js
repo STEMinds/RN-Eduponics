@@ -22,11 +22,11 @@ export default {
   unableToLoadTitle: "Unable to fetch MQTT data",
   unableToLoadContent: "Please make sure your hardware MQTT client is working properly",
   // greetings
-  goodMorning: "Good morning",
-  goodNoon: "Good noon",
-  goodAfternoon: "Good afternoon",
-  goodEvening: "Good evening",
-  goodNight: "Good night",
+  goodMorning: "Good Morning",
+  goodNoon: "Good Day",
+  goodAfternoon: "Good Afternoon",
+  goodEvening: "Good Evening",
+  goodNight: "Good Night",
   // first time modal
   welcome: "Welcome",
   welcomeText: "Seems like it’s your first time.\nYour device is not connected.\nLet’s go to settings,\nand connect your Eduponics Kit!",
