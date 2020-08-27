@@ -23,6 +23,7 @@ class Settings extends React.Component {
     constructor(props) {
       super(props)
       this.state = {
+        language:"English",
         cameraModalVisible:false,
         identifier:'',
         notifications_enabled:false,
@@ -41,6 +42,14 @@ class Settings extends React.Component {
     }
 
     async componentDidMount() {
+      // debug language code
+      if(I18n.t(I18n.languageCode).includes("missing")){
+        // this language is corrently not supported, fall-back to English
+        this.setState({language:"English"})
+      }else{
+        // language exist in translations
+        this.setState({language:I18n.t(I18n.languageCode)})
+      }
       // get saved data if not introduced already
       if(this.state.identifier == ''){
         try {
@@ -147,7 +156,7 @@ class Settings extends React.Component {
 
             <View style={{marginTop:hp('2.83%')}}>
               <Text style={styles.titleText}>{I18n.t("language")}</Text>
-              <Text style={styles.subtitleText}>{I18n.t(I18n.languageCode)}</Text>
+              <Text style={styles.subtitleText}>{this.state.language}</Text>
             </View>
 
             <View style={{marginTop:hp('2.34%')}}>
