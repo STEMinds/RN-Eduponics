@@ -29,6 +29,7 @@
     "react-native-qrcode-scanner": "^1.4.1",
     "react-native-reanimated": "^1.9.0",
     "react-native-responsive-screen": "^1.4.1",
+    "react-native-restart": "0.0.17",
     "react-native-safe-area-context": "^3.0.7",
     "react-native-screens": "^2.9.0",
     "react-native-switch": "^2.0.0",

@@ -10,6 +10,7 @@ import {View,Text,StyleSheet,TouchableOpacity,ImageBackground,Image,Platform,Tex
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
 import { Switch } from 'react-native-switch';
+import RNRestart from 'react-native-restart';
 import AsyncStorage from '@react-native-community/async-storage';
 import CameraModal from "../components/CameraModal";
 import SuccessModal from "../components/SuccessModal";
@@ -141,7 +142,7 @@ class Settings extends React.Component {
           { text: "Wipe", onPress: () => {
             this.setState({identifer:''})
             AsyncStorage.clear();
-            DevSettings.reload()
+            RNRestart.Restart();
           } }
         ],
         { cancelable: false }
