@@ -394,7 +394,7 @@ const styles = StyleSheet.create({
     alignItems: I18n.isRTL ? null : 'flex-start'
   },
   introText:{
-    //textAlign: I18n.isRTL ? 'left' : 'right',
+    textAlign: I18n.isRTL ? 'left' : 'right',
     //textAlign: I18n.isRTL ? 'right' : 'left',
     marginTop:hp('2%'),
     fontSize:hp('3.2%'),
@@ -410,14 +410,14 @@ const styles = StyleSheet.create({
   },
   infoTitle:{
     //textAlign: I18n.isRTL ? 'left' : 'right',
-    textAlign: I18n.isRTL ? 'right' : 'left',
+    //textAlign: I18n.isRTL ? 'right' : 'left',
     fontSize:hp('1.48%'),
     opacity:0.4
   },
   infoSubtitle:{
     alignSelf: I18n.isRTL ? null : 'flex-start',
-    //textAlign: I18n.isRTL ? 'left' : 'right',
-    textAlign: I18n.isRTL ? 'right' : 'left',
+    textAlign: I18n.isRTL ? 'left' : 'right',
+    //textAlign: I18n.isRTL ? 'right' : 'left',
     marginTop:hp('1.23%'),
     fontSize:hp('2.22%'),
     fontWeight:'600',
