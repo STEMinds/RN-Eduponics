@@ -58,7 +58,15 @@ const styles = StyleSheet.create({
   title:{
     fontSize:hp('3.17%'),
     fontWeight:'bold',
-    marginTop:hp('2.8%')
+    marginTop:hp('2.8%'),
+    ...Platform.select({
+      ios: {
+        fontFamily:'system font'
+      },
+      android: {
+        fontFamily:'Roboto'
+      }
+    })
   },
   introImage:{
     marginTop:hp('4.51%'),
@@ -70,7 +78,15 @@ const styles = StyleSheet.create({
     fontSize:hp('1.71%'),
     opacity:0.8,
     color:"rgba(49,53,66,100)",
-    justifyContent:'center'
+    justifyContent:'center',
+    ...Platform.select({
+      ios: {
+        fontFamily:'system font'
+      },
+      android: {
+        fontFamily:'Roboto'
+      }
+    })
   },
   letsGoButton:{
     marginTop:hp('1.93%'),
@@ -87,7 +103,15 @@ const styles = StyleSheet.create({
     width:wp('100%'),
     fontSize:hp('1.72%'),
     fontWeight:'bold',
-    color:'white'
+    color:'white',
+    ...Platform.select({
+      ios: {
+        fontFamily:'system font'
+      },
+      android: {
+        fontFamily:'Roboto'
+      }
+    })
   }
 });
 

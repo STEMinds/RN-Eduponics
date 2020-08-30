@@ -370,7 +370,16 @@ const styles = StyleSheet.create({
     })
   },
   spinnerTextStyle:{
-    color:'white'
+    color:'white',
+    ...Platform.select({
+      ios: {
+        fontFamily:'system font'
+      },
+      android: {
+        fontFamily:'Roboto'
+      }
+    }),
+    alignSelf:'center'
   },
   flowerIllustration:{
     position:'absolute',
@@ -385,22 +394,41 @@ const styles = StyleSheet.create({
     alignItems: I18n.isRTL ? null : 'flex-start'
   },
   introText:{
-    textAlign: I18n.isRTL ? 'left' : 'right',
+    //textAlign: I18n.isRTL ? 'left' : 'right',
+    //textAlign: I18n.isRTL ? 'right' : 'left',
     marginTop:hp('2%'),
     fontSize:hp('3.2%'),
-    fontWeight:'bold'
+    fontWeight:'bold',
+    ...Platform.select({
+      ios: {
+        fontFamily:'system font'
+      },
+      android: {
+        fontFamily:'Roboto'
+      }
+    })
   },
   infoTitle:{
-    textAlign: I18n.isRTL ? 'left' : 'right',
+    //textAlign: I18n.isRTL ? 'left' : 'right',
+    textAlign: I18n.isRTL ? 'right' : 'left',
     fontSize:hp('1.48%'),
     opacity:0.4
   },
   infoSubtitle:{
     alignSelf: I18n.isRTL ? null : 'flex-start',
-    textAlign: I18n.isRTL ? 'left' : 'right',
+    //textAlign: I18n.isRTL ? 'left' : 'right',
+    textAlign: I18n.isRTL ? 'right' : 'left',
     marginTop:hp('1.23%'),
     fontSize:hp('2.22%'),
-    fontWeight:'600'
+    fontWeight:'600',
+    ...Platform.select({
+      ios: {
+        fontFamily:'system font'
+      },
+      android: {
+        fontFamily:'Roboto'
+      }
+    })
   },
   dataContainer:{
     alignItems: I18n.isRTL ? null : 'flex-end',
@@ -409,7 +437,15 @@ const styles = StyleSheet.create({
   controlText:{
     marginTop:hp('3.39%'),
     fontSize:hp('2.46%'),
-    fontWeight:'bold'
+    fontWeight:'bold',
+    ...Platform.select({
+      ios: {
+        fontFamily:'system font'
+      },
+      android: {
+        fontFamily:'Roboto'
+      }
+    })
   },
   controlLinear:{
     height:hp('0.49%'),
@@ -439,7 +475,15 @@ const styles = StyleSheet.create({
     fontSize:hp('1.72%'),
     fontWeight:'bold',
     color:'white',
-    marginBottom:hp('0.25%')
+    marginBottom:hp('0.25%'),
+    ...Platform.select({
+      ios: {
+        fontFamily:'system font'
+      },
+      android: {
+        fontFamily:'Roboto'
+      }
+    })
   },
   plantSoilText:{
     textAlign: I18n.isRTL ? 'right' : 'left',
@@ -469,7 +513,15 @@ const styles = StyleSheet.create({
     color:'white',
     fontSize:hp('1.7%'),
     fontWeight:'600',
-    right:wp('13%')
+    right:wp('13%'),
+    ...Platform.select({
+      ios: {
+        fontFamily:'system font'
+      },
+      android: {
+        fontFamily:'Roboto'
+      }
+    })
   }
 })
 

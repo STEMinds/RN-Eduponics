@@ -32,13 +32,15 @@ class SuccessModal extends Component {
                 </LinearGradient>
               </LinearGradient>
             </LinearGradient>
-            <Text style={{fontSize:hp('2.44%'),fontWeight:'bold',marginTop:hp("1.22%")}}>{I18n.t("success")}</Text>
-            <Text style={{marginTop:hp("1.22%"),fontSize:hp("1.71%"),opacity:0.8, justifyContent:'center', textAlign:'center'}}>
-              {I18n.t("connectionEstablished")}{"\n"}
+            <Text style={styles.sucessText}>
+                {I18n.t("success")}
             </Text>
-            <TouchableOpacity style={{marginTop:hp("2.56%"),width:wp("48%"),height:hp("5.37%"),borderRadius:22,alignSelf:'center'}} onPress={() => this.closeModalAfterUse()}>
-              <LinearGradient useAngle={true} angle={45} colors={['#0AC4BA','#2BDA8E']} style={{width:wp("48%"),height:hp("5.37%"),borderRadius:22,alignItems:'center',justifyContent:'center'}}>
-                <Text style={{fontSize:hp("1.71%"),fontWeight:'bold',color:'white'}}>{I18n.t("awesome")}</Text>
+            <Text style={styles.connectionEstablishedText}>
+                {I18n.t("connectionEstablished")}{"\n"}
+            </Text>
+            <TouchableOpacity style={styles.closeModalButton} onPress={() => this.closeModalAfterUse()}>
+              <LinearGradient useAngle={true} angle={45} colors={['#0AC4BA','#2BDA8E']} style={styles.closeModalLinear}>
+                <Text style={styles.awesomeText}>{I18n.t("awesome")}</Text>
               </LinearGradient>
             </TouchableOpacity>
           </View>
@@ -75,6 +77,61 @@ const styles = StyleSheet.create({
     borderTopRightRadius:7.2,
     alignItems:'center',
     justifyContent:'center'
+  },
+  awesomeText:{
+    fontSize:hp("1.71%"),
+    fontWeight:'bold',
+    color:'white',
+    ...Platform.select({
+      ios: {
+        fontFamily:'system font'
+      },
+      android: {
+        fontFamily:'Roboto'
+      }
+    })
+  },
+  closeModalButton:{
+    marginTop:hp("2.56%"),
+    width:wp("48%"),
+    height:hp("5.37%"),
+    borderRadius:22,
+    alignSelf:'center'
+  },
+  closeModalLinear:{
+    width:wp("48%"),
+    height:hp("5.37%"),
+    borderRadius:22,
+    alignItems:'center',
+    justifyContent:'center'
+  },
+  connectionEstablishedText:{
+    marginTop:hp("1.22%"),
+    fontSize:hp("1.71%"),
+    opacity:0.8,
+    justifyContent:'center',
+    textAlign:'center',
+    ...Platform.select({
+      ios: {
+        fontFamily:'system font'
+      },
+      android: {
+        fontFamily:'Roboto'
+      }
+    })
+  },
+  sucessText:{
+    fontSize:hp('2.44%'),
+    fontWeight:'bold',
+    marginTop:hp("1.22%"),
+    ...Platform.select({
+      ios: {
+        fontFamily:'system font'
+      },
+      android: {
+        fontFamily:'Roboto'
+      }
+    })
   }
 });
 

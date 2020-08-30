@@ -280,7 +280,18 @@ class Settings extends React.Component {
 
           <TouchableOpacity style={styles.buttonStyle} onPress={() => this._wipeAsyncStorage()}>
             <LinearGradient useAngle={true} angle={45} colors={['#0AC4BA','#2BDA8E']} style={styles.buttonGradientStyle}>
-              <Text style={{fontSize:hp('1.72%'), fontWeight:'bold', color:'white'}}>{I18n.t("wipeData")}</Text>
+              <Text style={{
+                fontSize:hp('1.72%'),
+                fontWeight:'bold',
+                color:'white',
+                ...Platform.select({
+                ios: {
+                  fontFamily:'system font'
+                },
+                android: {
+                  fontFamily:'Roboto'
+                }
+              })}}>{I18n.t("wipeData")}</Text>
             </LinearGradient>
           </TouchableOpacity>
 
@@ -362,13 +373,29 @@ const styles = StyleSheet.create({
   titleText:{
     fontSize:hp('1.72%'),
     fontWeight:'bold',
-    color:'rgba(197,204,214,100)'
+    color:'rgba(197,204,214,100)',
+    ...Platform.select({
+      ios: {
+        fontFamily:'system font'
+      },
+      android: {
+        fontFamily:'Roboto'
+      }
+    })
   },
   subtitleText:{
     marginTop:hp('1.11%'),
     fontWeight:'600',
     fontSize:hp('1.72%'),
-    color:'black'
+    color:'black',
+    ...Platform.select({
+      ios: {
+        fontFamily:'system font'
+      },
+      android: {
+        fontFamily:'Roboto'
+      }
+    })
   },
   gradientStyle:{
     width:wp('27.6%'),

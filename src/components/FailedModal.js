@@ -32,14 +32,50 @@ class FailedModal extends Component {
                 </LinearGradient>
               </LinearGradient>
             </LinearGradient>
-            <Text style={{alignSelf:'center',textAlign:'center',fontSize:hp('2.44%'),fontWeight:'bold',marginTop:hp("1.22%")}}>{I18n.t("failed")} </Text>
-            <Text style={{marginTop:hp("1.22%"),fontSize:hp("1.71%"),opacity:0.8, textAlign:'center'}}>
+            <Text style={{
+                alignSelf:'center',
+                textAlign:'center',
+                fontSize:hp('2.44%'),
+                fontWeight:'bold',
+                marginTop:hp("1.22%"),
+                ...Platform.select({
+                  ios: {
+                    fontFamily:'system font'
+                  },
+                  android: {
+                    fontFamily:'Roboto'
+                  }
+                })}}>{I18n.t("failed")} </Text>
+            <Text style={{
+                marginTop:hp("1.22%"),
+                fontSize:hp("1.71%"),
+                opacity:0.8,
+                textAlign:'center',
+                ...Platform.select({
+                  ios: {
+                    fontFamily:'system font'
+                  },
+                  android: {
+                    fontFamily:'Roboto'
+                  }
+                })}}>
               {I18n.t("incorrectIdentifier")}{"\n"}
               {I18n.t("enterNewOne")}{"\n"}
             </Text>
             <TouchableOpacity style={{marginTop:hp("2.56%"),width:wp("48%"),height:hp("5.37%"),borderRadius:22,alignSelf:'center'}} onPress={() => this.closeModalAfterUse()}>
               <LinearGradient useAngle={true} angle={45} colors={['#0AC4BA','#2BDA8E']} style={{width:wp("48%"),height:hp("5.37%"),borderRadius:22,alignItems:'center',justifyContent:'center'}}>
-                <Text style={{fontSize:hp("1.71%"),fontWeight:'bold',color:'white'}}>{I18n.t("gotIt")}</Text>
+                <Text style={{
+                    fontSize:hp("1.71%"),
+                    fontWeight:'bold',
+                    color:'white',
+                    ...Platform.select({
+                      ios: {
+                        fontFamily:'system font'
+                      },
+                      android: {
+                        fontFamily:'Roboto'
+                      }
+                    })}}>{I18n.t("gotIt")}</Text>
               </LinearGradient>
             </TouchableOpacity>
           </View>

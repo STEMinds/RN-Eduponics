@@ -89,7 +89,15 @@ const styles = StyleSheet.create({
   titleText:{
     textAlign:'center',
     fontSize:hp('3.2%'),
-    fontWeight:'bold'
+    fontWeight:'bold',
+    ...Platform.select({
+      ios: {
+        fontFamily:'system font'
+      },
+      android: {
+        fontFamily:'Roboto'
+      }
+    })
   },
   subtitleText:{
     width:wp('100%'),
@@ -99,7 +107,15 @@ const styles = StyleSheet.create({
     alignSelf:'center',
     color:'rgba(197,204,214,100)',
     fontWeight:'bold',
-    opacity:0.9
+    opacity:0.9,
+    ...Platform.select({
+      ios: {
+        fontFamily:'system font'
+      },
+      android: {
+        fontFamily:'Roboto'
+      }
+    })
   },
   logoGrey:{
     marginTop:hp('3.69%'),
@@ -128,7 +144,15 @@ const styles = StyleSheet.create({
     width:wp('100%'),
     fontSize:hp('1.72%'),
     fontWeight:'bold',
-    color:'white'
+    color:'white',
+    ...Platform.select({
+      ios: {
+        fontFamily:'system font'
+      },
+      android: {
+        fontFamily:'Roboto'
+      }
+    })
   },
   termsText:{
     width:'100%',
@@ -136,7 +160,15 @@ const styles = StyleSheet.create({
     alignSelf:'center',
     fontSize:hp('1.48%'),
     color:'#9DA3B4',
-    fontWeight:'bold'
+    fontWeight:'bold',
+    ...Platform.select({
+      ios: {
+        fontFamily:'system font'
+      },
+      android: {
+        fontFamily:'Roboto'
+      }
+    })
   }
 })
 

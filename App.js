@@ -42,15 +42,28 @@ function AppScreens() {
         activeTintColor: '#10C8B1',
         inactiveTintColor: '#C5CCD6',
         indicatorStyle: {backgroundColor:'#10C8B1'},
-        labelStyle: { fontSize: hp("1.8%"), fontWeight:'bold' },
+        labelStyle: {
+          fontSize: hp("1.8%"),
+          fontWeight:'bold',
+          ...Platform.select({
+          ios: {
+            fontFamily:'system font'
+          },
+          android: {
+            fontFamily:'Roboto'
+          }
+        })
+        },
         style:{
           backgroundColor: 'white',
           ...Platform.select({
           ios: {
-            marginTop:hp('3.7%')
+            marginTop:hp('3.7%'),
+            fontFamily:'system font'
           },
           android: {
-            marginTop:hp('0%')
+            marginTop:hp('0%'),
+            fontFamily:'Roboto'
           }
         })},
       }}
