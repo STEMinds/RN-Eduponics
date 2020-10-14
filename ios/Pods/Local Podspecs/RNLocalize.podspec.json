@@ -1,17 +1,14 @@
 {
   "name": "RNLocalize",
   "dependencies": {
-    "React": [
+    "React-Core": [
 
     ]
   },
-  "version": "1.4.1",
+  "version": "1.4.2",
   "license": "MIT",
   "summary": "A toolbox for your React Native app localization.",
-  "authors": {
-    "name": "Mathieu Acthernoene",
-    "email": "zoontek@gmail.com"
-  },
+  "authors": "Mathieu Acthernoene <zoontek@gmail.com>",
   "homepage": "https://github.com/react-native-community/react-native-localize",
   "platforms": {
     "ios": "9.0",
@@ -19,8 +16,8 @@
   },
   "requires_arc": true,
   "source": {
-    "git": "git+https://github.com/react-native-community/react-native-localize.git",
-    "tag": "1.4.1"
+    "git": "https://github.com/react-native-community/react-native-localize.git",
+    "tag": "1.4.2"
   },
   "source_files": "ios/*.{h,m}"
 }

@@ -46,9 +46,6 @@ function AppScreens() {
           fontSize: hp("1.8%"),
           fontWeight:'bold',
           ...Platform.select({
-          ios: {
-            fontFamily:'system font'
-          },
           android: {
             fontFamily:'Roboto'
           }
@@ -58,8 +55,7 @@ function AppScreens() {
           backgroundColor: 'white',
           ...Platform.select({
           ios: {
-            marginTop:hp('3.7%'),
-            fontFamily:'system font'
+            marginTop:hp('3.7%')
           },
           android: {
             marginTop:hp('0%'),
