@@ -60,9 +60,6 @@ const styles = StyleSheet.create({
     fontWeight:'bold',
     marginTop:hp('2.8%'),
     ...Platform.select({
-      ios: {
-        fontFamily:'system font'
-      },
       android: {
         fontFamily:'Roboto'
       }
@@ -80,9 +77,6 @@ const styles = StyleSheet.create({
     color:"rgba(49,53,66,100)",
     justifyContent:'center',
     ...Platform.select({
-      ios: {
-        fontFamily:'system font'
-      },
       android: {
         fontFamily:'Roboto'
       }
@@ -105,9 +99,6 @@ const styles = StyleSheet.create({
     fontWeight:'bold',
     color:'white',
     ...Platform.select({
-      ios: {
-        fontFamily:'system font'
-      },
       android: {
         fontFamily:'Roboto'
       }

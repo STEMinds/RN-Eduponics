@@ -43,6 +43,7 @@ class Control extends React.Component {
           water_quantity:null
         },
         connected:false,
+        hasData:false,
         sensors:{
           "A":{
           "id":null,
@@ -109,11 +110,11 @@ class Control extends React.Component {
         // good after-noon
         sentence = I18n.t("goodAfternoon");
       }
-      if(time > 18 && time < 22){
+      if(time >= 18 && time < 22){
         // good evening
         sentence = I18n.t("goodEvening");
       }
-      this.setState({welcomeMessage:sentence})
+      this.setState({welcomeMessage:"Good Morning"})
     }
 
     async updateStorage(){
@@ -166,14 +167,14 @@ class Control extends React.Component {
       if(this.state.mqtt_client == null){
         /* create mqtt client */
         var client = await MQTT.createClient( {
-          //uri: 'mqtt://mqtt.eclipse.org:1883',
-          uri: 'mqtts://mqtt.steminds.com:8883',
+          uri: 'mqtt://mqtt.eclipse.org:1883',
+          //uri: 'mqtts://mqtt.steminds.com:8883',
           clientId: guidGenerator()
         })
         /* connect to client */
         await client.connect();
         // set the client into state
-        this.setState({mqtt_client:client,spinner:true});
+        this.setState({mqtt_client:client,connected:false,spinner:true});
       }
       /* make sure client created successfully */
       if(this.state.mqtt_client != null){
@@ -190,38 +191,38 @@ class Control extends React.Component {
           client.on('message', function(msg) {
             /* Manage plants soil data given from the Raspberry Pi */
             if(msg.topic == this.state.identifier + "/plants/soil"){
+              // TODO: do some tests to make sure the data is valid
               var sensor = JSON.parse(msg.data)
-              if(!sensor.hasOwnProperty("action")){
-                // turn int into boolean
-                sensor["enabled"] = !!+sensor["enabled"]
-                // check if connected before
-                if(!this.state.connected){
-                  // first time, make new array
-                  var existing_sensors = {}
-                }else{
-                  // not first time, take existing array
-                  var existing_sensors = this.state.sensors
-                }
+              // turn int into boolean
+              sensor["enabled"] = !!+sensor["enabled"]
+              // check if connected before
+              if(!this.state.hasData){
+                // first time, make new array
+                var existing_sensors = {}
                 // add or update sensors
                 existing_sensors[sensor["id"]] = sensor
-                this.setState({sensors:existing_sensors, connected:true,spinner:false})
-                if(this.state.sample == true){
-                  this.updateEnvironmentalData(client);
-                  this.setState({sample:false})
-                }
+              }else{
+                // not first time, take existing array
+                var existing_sensors = this.state.sensors
+                // push new data
+                existing_sensors[sensor["id"]] = sensor
               }
+              this.setState({sensors:existing_sensors,hasData:true})
             }
             /* Manage plants environmental data given from the Raspberry Pi */
             else if(msg.topic == this.state.identifier + "/plants/environment"){
               var data = JSON.parse(msg.data)
-              if(!data.hasOwnProperty("action")){
-                this.setState({environment:data})
-                if(this.state.sample == true){
-                  this.updateSensorsData(client);
-                  this.setState({sample:false})
+              // TODO: do some tests to make sure the data is valid
+              if("water_quantity" in data){
+                if(data["water_quantity"] == 1){
+                  data["water_quantity"] = "Empty"
+                }else if (data["water_quantity"] == 0) {
+                  data["water_quantity"] = "Full"
+                }else{
+                  data["water_quantity"] = "N/A"
                 }
               }
-
+              this.setState({environment:data})
             }
             /* Manage soil plants watering commands response from the Raspberry Pi */
             else if(msg.topic == this.state.identifier + "/plants/water"){
@@ -237,14 +238,14 @@ class Control extends React.Component {
 
           client.on('connect', async function() {
             console.log('connected');
+
+            // turn off spinner and set connected to true
             /* subscribe to topics */
             client.subscribe(this.state.identifier + '/plants/soil', 0);
             client.subscribe(this.state.identifier + '/plants/environment', 0);
             client.subscribe(this.state.identifier + '/plants/water', 0);
-            // update environmental data updates the environment first
-            // once it's finished, it will send signal to update the soil moisture sensors
-            this.updateEnvironmentalData(client);
-            this.setState({mqtt_subscribed:true})
+            // update state
+            this.setState({mqtt_subscribed:true,connected:true,spinner:false})
           }.bind(this));
         }
       }
@@ -372,9 +373,6 @@ const styles = StyleSheet.create({
   spinnerTextStyle:{
     color:'white',
     ...Platform.select({
-      ios: {
-        fontFamily:'system font'
-      },
       android: {
         fontFamily:'Roboto'
       }
@@ -400,9 +398,6 @@ const styles = StyleSheet.create({
     fontSize:hp('3.2%'),
     fontWeight:'bold',
     ...Platform.select({
-      ios: {
-        fontFamily:'system font'
-      },
       android: {
         fontFamily:'Roboto'
       }
@@ -411,6 +406,8 @@ const styles = StyleSheet.create({
   infoTitle:{
     //textAlign: I18n.isRTL ? 'left' : 'right',
     //textAlign: I18n.isRTL ? 'right' : 'left',
+    alignSelf: I18n.isRTL ? null : 'flex-start',
+    textAlign: I18n.isRTL ? 'left' : 'right',
     fontSize:hp('1.48%'),
     opacity:0.4
   },
@@ -422,9 +419,6 @@ const styles = StyleSheet.create({
     fontSize:hp('2.22%'),
     fontWeight:'600',
     ...Platform.select({
-      ios: {
-        fontFamily:'system font'
-      },
       android: {
         fontFamily:'Roboto'
       }
@@ -439,9 +433,6 @@ const styles = StyleSheet.create({
     fontSize:hp('2.46%'),
     fontWeight:'bold',
     ...Platform.select({
-      ios: {
-        fontFamily:'system font'
-      },
       android: {
         fontFamily:'Roboto'
       }
@@ -477,9 +468,6 @@ const styles = StyleSheet.create({
     color:'white',
     marginBottom:hp('0.25%'),
     ...Platform.select({
-      ios: {
-        fontFamily:'system font'
-      },
       android: {
         fontFamily:'Roboto'
       }
@@ -515,9 +503,6 @@ const styles = StyleSheet.create({
     fontWeight:'600',
     right:wp('13%'),
     ...Platform.select({
-      ios: {
-        fontFamily:'system font'
-      },
       android: {
         fontFamily:'Roboto'
       }

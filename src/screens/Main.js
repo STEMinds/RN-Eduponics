@@ -8,7 +8,7 @@
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import {View,Text,StyleSheet,TouchableOpacity,Image,StatusBar,Platform,Linking} from 'react-native'
+import {View,Text,StyleSheet,TouchableOpacity,Pressable,Image,StatusBar,Platform,Linking} from 'react-native'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
 import I18n from "../utils/I18n";
@@ -91,9 +91,6 @@ const styles = StyleSheet.create({
     fontSize:hp('3.2%'),
     fontWeight:'bold',
     ...Platform.select({
-      ios: {
-        fontFamily:'system font'
-      },
       android: {
         fontFamily:'Roboto'
       }
@@ -109,9 +106,6 @@ const styles = StyleSheet.create({
     fontWeight:'bold',
     opacity:0.9,
     ...Platform.select({
-      ios: {
-        fontFamily:'system font'
-      },
       android: {
         fontFamily:'Roboto'
       }
@@ -146,9 +140,6 @@ const styles = StyleSheet.create({
     fontWeight:'bold',
     color:'white',
     ...Platform.select({
-      ios: {
-        fontFamily:'system font'
-      },
       android: {
         fontFamily:'Roboto'
       }
@@ -162,9 +153,6 @@ const styles = StyleSheet.create({
     color:'#9DA3B4',
     fontWeight:'bold',
     ...Platform.select({
-      ios: {
-        fontFamily:'system font'
-      },
       android: {
         fontFamily:'Roboto'
       }

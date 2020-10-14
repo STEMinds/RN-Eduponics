@@ -15,7 +15,7 @@ export default {
   soilMoisture: "Soil moisture",
   waterQauntity: "Water quantity",
   temperature: "Temperature",
-  humidity: "humidity",
+  humidity: "Humidity",
   sunlight: "Sunlight",
   control: "Control",
   loadingData: "Loading MQTT data...",

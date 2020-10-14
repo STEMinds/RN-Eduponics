@@ -186,7 +186,7 @@ class Settings extends React.Component {
             <View style={{marginTop:hp('2.34%')}}>
               <Text style={styles.titleText}>{I18n.t("mqttBroker")}</Text>
               <View style={{flexDirection:'row'}}>
-                <Text style={styles.subtitleText}>mqtt.steminds.com</Text>
+                <Text style={styles.subtitleText}>mqtt.eclipse.org</Text>
                 {this._renderConnectionState()}
               </View>
             </View>
@@ -286,9 +286,6 @@ class Settings extends React.Component {
                 fontWeight:'bold',
                 color:'white',
                 ...Platform.select({
-                ios: {
-                  fontFamily:'system font'
-                },
                 android: {
                   fontFamily:'Roboto'
                 }
@@ -376,9 +373,6 @@ const styles = StyleSheet.create({
     fontWeight:'bold',
     color:'rgba(197,204,214,100)',
     ...Platform.select({
-      ios: {
-        fontFamily:'system font'
-      },
       android: {
         fontFamily:'Roboto'
       }
@@ -390,9 +384,6 @@ const styles = StyleSheet.create({
     fontSize:hp('1.72%'),
     color:'black',
     ...Platform.select({
-      ios: {
-        fontFamily:'system font'
-      },
       android: {
         fontFamily:'Roboto'
       }

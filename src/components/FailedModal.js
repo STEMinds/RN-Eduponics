@@ -39,9 +39,6 @@ class FailedModal extends Component {
                 fontWeight:'bold',
                 marginTop:hp("1.22%"),
                 ...Platform.select({
-                  ios: {
-                    fontFamily:'system font'
-                  },
                   android: {
                     fontFamily:'Roboto'
                   }
@@ -52,9 +49,6 @@ class FailedModal extends Component {
                 opacity:0.8,
                 textAlign:'center',
                 ...Platform.select({
-                  ios: {
-                    fontFamily:'system font'
-                  },
                   android: {
                     fontFamily:'Roboto'
                   }
@@ -69,9 +63,6 @@ class FailedModal extends Component {
                     fontWeight:'bold',
                     color:'white',
                     ...Platform.select({
-                      ios: {
-                        fontFamily:'system font'
-                      },
                       android: {
                         fontFamily:'Roboto'
                       }
