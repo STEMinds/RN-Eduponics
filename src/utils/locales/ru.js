@@ -22,8 +22,8 @@ export default {
   loadingData: "Загрузка MQTT данных...",
   unableToLoadTitle: "Не удалось получить MQTT данные",
   unableToLoadContent: "Убедитесь, что ваше MQTT устройство работает правильно",
-  waterFull:"",
-  waterEmpty:"",
+  waterFull:"Полное",
+  waterEmpty:"Пусто",
   // greetings
   goodMorning: "Доброе утро",
   goodNoon: "Добрый день",
