@@ -12,6 +12,7 @@ export default {
   termsOfService: "Termos de serviço",
   privacyPolicy: "Política de privacidade",
   // control page
+  unknown:"N/A",
   soilMoisture: "Umidade do solo",
   waterQauntity: "Quantidade de água",
   temperature: "Temperatura",
@@ -21,6 +22,8 @@ export default {
   loadingData: "Carregando dados MQTT ...",
   unableToLoadTitle: "Unable to fetch MQTT data",
   unableToLoadContent: "Please make sure your hardware MQTT client is working properly",
+  waterFull:"Cheio",
+  waterEmpty:"Vazio",
   // greetings
   goodMorning: "Bom Dia",
   goodNoon: "Bom meio dia",
@@ -61,5 +64,6 @@ export default {
   vi: "Tiếng Việt",
   pt: "Português",
   uk: "Українська",
-  es: "español"
+  es: "español",
+  ru: "Русский"
 };

@@ -12,6 +12,7 @@ export default {
   termsOfService: "Điều khoản dịch vụ",
   privacyPolicy: "Chính sách quyền riêng tư",
   // control page
+  unknown:"N/A",
   soilMoisture: "Độ ẩm của đất",
   waterQauntity: "Lượng nước",
   temperature: "Nhiệt độ",
@@ -21,6 +22,8 @@ export default {
   loadingData: "Đang tải dữ liệu MQTT ...",
   unableToLoadTitle: "Unable to fetch MQTT data",
   unableToLoadContent: "Please make sure your hardware MQTT client is working properly",
+  waterFull:"đầy",
+  waterEmpty:"trống",
   // greetings
   goodMorning: "Buổi sáng tốt lành",
   goodNoon: "Buổi trưa tốt lành",
@@ -61,5 +64,6 @@ export default {
   vi: "Tiếng Việt",
   pt: "Português",
   uk: "Українська",
-  es: "español"
+  es: "español",
+  ru: "Русский"
 };

@@ -12,6 +12,7 @@ export default {
   termsOfService: "Términos de servicio",
   privacyPolicy: "Política de privacidad",
   // control page
+  unknown:"N/A",
   soilMoisture: "Humedad del suelo",
   waterQauntity: "Cantidad de agua",
   temperature: "Temperatura",
@@ -21,6 +22,8 @@ export default {
   loadingData: "Cargando datos MQTT...",
   unableToLoadTitle: "No fue posible recuperar datos MQTT",
   unableToLoadContent: "Por favor, asegúrate de que tu cliente hardware MQTT funciona correctament",
+  waterFull:"Lleno",
+  waterEmpty:"Vacío",
   // greetings
   goodMorning: "Buenos días",
   goodNoon: "Buenos días",
@@ -28,7 +31,7 @@ export default {
   goodEvening: "Buenas tardes",
   goodNight: "Buenas noches",
   // first time modal
-  welcome: "Bienvenido ",
+  welcome: "Bienvenido",
   welcomeText: "Parece que es tu primera vez.\nTu dispositivo no está conectado.\nVe a ajustes,\ny conecta tu Kit Eduponics",
   // failed modal
   incorrectIdentifier: "Identificador incorrecto",
@@ -61,5 +64,6 @@ export default {
   vi: "Tiếng Việt",
   pt: "Português",
   uk: "Українська",
-  es: "español"
+  es: "español",
+  ru: "Русский"
 }

@@ -109,7 +109,7 @@ class Settings extends React.Component {
         return(
           <View style={{alignItems:'center',justifyContent:'center',position:'absolute',width:wp('27.6%'),height:hp('4.2%'),borderRadius:20,right:wp('15%')}}>
             <LinearGradient useAngle={true} angle={45} colors={['#0AC4BA','#2BDA8E']} style={styles.gradientStyle}>
-              <Text style={{alignSelf:'center',textAlign:'center',fontSize:hp('1.72%'), fontWeight:'bold', color:'white', width:wp('19.9%')}}>{I18n.t('connected')}</Text>
+              <Text style={{alignSelf:'center',textAlign:'center',fontSize:hp('1.72%'), fontWeight:'bold', color:'white', width:wp('100%')}}>{I18n.t('connected')}</Text>
             </LinearGradient>
           </View>
         )

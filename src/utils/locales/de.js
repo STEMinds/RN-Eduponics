@@ -12,6 +12,7 @@ export default {
   termsOfService: "Nutzungsbedingungen",
   privacyPolicy: "Datenschutzrichtlinie",
   // control page
+  unknown:"N/A",
   soilMoisture: "Bodenfeuchtigkeit",
   waterQauntity: "Wassermenge",
   temperature: "Temperatur",
@@ -19,8 +20,10 @@ export default {
   sunlight: "Sonnenlicht",
   control: "Steuerung",
   loadingData: "Laden von MQTT Daten ...",
-  unableToLoadTitle: "Unable to fetch MQTT data",
-  unableToLoadContent: "Please make sure your hardware MQTT client is working properly",
+  unableToLoadTitle: "MQTT-Daten können nicht abgerufen werden",
+  unableToLoadContent: "Bitte stellen Sie sicher, dass Ihr Hardware-MQTT-Client richtig funktioniert",
+  waterFull:"Voll",
+  waterEmpty:"Leer",
   // greetings
   goodMorning: "Guten Morgen",
   goodNoon: "Guten Tag",
@@ -61,5 +64,6 @@ export default {
   vi: "Tiếng Việt",
   pt: "Português",
   uk: "Українська",
-  es: "español"
+  es: "español",
+  ru: "Русский"
 }

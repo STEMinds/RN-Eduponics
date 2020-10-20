@@ -12,6 +12,7 @@ export default {
   termsOfService: "Умови надання послуг",
   privacyPolicy: "Політика конфіденційності",
   // control page
+  unknown:"N/A",
   soilMoisture: "Вологість ґрунту",
   waterQauntity: "Кількість води",
   temperature: "Температура",
@@ -21,6 +22,8 @@ export default {
   loadingData: "Завантаження даних MQTT...",
   unableToLoadTitle: "Unable to fetch MQTT data",
   unableToLoadContent: "Please make sure your hardware MQTT client is working properly",
+  waterFull:"повний",
+  waterEmpty:"порожній",
   // greetings
   goodMorning: "Добрий ранок",
   goodNoon: "Доброго дня",
@@ -37,7 +40,7 @@ export default {
   failed: "Помилка",
   // success modal
   success: "Успішно!",
-  connectionEstablished: "З'єднання встановлено!",
+  connectionEstablished: "єднання встановлено!",
   awesome: "Чудово",
   // settings
   mqttBroker: "MQTT Брокер",
@@ -61,5 +64,6 @@ export default {
   vi: "Tiếng Việt",
   pt: "Português",
   uk: "Українська",
-  es: "español"
+  es: "español",
+  ru: "Русский"
 };

@@ -12,6 +12,7 @@ export default {
   termsOfService: "Terms of service",
   privacyPolicy: "Privacy policy",
   // control page
+  unknown:"N/A",
   soilMoisture: "मिटटी का गीलापन",
   waterQauntity: "पानी की मात्रा",
   temperature: "तापमान",
@@ -21,6 +22,8 @@ export default {
   loadingData: "MQTT डेटा लोड हो रहा है ...",
   unableToLoadTitle: "Unable to fetch MQTT data",
   unableToLoadContent: "Please make sure your hardware MQTT client is working properly",
+  waterFull:"पूर्ण",
+  waterEmpty:"खाली",
   // greetings
   goodMorning: "शुभ प्रभात",
   goodNoon: "अच्छा दोपहर",
@@ -61,5 +64,6 @@ export default {
   vi: "Tiếng Việt",
   pt: "Português",
   uk: "Українська",
-  es: "español"
+  es: "español",
+  ru: "Русский"
 };

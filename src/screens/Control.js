@@ -47,22 +47,22 @@ class Control extends React.Component {
         sensors:{
           "A":{
           "id":null,
-          "name":"N/A",
+          "name":I18n.t("unknown"),
           "enabled":false,
           "moisture":"0%"
         },"B":{
           "id":null,
-          "name":"N/A",
+          "name":I18n.t("unknown"),
           "enabled":false,
           "moisture":"0%"
         },"C":{
           "id":null,
-          "name":"N/A",
+          "name":I18n.t("unknown"),
           "enabled":false,
           "moisture":"0%"
         },"D":{
           "id":null,
-          "name":"N/A",
+          "name":I18n.t("unknown"),
           "enabled":false,
           "moisture":"0%"
         }}
@@ -114,7 +114,7 @@ class Control extends React.Component {
         // good evening
         sentence = I18n.t("goodEvening");
       }
-      this.setState({welcomeMessage:"Good Morning"})
+      this.setState({welcomeMessage:sentence})
     }
 
     async updateStorage(){
@@ -215,11 +215,11 @@ class Control extends React.Component {
               // TODO: do some tests to make sure the data is valid
               if("water_quantity" in data){
                 if(data["water_quantity"] == 1){
-                  data["water_quantity"] = "Empty"
+                  data["water_quantity"] = I18n.t("waterEmpty")
                 }else if (data["water_quantity"] == 0) {
-                  data["water_quantity"] = "Full"
+                  data["water_quantity"] = I18n.t("waterFull")
                 }else{
-                  data["water_quantity"] = "N/A"
+                  data["water_quantity"] = I18n.t("unknown")
                 }
               }
               this.setState({environment:data})
@@ -267,7 +267,7 @@ class Control extends React.Component {
               borderTopRightRadius: I18n.isRTL ? 6 : 0,
               borderTopLeftRadius: I18n.isRTL ? 0 : 6,
               borderBottomLeftRadius: I18n.isRTL ? 6 : 0}]}/>
-          <Image source={require('../images/power_button.png')} style={{alignSelf:'center',tintColor: this.state.sensors[key].enabled ? 'white' : '#4D72A3', opacity: this.state.sensors[key].enabled ? 1 : 0.6}}/>
+            <Image source={require('../images/watering-can.png')} style={{width:hp('3.45%'),height:hp('3.45%'),alignSelf:'center',tintColor: this.state.sensors[key].enabled ? 'white' : '#4D72A3', opacity: this.state.sensors[key].enabled ? 1 : 0.6}}/>
         </TouchableOpacity>
       </View>)
       return container
@@ -301,22 +301,22 @@ class Control extends React.Component {
 
               <View style={[styles.dataContainer,{marginTop:hp('2%')}]}>
                 <Text style={styles.infoTitle}>{I18n.t("waterQauntity")}</Text>
-                <Text style={styles.infoSubtitle}>{this.state.environment.water_quantity == null ? "N/A" : this.state.environment.water_quantity}</Text>
+                <Text style={styles.infoSubtitle}>{this.state.environment.water_quantity == null ? I18n.t("unknown") : this.state.environment.water_quantity}</Text>
               </View>
 
               <View style={styles.dataContainer}>
                 <Text style={styles.infoTitle}>{I18n.t("temperature")}</Text>
-                <Text style={styles.infoSubtitle}>{this.state.environment.temp == null ? "N/A" : this.state.environment.temp + "℃"}</Text>
+                <Text style={styles.infoSubtitle}>{this.state.environment.temp == null ? I18n.t("unknown") : this.state.environment.temp + "℃"}</Text>
               </View>
 
               <View style={styles.dataContainer}>
                 <Text style={styles.infoTitle}>{I18n.t("humidity")}</Text>
-                <Text style={styles.infoSubtitle}>{this.state.environment.humidity == null ? "N/A" : this.state.environment.humidity + "%"}</Text>
+                <Text style={styles.infoSubtitle}>{this.state.environment.humidity == null ? I18n.t("unknown") : this.state.environment.humidity + "%"}</Text>
               </View>
 
               <View>
                 <Text style={styles.infoTitle}>{I18n.t("sunlight")}</Text>
-                <Text style={styles.infoSubtitle}>{this.state.environment.sunlight == null ? "N/A" : this.state.environment.sunlight + "lx"}</Text>
+                <Text style={styles.infoSubtitle}>{this.state.environment.sunlight == null ? I18n.t("unknown") : this.state.environment.sunlight + "lx"}</Text>
               </View>
 
               <Text style={styles.controlText}>{I18n.t("control")}</Text>

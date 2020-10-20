@@ -12,6 +12,7 @@ import zh from "./locales/zh";
 import hi from "./locales/hi";
 import uk from "./locales/uk";
 import es from "./locales/es";
+import ru from "./locales/ru";
 
 const locales = RNLocalize.getLocales();
 
@@ -36,7 +37,8 @@ I18n.translations = {
   vi,
   pt,
   zh,
-  es
+  es,
+  ru
 };
 
 export default I18n;

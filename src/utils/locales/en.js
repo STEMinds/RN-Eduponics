@@ -5,13 +5,14 @@ export default {
   settings: "Settings",
   learn: "Learn",
   // main page
-  steminds: "STEMinds", // no need translation
+  steminds: "STEMinds ", // no need translation
   eduponics: "Eduponics", // no need translation
   subtitleText: "Make your own IoT garden",
   letsGo: "Let's Go!",
   termsOfService: "Terms of service",
   privacyPolicy: "Privacy policy",
   // control page
+  unknown:"N/A",
   soilMoisture: "Soil moisture",
   waterQauntity: "Water quantity",
   temperature: "Temperature",
@@ -21,6 +22,8 @@ export default {
   loadingData: "Loading MQTT data...",
   unableToLoadTitle: "Unable to fetch MQTT data",
   unableToLoadContent: "Please make sure your hardware MQTT client is working properly",
+  waterFull:"Full",
+  waterEmpty:"Empty",
   // greetings
   goodMorning: "Good Morning",
   goodNoon: "Good Day",
@@ -28,7 +31,7 @@ export default {
   goodEvening: "Good Evening",
   goodNight: "Good Night",
   // first time modal
-  welcome: "Welcome ",
+  welcome: "Welcome",
   welcomeText: "Seems like it’s your first time.\nYour device is not connected.\nLet’s go to settings,\nand connect your Eduponics Kit!",
   // failed modal
   incorrectIdentifier: "Incorrect identifier",
@@ -36,7 +39,7 @@ export default {
   gotIt: "Got it",
   failed: "Failed",
   // success modal
-  success: "Success! ",
+  success: "Success!",
   connectionEstablished: "Connection successfully established!",
   awesome: "Awesome",
   // settings
@@ -61,5 +64,6 @@ export default {
   vi: "Tiếng Việt",
   pt: "Português",
   uk: "Українська",
-  es: "español"
+  es: "español",
+  ru: "Русский"
 };

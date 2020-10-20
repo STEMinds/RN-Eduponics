@@ -38,8 +38,8 @@ class Main extends React.Component {
             barStyle="dark-content"
           />
           <View style={styles.titleView}>
-            <Text style={styles.titleText}>{I18n.t("steminds")} </Text>
-            <Text style={[styles.titleText,{color:'rgba(78,185,95,100)'}]}>{I18n.t("eduponics")}</Text>
+            <Text style={[styles.titleText,{color: I18n.isRTL ? 'rgba(78,185,95,100)' : 'black'}]}>{I18n.isRTL ? I18n.t("eduponics") : I18n.t("steminds") }</Text>
+            <Text style={[styles.titleText,{color: I18n.isRTL ? 'black' : 'rgba(78,185,95,100)'}]}>{I18n.isRTL ? I18n.t("steminds") : I18n.t("eduponics") }</Text>
           </View>
 
           <Text style={styles.subtitleText}>{I18n.t("subtitleText")}</Text>

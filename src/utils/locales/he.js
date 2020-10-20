@@ -12,6 +12,7 @@ export default {
   termsOfService: "תקנון ותנאי שימוש",
   privacyPolicy: "מדיניות פרטיות",
   // control page
+  unknown:"לא ידוע",
   soilMoisture: "לחות באדמה",
   waterQauntity: "כמות מים",
   temperature: "טמפרטורה",
@@ -21,6 +22,8 @@ export default {
   loadingData: "טוען נתונים ...",
   unableToLoadTitle: "Unable to fetch MQTT data",
   unableToLoadContent: "Please make sure your hardware MQTT client is working properly",
+  waterFull:"מלא",
+  waterEmpty:"ריק",
   // greetings
   goodMorning: "בוקר טוב",
   goodNoon: "צהריים טובים",
@@ -61,5 +64,6 @@ export default {
   vi: "Tiếng Việt",
   pt: "Português",
   uk: "Українська",
-  es: "español"
+  es: "español",
+  ru: "Русский"
 };
