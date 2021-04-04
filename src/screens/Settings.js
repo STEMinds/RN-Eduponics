@@ -467,9 +467,8 @@ const styles = StyleSheet.create({
     borderColor:'rgba(225,227,232,100)'
   },
   buttonStyle:{
-    position:'absolute',
     alignSelf:'center',
-    bottom:hp('9.85%'),
+    top:hp('35%'),
     width:wp('84%'),
     height:hp('5.91%'),
     borderRadius:24
