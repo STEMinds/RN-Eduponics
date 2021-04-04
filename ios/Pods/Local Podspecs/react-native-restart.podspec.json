@@ -4,7 +4,11 @@
   "summary": "Sometimes you want to reload your app bundle during app runtime. This package will allow you to do it.",
   "homepage": "https://github.com/avishayil/react-native-restart#readme",
   "license": "MIT",
-  "authors": "Avishay Bar <avishay.il@gmail.com> (https://github.com/avishayil)",
+  "authors": {
+    "name": "Avishay Bar",
+    "email": "avishay.il@gmail.com",
+    "url": "https://github.com/avishayil"
+  },
   "platforms": {
     "ios": "9.0"
   },

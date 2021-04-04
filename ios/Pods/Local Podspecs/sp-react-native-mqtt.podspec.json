@@ -1,6 +1,6 @@
 {
   "name": "sp-react-native-mqtt",
-  "version": "0.4.25",
+  "version": "0.4.26",
   "license": {
     "type": "MIT"
   },
@@ -8,7 +8,7 @@
   "authors": "Ioannis Kokkinidis",
   "summary": "MQTT client for react-native",
   "source": {
-    "git": "git+https://github.com/hawkingnetwork/react-native-mqtt.git"
+    "git": "git+https://github.com/SudoPlz/react-native-mqtt.git"
   },
   "source_files": "ios/*.{h,m}",
   "platforms": {
