@@ -32,6 +32,7 @@ class Control extends React.Component {
         spinner:false,
         sample:true,
         identifier:'',
+        mqtt_broker:'',
         mqtt_client:null,
         mqtt_subscribed:false,
         firstTimeModalShow:false,
@@ -119,16 +120,23 @@ class Control extends React.Component {
 
     async updateStorage(){
       try {
-        const value = await AsyncStorage.getItem('@identifier')
-        if(value !== null) {
+        const identiferValue = await AsyncStorage.getItem('@identifier');
+        var mqttBroker = await AsyncStorage.getItem('@mqttbroker');
+        // check if broker is set, if not, use default
+        if(mqttBroker == null || mqttBroker == ''){
+          mqttBroker = 'mqtt.eclipseprojects.io:8883';
+        }
+        // check identifer values
+        if(identiferValue !== null && mqttBroker !== null) {
           // check if the identifier we currently have is same as value
-          if(value != this.state.identifier && this.state.identifier != ''){
+          if(identiferValue != this.state.identifier && this.state.identifier != '' || mqttBroker != this.state.mqtt_broker && this.state.mqtt_broker != ''){
             // the identifier was changed in settings
             // close the client
             //this.mqtt_client.close()
             // update settings
             this.setState({
-                identifier: value,
+                identifier: identiferValue,
+                mqtt_broker: mqttBroker,
                 mqtt_client:null,
                 mqtt_subscribed: false
             }, () => {
@@ -138,7 +146,8 @@ class Control extends React.Component {
           }else{
             // value previously stored, set it
             this.setState({
-                identifier: value,
+                identifier: identiferValue,
+                mqtt_broker: mqttBroker,
                 firstTimeModalShow: false,
             }, () => {
                 // set new mqtt client
@@ -166,9 +175,11 @@ class Control extends React.Component {
     async _setupMQTT(){
       if(this.state.mqtt_client == null){
         /* create mqtt client */
+        console.log("connecting to: " + this.state.mqtt_broker);
         var client = await MQTT.createClient( {
-          uri: 'mqtt://mqtt.eclipse.org:1883',
-          //uri: 'mqtts://mqtt.steminds.com:8883',
+          uri: this.state.mqtt_broker,
+          //uri: 'mqtt://mqtt.eclipseprojects.io:1883',
+          //uri: 'mqtts://mqtt.eclipseprojects.io:8883',
           clientId: guidGenerator()
         })
         /* connect to client */

@@ -27,6 +27,7 @@ class Settings extends React.Component {
         language:"English",
         cameraModalVisible:false,
         identifier:'',
+        mqtt_broker:'mqtts://mqtt.eclipseprojects.io:8883',
         notifications_enabled:false,
         watering_enabled:false,
         hydro_mode:false,
@@ -54,12 +55,25 @@ class Settings extends React.Component {
       // get saved data if not introduced already
       if(this.state.identifier == ''){
         try {
-          const value = await AsyncStorage.getItem('@identifier')
-          if(value !== null) {
+          const identifierValue = await AsyncStorage.getItem('@identifier')
+          const mqttBroker = await AsyncStorage.getItem('@mqttbroker')
+          if(identifierValue !== null) {
             // value previously stored
             this.setState({
-              identifier:value,
+              identifier:identifierValue,
               connected:true
+            })
+          }else{
+            // value not stored, change status to disconnected
+            this.setState({
+              connected:false
+            })
+          }
+          // check mqtt broker
+          if(mqttBroker !== null) {
+            // value previously stored
+            this.setState({
+              mqtt_broker:mqttBroker,
             })
           }else{
             // value not stored, change status to disconnected
@@ -96,6 +110,38 @@ class Settings extends React.Component {
           connected:false,
           identifier:'',
           failedModalVisible:true
+        })
+      }
+    }
+
+    async _saveBrokerToStorage(){
+      var final_broker = '';
+      var value = this.state.mqtt_broker.split(":");
+      // make sure the identifier is UUID
+      if(this.state.mqtt_broker && value.length == 2){
+        // identifer is correct, save data
+        try {
+          // add MQTT or MQTTS based on the port
+          if(value[1] == 8883){
+            final_broker = "mqtts://" + this.state.mqtt_broker;
+          }else{
+            final_broker = "mqtt://" + this.state.mqtt_broker;
+          }
+          await AsyncStorage.setItem('@mqttbroker', final_broker.toLowerCase())
+        } catch (e) {
+          // saving error
+          console.log("error saving MQTT broker",e)
+        }
+        // Change state to connected and show success modal
+        this.setState({
+          mqtt_broker:final_broker,
+          successModalVisible:true
+        })
+      }else{
+        // Regex is wrong, show failed modal
+        this.setState({
+          failedModalVisible:true,
+          mqtt_broker:''
         })
       }
     }
@@ -186,7 +232,16 @@ class Settings extends React.Component {
             <View style={{marginTop:hp('2.34%')}}>
               <Text style={styles.titleText}>{I18n.t("mqttBroker")}</Text>
               <View style={{flexDirection:'row'}}>
-                <Text style={styles.subtitleText}>mqtt.eclipse.org</Text>
+                <TextInput
+                  autoCapitalize='none'
+                  placeholder={I18n.t("brokerPlaceHolder")}
+                  value={this.state.mqtt_broker.split("://")[1]}
+                  returnKeyType={"done"}
+                  style={[styles.subtitleText,{width:wp('55%')}]}
+                  onChangeText={text => this.setState({mqtt_broker:text})}
+                  onSubmitEditing={() => this._saveBrokerToStorage()}>
+                </TextInput>
+                {/*<Text style={styles.subtitleText}>mqtt.eclipse.org</Text>*/}
                 {this._renderConnectionState()}
               </View>
             </View>
