@@ -153,7 +153,7 @@ class Settings extends React.Component {
     _renderConnectionState(){
       if(this.state.connected){
         return(
-          <View style={{alignItems:'center',justifyContent:'center',position:'absolute',width:wp('27.6%'),height:hp('4.2%'),borderRadius:20,right:wp('15%')}}>
+          <View style={{marginTop:hp('1.5%'), alignItems:'center',justifyContent:'center',position:'absolute',width:wp('27.6%'),height:hp('4.2%'),borderRadius:20,right:wp('15%')}}>
             <LinearGradient useAngle={true} angle={45} colors={['#0AC4BA','#2BDA8E']} style={styles.gradientStyle}>
               <Text style={{alignSelf:'center',textAlign:'center',fontSize:hp('1.72%'), fontWeight:'bold', color:'white', width:wp('100%')}}>{I18n.t('connected')}</Text>
             </LinearGradient>
@@ -161,7 +161,7 @@ class Settings extends React.Component {
         )
       }else{
         return(
-          <View style={{borderColor:"#0AC4BA",borderRadius:20,borderWidth:1.5,alignItems:'center',justifyContent:'center',position:'absolute',width:wp('27.6%'),...Platform.select({
+          <View style={{marginTop:hp('1.5%'), borderColor:"#0AC4BA",borderRadius:20,borderWidth:1.5,alignItems:'center',justifyContent:'center',position:'absolute',width:wp('27.6%'),...Platform.select({
             ios: {
               height:hp('4.2%')
             },
