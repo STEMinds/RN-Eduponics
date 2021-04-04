@@ -132,8 +132,8 @@ android {
         applicationId "com.steminds.eduponics"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 13
-        versionName "1.5"
+        versionCode 14
+        versionName "1.6"
         missingDimensionStrategy 'react-native-camera', 'general'
         multiDexEnabled true
     }
