@@ -54,6 +54,7 @@ export default {
   wipeDataSubtitle: "确定要重置应用并清除本地数据吗?",
   connected: "已连接",
   disconnected: "未连接",
+  brokerPlaceHolder: "mqtt.eclipseprojects.io:8883",
   // language codes (each one on it's own native language)
   en: "English",
   de: "Deutsche",

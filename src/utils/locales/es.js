@@ -54,6 +54,7 @@ export default {
   wipeDataSubtitle: "¿Estás seguro de que quieres resetear la aplicación y borrar todos tus datos?",
   connected: "Conectado",
   disconnected: "Desconectado",
+  brokerPlaceHolder: "mqtt.eclipseprojects.io:8883",
   // language codes (each one on it's own native language)
   en: "English",
   de: "Deutsche",

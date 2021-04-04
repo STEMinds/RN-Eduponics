@@ -54,6 +54,7 @@ export default {
   wipeDataSubtitle: "Вы уверены что хотите удалить данные приложения и вернуть его к первоначальным настройкам?",
   connected: "Подключено",
   disconnected: "Отключено",
+  brokerPlaceHolder: "mqtt.eclipseprojects.io:8883",
   // language codes (each one on it's own native language)
   en: "English",
   de: "Deutsche",

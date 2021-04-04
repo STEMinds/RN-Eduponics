@@ -54,6 +54,7 @@ export default {
   wipeDataSubtitle: "אתה בטוח שאתה רוצה למחוק את כל המידע מהאפליקצייה?",
   connected: "מחובר",
   disconnected: "מנותק",
+  brokerPlaceHolder: "mqtt.eclipseprojects.io:8883",
   // language codes (each one on it's own native language)
   en: "English",
   de: "Deutsche",

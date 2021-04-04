@@ -54,6 +54,7 @@ export default {
   wipeDataSubtitle: "Ви впевнені, що хочете скинути додаток та стерти локальні дані?",
   connected: "Підключено",
   disconnected: "Відключено",
+  brokerPlaceHolder: "mqtt.eclipseprojects.io:8883",
   // language codes (each one on it's own native language)
   en: "English",
   de: "Deutsche",

@@ -54,6 +54,7 @@ export default {
   wipeDataSubtitle: "Bạn có chắc chắn muốn thiết lập lại ứng dụng và xóa toàn bộ dữ liệu",
   connected: "kết nối",
   disconnected: "ngắt kết nối",
+  brokerPlaceHolder: "mqtt.eclipseprojects.io:8883",
   // language codes (each one on it's own native language)
   en: "English",
   de: "Deutsche",

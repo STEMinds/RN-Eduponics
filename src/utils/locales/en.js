@@ -54,6 +54,7 @@ export default {
   wipeDataSubtitle: "Are you sure you want to reset the app and wipe your local data?",
   connected: "Connected",
   disconnected: "Disconnected",
+  brokerPlaceHolder: "mqtt.eclipseprojects.io:8883",
   // language codes (each one on it's own native language)
   en: "English",
   de: "Deutsche",
