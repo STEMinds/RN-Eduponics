@@ -57,3 +57,5 @@ buck-out/
 *.jsbundle
 assets/AgritechAPP2 .sketch
 *.hprof
+ios/lock/*
+ios/Pods/*
